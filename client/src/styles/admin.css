@@ -1,0 +1,92 @@
+.user-table {
+  display: flex;
+  flex-direction: column;
+  align-content: stretch;
+}
+
+.admin-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  font-size: 3rem;
+  line-height: 1.4;
+  padding: 0.5rem 0;
+  margin-bottom: 2rem;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button {
+  background: #3498db;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: transform 0.2s, box-shadow 0.2s;
+  margin: 0.5rem;
+  cursor: pointer;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+  background: #2980b9;
+}
+
+.button-group {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+/* User Table Styles */
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 2rem;
+  background: #f8f9fa;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.user-table th {
+  background: #2c3e50;
+  color: white;
+  padding: 1rem;
+  text-align: left;
+}
+
+.user-table td {
+  padding: 1rem;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.user-table tr:hover {
+  background: #e9ecef;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .admin-container {
+    margin: 1rem;
+    padding: 1rem;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  button {
+    width: 100%;
+    margin: 0.5rem 0;
+  }
+}

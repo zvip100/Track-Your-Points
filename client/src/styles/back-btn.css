@@ -1,0 +1,45 @@
+.back-btn-container {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  display: inline-block;
+}
+
+.back-btn-container:before {
+  content: attr(data-tooltip);
+  position: absolute;
+  background: #333;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  left: 70px;
+  top: 50%;
+  transform: translateY(-50%);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.back-btn-container:hover:before {
+  opacity: 1;
+  visibility: visible;
+  left: 80px;
+}
+
+.back-button {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  cursor: pointer;
+  color: #836cddaa;
+  transition: all 0.3s ease;
+}
+
+.back-button:hover {
+  color: #836cdd;
+  transform: scale(1.1);
+}
