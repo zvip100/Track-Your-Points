@@ -2,14 +2,14 @@ import { IoArrowBackCircle } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import "../styles/back-btn.css";
 
-function BackButton() {
+function BackButton({path, text}) {
   const navigate = useNavigate();
 
   return (
-    <div className="back-btn-container" data-tooltip="Back to Homepage">
+    <div className="back-btn-container" data-tooltip={text}>
       <IoArrowBackCircle
         className="back-button"
-        onClick={() => navigate("/")}
+        onClick={() => navigate(path)}
         size={60}
       />
     </div>

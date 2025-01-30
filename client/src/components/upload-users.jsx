@@ -32,7 +32,7 @@ function UploadUsers() {
 
         <FileInput uploaded={uploaded} setUploaded={setUploaded} />
 
-        <BackButton />
+        <BackButton path="/admin" text="Back to Admin page" />
       </div>
     </>
   );

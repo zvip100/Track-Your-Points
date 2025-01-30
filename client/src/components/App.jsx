@@ -1,7 +1,9 @@
 import { useState } from "react";
 import logo from "../assets/logo.svg";
+import villaImg from "../assets/tampa.jpg";
 //import LoadingSpinner from "./loading";
 import "../styles/App.css";
+import Footer from "./footer";
 import { Link, useNavigate } from "react-router-dom";
 
 function App() {
@@ -16,7 +18,7 @@ function App() {
     }
 
     try {
-      const response = await fetch("http://localhost:3000/", {
+      const response = await fetch("http://localhost:3000/about", {
         method: "GET",
       });
 
@@ -75,6 +77,7 @@ function App() {
         </a>
 
         <div className="centered-content">
+          <div className="background-img"></div>
           <h1 className="title">Track Your Points!</h1>
 
           {msg && (
@@ -82,7 +85,7 @@ function App() {
               <h2>{msg}</h2>
 
               <img
-                src="https://lh3.googleusercontent.com/fQ8xCHtldG1qnPMnT-IzpCjMjv3ZbBKikg-NuOo1tBrH32zaBjE3R9E863PP4pLW3sykdmC_p9QNHMyjpUM1IZ0Or184WQHLPBUN9yTvP6qTd72Jwpo3Ho87g_eznJVLEA=w1280"
+                src="https://static.wixstatic.com/media/bbcd57_17210834dd8947e78c062348767c9237~mv2.jpg/v1/fill/w_649,h_408,q_85,usm_0.66_1.00_0.01/bbcd57_17210834dd8947e78c062348767c9237~mv2.jpg"
                 alt="Image of our villa in Tampa Florida"
                 width="70%"
                 height="50%"
@@ -116,6 +119,8 @@ function App() {
           )}
         </div>
       </main>
+
+      <Footer />
     </>
   );
 }

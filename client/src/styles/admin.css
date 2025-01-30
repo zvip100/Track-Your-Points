@@ -47,8 +47,7 @@ button:hover {
   justify-content: center;
   margin-bottom: 2rem;
 }
-
-/* User Table Styles */
+/**
 .user-table {
   width: 100%;
   border-collapse: collapse;
@@ -74,6 +73,7 @@ button:hover {
   background: #e9ecef;
 }
 
+*/
 /* Responsive Design */
 @media (max-width: 768px) {
   .admin-container {
@@ -90,3 +90,5 @@ button:hover {
     margin: 0.5rem 0;
   }
 }
+
+

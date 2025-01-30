@@ -51,9 +51,9 @@ function Signup() {
       setShowPopup(true);
       setPending(false);
 
-      if (result === "Email in use") {
+      if (result.length === 0) {
         setPopupMsg(
-          "Email address already in use. Please try again with an different email address."
+          "Invalid Email Address. Please use your Starlife Partners Agency Email Address."
         );
         setMsgType("error-msg");
         return;
@@ -133,7 +133,7 @@ function Signup() {
 
       {pending && <LoadingSpinner />}
 
-      <BackButton />
+      <BackButton path="/" text="Back to Homepage" />
     </>
   );
 }

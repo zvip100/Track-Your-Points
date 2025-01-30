@@ -1,4 +1,4 @@
-import { db, users } from "../database/db";
+import { db, users, eq } from "../database/db";
 
 export async function getUsers() {
   try {
@@ -15,8 +15,8 @@ export async function getUsers() {
     console.log("Users: ", allUsers);
 
     allUsers.forEach((user) => {
-      if (user.registered === true) user.registered = "Yes";
-      else user.registered = "No";
+      if (user.registered === true) user.status = "Registered";
+      else user.status = "Invited";
     });
 
     return allUsers;
@@ -43,6 +43,30 @@ export async function addUsers(usersArray) {
     return newUsers;
   } catch (e) {
     console.error("Error adding user: ", e.message);
+    throw e;
+  }
+}
+
+export async function addPoints(user, points) {
+  try {
+    const currentPoints = await db
+      .select({ points: users.points })
+      .from(users)
+      .where(eq(users.email, user));
+
+    console.log("current points: ", currentPoints);
+
+    const newPoints = currentPoints[0].points + points;
+    console.log("new points: ", newPoints);
+
+    const result = await db
+      .update(users)
+      .set({ points: newPoints })
+      .where(eq(users.email, user))
+      .returning({ user: users.email, points: users.points });
+    return result;
+  } catch (e) {
+    console.error("Error adding points: ", e.message);
     throw e;
   }
 }

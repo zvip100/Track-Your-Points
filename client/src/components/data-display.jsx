@@ -114,7 +114,7 @@ function DataDisplay({ data, setUploaded }) {
         throw new Error(result.error);
       }
     } catch (error) {
-      setMsg("Error saving users: " + error.message);
+      setMsg("Error saving users. Please try again.");
       setMsgType("error-msg");
     } finally {
       setIsSaving(false);

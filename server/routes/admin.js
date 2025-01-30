@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getUsers, addUsers } from "../models/admin";
+import { getUsers, addUsers, addPoints } from "../models/admin";
 
 const adminRouter = Router();
 
@@ -38,4 +38,15 @@ adminRouter.post("/add-user", async (req, res) => {
   }
 });
 
+adminRouter.post("/add-points", async (req, res) => {
+  const user = req.body.user;
+  const points = req.body.points;
+  try {
+    const result = await addPoints(user, points);
+    res.json(result);
+  } catch (e) {
+    console.error("Error adding points: ", e.message);
+    res.sendStatus(500);
+  }
+});
 export default adminRouter;

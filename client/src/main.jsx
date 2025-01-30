@@ -9,6 +9,7 @@ import Admin from "./components/admin.jsx";
 import About from "./components/about.jsx";
 import UploadUsers from "./components/upload-users.jsx";
 import AddUser from "./components/add-user.jsx";
+import AllUsers from "./components/all-users.jsx";
 
 const router = createBrowserRouter([
   {
@@ -35,7 +36,11 @@ const router = createBrowserRouter([
     path: "/admin/add-user",
     element: <AddUser />,
   },
-  
+  {
+    path: "/admin/all-users",
+    element: <AllUsers />,
+  },
+
   {
     path: "/about",
     element: <About />,

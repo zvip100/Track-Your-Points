@@ -56,7 +56,7 @@ function AddUser() {
     } catch (e) {
       console.error("Error adding user!");
       setShowPopup(true);
-      setMsg("Error adding user: " + e.message);
+      setMsg("Error adding user. Please try again.");
       setMsgType("error-msg");
       setPending(false);
       resetForm();
@@ -137,7 +137,7 @@ function AddUser() {
 
       {pending && <LoadingSpinner />}
 
-      <BackButton />
+      <BackButton path="/admin" text="Back to Admin page" />
     </>
   );
 }

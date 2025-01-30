@@ -115,7 +115,7 @@ function Login(props) {
 
       {pending && <LoadingSpinner />}
 
-      <BackButton />
+      <BackButton path="/" text="Back to Homepage" />
     </>
   );
 }
