@@ -40,7 +40,9 @@ function AllUsers() {
 
       {users.length > 0 && (
         <>
-          <h3 className="options-msg">Click on a any User for more options.</h3>
+          <h3 className="options-msg">
+            Click on a specific user to add points to his account.
+          </h3>
 
           <UserTable
             users={users}

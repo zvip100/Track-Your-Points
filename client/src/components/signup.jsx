@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useFormik } from "formik";
 import signUpSchema from "../sign-up-schema.js";
 import { signUpForm } from "../data.js";
@@ -7,6 +7,7 @@ import InputField from "./input-field.jsx";
 import Popup from "./popup.jsx";
 import BackButton from "./back-btn.jsx";
 import LoadingSpinner from "./loading.jsx";
+import Footer from "./footer.jsx";
 import "../styles/sign-up.css";
 
 function Signup() {
@@ -121,6 +122,9 @@ function Signup() {
             </button>
           </div>
         </form>
+        <p>
+          Already have an account? <Link to="/login">Log In</Link>
+        </p>
       </div>
 
       {showPopup && (
@@ -134,6 +138,7 @@ function Signup() {
       {pending && <LoadingSpinner />}
 
       <BackButton path="/" text="Back to Homepage" />
+      <Footer />
     </>
   );
 }

@@ -38,6 +38,7 @@ function AdminActions({ user, setUser, setReloadPage }) {
       setPopupMsg(`Successfully added points to ${user}'s account.`);
       setMsgType("success-msg");
       setReloadPage();
+      setTimeout(() => setUser(), 5000);
     }
   }
   return (

@@ -7,6 +7,7 @@ import { data, stillNeeds } from "./data.js";
 import signupRouter from "./routes/signup.js";
 import adminRouter from "./routes/admin.js";
 import authRouter from "./routes/auth.js";
+import accountRouter from "./routes/account.js";
 
 const app = express();
 
@@ -23,12 +24,7 @@ app.use("/", express.static(path.join(__dirname, "../client/dist/")));
 app.use("/sign-up", signupRouter);
 app.use("/auth", authRouter);
 app.use("/admin", adminRouter);
-
-app.get("/about", (req, res) => {
-  res.send(
-    "Earn 90,000 points to get your 3 nights dream vacation at our beautiful villa in Tampa Florida for free!"
-  );
-});
+app.use("/account", accountRouter);
 
 app.get("/my-points", (req, res) => {
   data.needs = stillNeeds();

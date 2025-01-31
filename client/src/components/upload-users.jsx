@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import FileInput from "./file-input";
 import BackButton from "./back-btn";
+import Footer from "./footer";
 import exempleImage from "../assets/user-sheet-exemple.png";
 import "../styles/upload-users.css";
 
@@ -31,9 +32,10 @@ function UploadUsers() {
         )}
 
         <FileInput uploaded={uploaded} setUploaded={setUploaded} />
-
-        <BackButton path="/admin" text="Back to Admin page" />
       </div>
+
+      <BackButton path="/admin" text="Back to Admin page" />
+      <Footer />
     </>
   );
 }

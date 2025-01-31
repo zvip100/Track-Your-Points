@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useContext, useEffect } from "react";
+import { useNavigate, Link, useLocation } from "react-router-dom";
+import { UserContext } from "./App";
 import InputField from "./input-field";
 import { loginForm } from "../data";
 import { useFormik } from "formik";
@@ -7,14 +8,32 @@ import loginSchema from "../login-schema";
 import BackButton from "./back-btn";
 import Popup from "./popup";
 import LoadingSpinner from "./loading";
+import Footer from "./footer";
 
-function Login(props) {
+function Login({ setUserInfo }) {
   //const [clicked, setClicked] = useState(false);
   const [pending, setPending] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [popupMsg, setPopupMsg] = useState("");
   const [msgType, setMsgType] = useState("");
+  const [loginResult, setLoginResult] = useState("");
   const navigate = useNavigate();
+  //const location = useLocation();
+ // const userInfo = useContext(UserContext);
+
+  useEffect(() => {
+    let timeoutId;
+
+    if (loginResult && loginResult[0]?.points) {
+      timeoutId = setTimeout(() => {
+        navigate("/", {state: "login page"});
+      }, 3000);
+    }
+
+    return () => {
+      if (timeoutId) clearTimeout(timeoutId);
+    };
+  }, [loginResult]);
 
   const formik = useFormik({
     initialValues: {
@@ -58,9 +77,16 @@ function Login(props) {
         return;
       }
 
+      setLoginResult(result);
       setPopupMsg("Log In Successful! Redirecting to home page...");
       setMsgType("success-msg");
-      setTimeout(() => navigate("/"), 3000);
+
+      setUserInfo({
+        id: result[0].id,
+        name: `${result[0].firstName} ${result[0].lastName}`,
+        email: result[0].email,
+        points: result[0].points,
+      });
     } catch (error) {
       console.error(error);
       setPopupMsg("Error logging in. Please try again.");
@@ -103,6 +129,9 @@ function Login(props) {
             </button>
           </div>
         </form>
+        <p>
+          Don't have account yet? <Link to="/sign-up"> Sign Up</Link>
+        </p>
       </div>
 
       {showPopup && (
@@ -116,6 +145,7 @@ function Login(props) {
       {pending && <LoadingSpinner />}
 
       <BackButton path="/" text="Back to Homepage" />
+      <Footer />
     </>
   );
 }

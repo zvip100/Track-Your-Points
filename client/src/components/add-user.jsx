@@ -5,6 +5,7 @@ import "../styles/add-user.css";
 import Popup from "./popup";
 import BackButton from "./back-btn";
 import LoadingSpinner from "./loading";
+import Footer from "./footer";
 
 function AddUser() {
   const [pending, setPending] = useState(false);
@@ -138,6 +139,7 @@ function AddUser() {
       {pending && <LoadingSpinner />}
 
       <BackButton path="/admin" text="Back to Admin page" />
+      <Footer />
     </>
   );
 }
