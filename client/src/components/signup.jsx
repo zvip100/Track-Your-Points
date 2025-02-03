@@ -8,6 +8,7 @@ import Popup from "./popup.jsx";
 import BackButton from "./back-btn.jsx";
 import LoadingSpinner from "./loading.jsx";
 import Footer from "./footer.jsx";
+import { URL } from "../main";
 import "../styles/sign-up.css";
 
 function Signup() {
@@ -30,7 +31,7 @@ function Signup() {
   async function handleSignUp(values, { resetForm }) {
     setPending(true);
     try {
-      const response = await fetch("http://localhost:3000/sign-up", {
+      const response = await fetch(`${URL}/api/sign-up`, {
         method: "POST",
         headers: {
           "Content-type": "application/json",

@@ -3,7 +3,6 @@ import {
   varchar,
   pgSchema,
   timestamp,
-  numeric,
   boolean,
 } from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
@@ -20,24 +19,29 @@ export const users = mySchema.table("users", {
   phone: varchar({ length: 20 }),
   points: integer().default(0),
   registered: boolean().default(false).notNull(),
-  created_at: timestamp({ mode: "string" })
-    .default(sql`CURRENT_TIMESTAMP`)
+  created_at: timestamp({ mode: "date" })
+    .default(sql`TIMEZONE('America/New_York', NOW())`)
     .notNull(),
-  updated_at: timestamp({ mode: "string" }),
-  last_login: timestamp({ mode: "string" }),
+  updated_at: timestamp({ mode: "date" }),
+  last_login: timestamp({ mode: "date" }),
 });
 
-/** 
-export const policies = mySchema.table("policies", {
+export const points = mySchema.table("points", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  policy_number: varchar({ length: 255 }).notNull(),
-  value: numeric({ precision: 16, scale: 2 }),
-  agent: integer()
+  user: integer()
     .notNull()
     .references(() => users.id),
-  points: integer().default(0).notNull(),
-  created_at: timestamp({ mode: "string" })
-    .default(sql`CURRENT_TIMESTAMP`)
+  amount: integer().notNull().default(0),
+  added_at: timestamp({ mode: "date" })
+    .default(sql`TIMEZONE('America/New_York', NOW())`)
     .notNull(),
 });
-*/
+
+export const admin = mySchema.table("admin", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  email: varchar({ length: 255 }).notNull().unique(),
+  password_hash: varchar({ length: 255 }).notNull(),
+  created_at: timestamp({ mode: "date" })
+    .default(sql`TIMEZONE('America/New_York', NOW())`)
+    .notNull(),
+});

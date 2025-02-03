@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Popup from "./popup";
 import LoadingSpinner from "./loading";
+import { URL } from "../main";
 import "../styles/data-display.css";
 
 function DataDisplay({ data, setUploaded }) {
@@ -93,7 +94,7 @@ function DataDisplay({ data, setUploaded }) {
         email: row.email,
       }));
 
-      const response = await fetch("http://localhost:3000/admin/add-user", {
+      const response = await fetch(`${URL}/api/admin/add-user`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

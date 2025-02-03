@@ -8,11 +8,6 @@ import LoadingSpinner from "./loading";
 import "../styles/admin.css";
 
 function Admin() {
-  //const [users, setUsers] = useState([]);
-  //const [pending, setPending] = useState(false);
-  //const [showPopup, setShowPopup] = useState(false);
-  //const navigate = useNavigate();
-
   return (
     <>
       <div className="admin-container">
@@ -27,6 +22,9 @@ function Admin() {
           </Link>{" "}
           <Link to="/admin/all-users">
             <button type="button">See All Users</button>
+          </Link>{" "}
+          <Link to="/admin/points-history">
+            <button type="button">Points History</button>
           </Link>{" "}
         </div>
       </div>

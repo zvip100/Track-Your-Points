@@ -106,3 +106,35 @@ table-container::-webkit-scrollbar {
 .table-container::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+.sort-table-dropdown {
+  padding: 0.8rem 1.2rem;
+  font-size: 1rem;
+  border: 2px solid #94a3b8;
+  border-radius: 8px;
+  background-color: white;
+  color: #1e293b;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 1rem 0;
+  width: auto;
+  min-width: 200px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.sort-table-dropdown:hover {
+  border-color: #64748b;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.sort-table-dropdown:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.sort-table-dropdown option {
+  padding: 0.8rem;
+  background-color: white;
+  color: #1e293b;
+}

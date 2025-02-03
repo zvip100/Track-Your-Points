@@ -10,6 +10,7 @@ import UploadUsers from "./upload-users.jsx";
 import AddUser from "./add-user.jsx";
 import AllUsers from "./all-users.jsx";
 import MyAccount from "./my-account.jsx";
+import PointsHistory from "./points-history.jsx";
 
 export const UserContext = createContext(null);
 
@@ -49,6 +50,10 @@ function App() {
     {
       path: "/admin/all-users",
       element: <AllUsers />,
+    },
+    {
+      path: "/admin/points-history",
+      element: <PointsHistory />,
     },
 
     {

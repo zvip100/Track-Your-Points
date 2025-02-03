@@ -1,12 +1,14 @@
+import { URL } from "../main";
+
 export async function addPoints(user, points) {
   try {
-    const response = await fetch("http://localhost:3000/admin/add-points", {
+    const response = await fetch(`${URL}/api/admin/add-points`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
       },
       body: JSON.stringify({
-        user,
+        userId: user,
         points,
       }),
     });

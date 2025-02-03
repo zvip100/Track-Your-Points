@@ -1,0 +1,13 @@
+.table-row-amount {
+  text-align: left;
+  padding: 1rem;
+  margin-bottom: 0;
+  color: #1e293b;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.table-row-amount span {
+  color: #0284c7;
+  margin-left: 0.5rem;
+}

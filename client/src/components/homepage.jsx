@@ -18,7 +18,6 @@ function Homepage() {
   useEffect(() => {
     if (userInfo && location?.state === "login page") {
       console.log("user info: ", userInfo);
-      setShowPopup(true);
     }
   }, []);
 
@@ -59,8 +58,13 @@ function Homepage() {
           <div>
             {userInfo && (
               <>
-                {" "}
-                <h3>You have already {userInfo?.points} points! Keep it up!</h3>
+                {userInfo?.points > 0 ? (
+                  <h3>
+                    You have already {userInfo?.points} points! Keep it up!
+                  </h3>
+                ) : (
+                  <h3>You don't have any points yet. Start earning today!</h3>
+                )}
                 <Link to="/my-account">Click here for more info</Link>{" "}
               </>
             )}
@@ -89,17 +93,6 @@ function Homepage() {
           </div>
         </div>
       </main>
-
-      {showPopup && (
-        <>
-          <Popup
-            msg={`Hello ${userInfo.name}! 
-            You have Already ${userInfo.points} points! Keep it up!`}
-            showPopup={() => setShowPopup(!showPopup)}
-            class_="success-msg"
-          />
-        </>
-      )}
 
       <Footer />
     </>

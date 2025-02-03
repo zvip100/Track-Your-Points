@@ -5,7 +5,7 @@ import { addPoints } from "../helpers/admin.js";
 import Popup from "./popup.jsx";
 import LoadingSpinner from "./loading.jsx";
 
-function AdminActions({ user, setUser, setReloadPage }) {
+function AdminActions({ user, email, setUser, setEmail, setReloadPage }) {
   const [points, setPoints] = useState("");
   const [showPopup, setShowPopup] = useState(false);
   const [popupMsg, setPopupMsg] = useState("");
@@ -35,7 +35,7 @@ function AdminActions({ user, setUser, setReloadPage }) {
         return;
       }
 
-      setPopupMsg(`Successfully added points to ${user}'s account.`);
+      setPopupMsg(`Successfully added points to ${email}'s account.`);
       setMsgType("success-msg");
       setReloadPage();
       setTimeout(() => setUser(), 5000);
@@ -45,10 +45,17 @@ function AdminActions({ user, setUser, setReloadPage }) {
     <div className="admin-popup">
       <div className="admin-popup-overlay">
         <div className="admin-popup-content">
-          <button type="button" className="admin-close-btn" onClick={setUser}>
+          <button
+            type="button"
+            className="admin-close-btn"
+            onClick={() => {
+              setUser();
+              setEmail();
+            }}
+          >
             <IoClose size={24} />
           </button>
-          <h3 className="admin-title">Account: {user}</h3>
+          <h3 className="admin-title">Account: {email}</h3>
 
           {points && (
             <>

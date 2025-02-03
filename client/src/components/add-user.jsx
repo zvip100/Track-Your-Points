@@ -6,6 +6,7 @@ import Popup from "./popup";
 import BackButton from "./back-btn";
 import LoadingSpinner from "./loading";
 import Footer from "./footer";
+import { URL } from "../main";
 
 function AddUser() {
   const [pending, setPending] = useState(false);
@@ -26,7 +27,7 @@ function AddUser() {
   async function handleSubmit(values, { resetForm }) {
     setPending(true);
     try {
-      const response = await fetch("http://localhost:3000/admin/add-user", {
+      const response = await fetch(`${URL}/api/admin/add-user`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

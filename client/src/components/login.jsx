@@ -9,6 +9,7 @@ import BackButton from "./back-btn";
 import Popup from "./popup";
 import LoadingSpinner from "./loading";
 import Footer from "./footer";
+import { URL } from "../main";
 
 function Login({ setUserInfo }) {
   //const [clicked, setClicked] = useState(false);
@@ -19,14 +20,14 @@ function Login({ setUserInfo }) {
   const [loginResult, setLoginResult] = useState("");
   const navigate = useNavigate();
   //const location = useLocation();
- // const userInfo = useContext(UserContext);
+  // const userInfo = useContext(UserContext);
 
   useEffect(() => {
     let timeoutId;
 
-    if (loginResult && loginResult[0]?.points) {
+    if (loginResult) {
       timeoutId = setTimeout(() => {
-        navigate("/", {state: "login page"});
+        navigate("/", { state: "login page" });
       }, 3000);
     }
 
@@ -47,7 +48,7 @@ function Login({ setUserInfo }) {
   async function handleLogin(values, { resetForm }) {
     setPending(true);
     try {
-      const response = await fetch("http://localhost:3000/auth/login", {
+      const response = await fetch(`${URL}/api/auth/login`, {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -78,7 +79,17 @@ function Login({ setUserInfo }) {
       }
 
       setLoginResult(result);
-      setPopupMsg("Log In Successful! Redirecting to home page...");
+
+      if (result[0].points > 0) {
+        setPopupMsg(
+          `Hello ${result[0].firstName} ${result[0].lastName}! You have Already ${result[0].points} points! Keep it up!`
+        );
+      } else {
+        setPopupMsg(
+          `Hello ${result[0].firstName} ${result[0].lastName}! Redirecting you to the Homepage.`
+        );
+      }
+
       setMsgType("success-msg");
 
       setUserInfo({

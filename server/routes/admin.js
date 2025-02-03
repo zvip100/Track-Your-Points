@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getUsers, addUsers, addPoints } from "../models/admin";
+import { getUsers, addUsers, addPoints, getPoints } from "../models/admin";
 
 const adminRouter = Router();
 
@@ -39,13 +39,23 @@ adminRouter.post("/add-user", async (req, res) => {
 });
 
 adminRouter.post("/add-points", async (req, res) => {
-  const user = req.body.user;
+  const userId = req.body.userId;
   const points = req.body.points;
   try {
-    const result = await addPoints(user, points);
+    const result = await addPoints(userId, points);
     res.json(result);
   } catch (e) {
     console.error("Error adding points: ", e.message);
+    res.sendStatus(500);
+  }
+});
+
+adminRouter.get("/points", async (req, res) => {
+  try {
+    const result = await getPoints();
+    res.json(result);
+  } catch (e) {
+    console.error("Error getting points history: ", e.message);
     res.sendStatus(500);
   }
 });

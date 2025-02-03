@@ -1,9 +1,74 @@
 {
-  "id": "3de838ce-a191-41e6-9cb0-d1a432d714c8",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "f1709dc5-a88b-4e32-a2d3-bd229f1bcff5",
+  "prevId": "3de838ce-a191-41e6-9cb0-d1a432d714c8",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
+    "points-project.points": {
+      "name": "points",
+      "schema": "points-project",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "points_id_seq",
+            "schema": "points-project",
+            "increment": "1",
+            "startWith": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "cache": "1",
+            "cycle": false
+          }
+        },
+        "user": {
+          "name": "user",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "amount": {
+          "name": "amount",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "added_at": {
+          "name": "added_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "TIMEZONE('America/New_York', NOW())"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "points_user_users_id_fk": {
+          "name": "points_user_users_id_fk",
+          "tableFrom": "points",
+          "tableTo": "users",
+          "schemaTo": "points-project",
+          "columnsFrom": [
+            "user"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
     "points-project.users": {
       "name": "users",
       "schema": "points-project",

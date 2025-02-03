@@ -9,7 +9,7 @@ CREATE TABLE "points-project"."users" (
 	"phone" varchar(20),
 	"points" integer DEFAULT 0,
 	"registered" boolean DEFAULT false NOT NULL,
-	"created_at" timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,
+	"created_at" timestamp DEFAULT TIMEZONE('America/New_York', NOW()) NOT NULL,
 	"updated_at" timestamp,
 	"last_login" timestamp,
 	CONSTRAINT "users_email_unique" UNIQUE("email")

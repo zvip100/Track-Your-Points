@@ -3,6 +3,7 @@ import AdminActions from "./admin-actions";
 
 function UserTable({ users, setReloadPage }) {
   const [user, setUser] = useState("");
+  const [email, setEmail] = useState("");
 
   return (
     <>
@@ -22,7 +23,12 @@ function UserTable({ users, setReloadPage }) {
 
             <tbody>
               {users.map((user, index) => (
-                <tr key={index} onClick={() => setUser(user.email)}>
+                <tr
+                  key={user.id}
+                  onClick={() => {
+                    setUser(user.id), setEmail(user.email);
+                  }}
+                >
                   <td>{index + 1}</td>
                   <td>{user.firstName}</td>
                   <td>{user.lastName}</td>
@@ -39,7 +45,9 @@ function UserTable({ users, setReloadPage }) {
       {user && (
         <AdminActions
           user={user}
+          email={email}
           setUser={() => setUser("")}
+          setEmail={() => setEmail("")}
           setReloadPage={setReloadPage}
         />
       )}
