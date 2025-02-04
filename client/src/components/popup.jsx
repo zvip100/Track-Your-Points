@@ -2,7 +2,7 @@ import "../styles/popup.css";
 import { IoClose } from "react-icons/io5";
 import { useEffect } from "react";
 
-function Popup({ msg, showPopup, class_ }) {
+function Popup({ msg, showPopup, class_, note }) {
   useEffect(() => {
     if (class_ === "success-msg") {
       setTimeout(() => showPopup(), 5000);
@@ -17,6 +17,7 @@ function Popup({ msg, showPopup, class_ }) {
             <IoClose size={24} />
           </button>
           <h2 className={class_}>{msg}</h2>
+          {note && <p>{note}</p>}
         </div>
       </div>
     </div>

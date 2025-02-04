@@ -1,4 +1,4 @@
-import { desc } from "drizzle-orm";
+import { asc, desc } from "drizzle-orm";
 import { db, users, admin, points, eq, sql, and } from "../database/db";
 
 export async function login(email, password) {
@@ -30,7 +30,9 @@ export async function getUsers() {
         points: users.points,
         registered: users.registered,
       })
-      .from(users);
+      .from(users)
+      .orderBy(asc(users.last_name));
+
     console.log("Users: ", allUsers);
 
     allUsers.forEach((user) => {

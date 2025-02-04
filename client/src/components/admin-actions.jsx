@@ -5,11 +5,18 @@ import { addPoints } from "../helpers/admin.js";
 import Popup from "./popup.jsx";
 import LoadingSpinner from "./loading.jsx";
 
-function AdminActions({ user, email, setUser, setEmail, setReloadPage }) {
+function AdminActions({
+  user,
+  email,
+  setUser,
+  setEmail,
+  setReloadPage,
+  setShowPopup,
+  setPopupMsg,
+  setMsgType,
+  setPopupNote,
+}) {
   const [points, setPoints] = useState("");
-  const [showPopup, setShowPopup] = useState(false);
-  const [popupMsg, setPopupMsg] = useState("");
-  const [msgType, setMsgType] = useState(false);
   const [pending, setPending] = useState(false);
 
   async function handlePointsClick() {
@@ -27,19 +34,20 @@ function AdminActions({ user, email, setUser, setEmail, setReloadPage }) {
 
       setPending(false);
       setShowPopup(true);
+      setPoints("");
 
       if (result?.error) {
         setPopupMsg("Action failed. Please try again.");
         setMsgType("error-msg");
-        setPoints("");
         return;
       }
 
       setPopupMsg(`Successfully added ${points} points to ${email}'s account.`);
       setMsgType("success-msg");
-      setPoints("");
+      setPopupNote("Table has been updated.");
+      setUser("");
+      setEmail("");
       setReloadPage();
-      setTimeout(() => setUser(), 5000);
     }
   }
   return (
@@ -83,14 +91,6 @@ function AdminActions({ user, email, setUser, setEmail, setReloadPage }) {
           <p className="admin-footer-text">
             Click on the close Icon at the top right corner to exit.
           </p>
-
-          {showPopup && (
-            <Popup
-              msg={popupMsg}
-              showPopup={() => setShowPopup(!showPopup)}
-              class_={msgType}
-            />
-          )}
         </div>
       </div>
 

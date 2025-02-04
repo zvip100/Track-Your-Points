@@ -1,9 +1,14 @@
 import { useState } from "react";
 import AdminActions from "./admin-actions";
+import Popup from "./popup";
 
 function UserTable({ users, setReloadPage }) {
   const [user, setUser] = useState("");
   const [email, setEmail] = useState("");
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupMsg, setPopupMsg] = useState("");
+  const [msgType, setMsgType] = useState(false);
+  const [popupNote, setPopupNote] = useState("");
 
   return (
     <>
@@ -49,6 +54,19 @@ function UserTable({ users, setReloadPage }) {
           setUser={() => setUser("")}
           setEmail={() => setEmail("")}
           setReloadPage={setReloadPage}
+          setShowPopup={() => setShowPopup(!showPopup)}
+          setPopupMsg={setPopupMsg}
+          setMsgType={setMsgType}
+          setPopupNote={setPopupNote}
+        />
+      )}
+
+      {showPopup && (
+        <Popup
+          msg={popupMsg}
+          showPopup={() => setShowPopup(!showPopup)}
+          class_={msgType}
+          note={popupNote}
         />
       )}
     </>
