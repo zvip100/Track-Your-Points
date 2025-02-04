@@ -1,4 +1,23 @@
-import { db, users, points, eq, sql } from "../database/db";
+import { desc } from "drizzle-orm";
+import { db, users, admin, points, eq, sql, and } from "../database/db";
+
+export async function login(email, password) {
+  try {
+    const result = await db
+      .select()
+      .from(admin)
+      .where(and(eq(admin.email, email), eq(admin.password_hash, password)));
+
+    console.log("admin login result: ", result);
+
+    if (result.length === 0) return "Not found";
+
+    return result;
+  } catch (e) {
+    console.error("Error logging as admin: ", e.message);
+    throw e;
+  }
+}
 
 export async function getUsers() {
   try {
@@ -22,6 +41,7 @@ export async function getUsers() {
     return allUsers;
   } catch (e) {
     console.error("Error getting users: ", e.message);
+    throw e;
   }
 }
 
@@ -91,7 +111,8 @@ export async function getPoints() {
         time: sql`to_char(${points.added_at}, 'HH12:MI:SS AM')`,
       })
       .from(points)
-      .leftJoin(users, eq(points.user, users.id));
+      .leftJoin(users, eq(points.user, users.id))
+      .orderBy(desc(points.added_at));
 
     console.log("Get points result: ", result);
     return result;

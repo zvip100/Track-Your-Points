@@ -27,16 +27,17 @@ function AdminActions({ user, email, setUser, setEmail, setReloadPage }) {
 
       setPending(false);
       setShowPopup(true);
-      setPoints("");
 
       if (result?.error) {
         setPopupMsg("Action failed. Please try again.");
         setMsgType("error-msg");
+        setPoints("");
         return;
       }
 
-      setPopupMsg(`Successfully added points to ${email}'s account.`);
+      setPopupMsg(`Successfully added ${points} points to ${email}'s account.`);
       setMsgType("success-msg");
+      setPoints("");
       setReloadPage();
       setTimeout(() => setUser(), 5000);
     }

@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import addUserSchema from "../add-user-schema";
 import "../styles/add-user.css";
@@ -7,12 +8,19 @@ import BackButton from "./back-btn";
 import LoadingSpinner from "./loading";
 import Footer from "./footer";
 import { URL } from "../main";
+import { AdminContext } from "./App";
 
 function AddUser() {
   const [pending, setPending] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [msg, setMsg] = useState("");
   const [msgType, setMsgType] = useState("");
+  const navigate = useNavigate();
+  const admin = useContext(AdminContext);
+
+  useEffect(() => {
+    if (!admin) navigate("/admin/login", { state: "add-user" });
+  }, []);
 
   const formik = useFormik({
     initialValues: {

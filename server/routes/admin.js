@@ -1,7 +1,28 @@
 import { Router } from "express";
-import { getUsers, addUsers, addPoints, getPoints } from "../models/admin";
+import {
+  login,
+  getUsers,
+  addUsers,
+  addPoints,
+  getPoints,
+} from "../models/admin";
 
 const adminRouter = Router();
+
+adminRouter.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const result = await login(email, password);
+    if (result === "Not found") {
+      res.json("Not found");
+      return;
+    }
+    res.json(result);
+  } catch (e) {
+    console.error("error logging in as admin: ", e.message);
+    res.sendStatus(500);
+  }
+});
 
 adminRouter.get("/get-users", async (req, res) => {
   try {
@@ -59,4 +80,5 @@ adminRouter.get("/points", async (req, res) => {
     res.sendStatus(500);
   }
 });
+
 export default adminRouter;

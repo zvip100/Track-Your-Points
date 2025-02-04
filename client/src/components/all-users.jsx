@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import UserTable from "./user-table";
 import SortTable from "./sort-table";
 import Popup from "./popup";
@@ -6,6 +7,7 @@ import LoadingSpinner from "./loading";
 import BackButton from "./back-btn";
 import Footer from "./footer";
 import { URL } from "../main";
+import { AdminContext } from "./App";
 import "../styles/all-users.css";
 
 function AllUsers() {
@@ -14,6 +16,12 @@ function AllUsers() {
   const [showPopup, setShowPopup] = useState(false);
   const [reloadPage, setReloadPage] = useState(false);
   const [reloadTable, setReloadTable] = useState(false);
+  const navigate = useNavigate();
+  const admin = useContext(AdminContext);
+
+  useEffect(() => {
+    if (!admin) navigate("/admin/login", { state: "all-users" });
+  }, []);
 
   useEffect(() => {
     async function getUsers() {

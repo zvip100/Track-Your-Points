@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { AdminContext } from "./App";
 import FileInput from "./file-input";
 import BackButton from "./back-btn";
 import Footer from "./footer";
@@ -7,6 +9,12 @@ import "../styles/upload-users.css";
 
 function UploadUsers() {
   const [uploaded, setUploaded] = useState(false);
+  const navigate = useNavigate();
+  const admin = useContext(AdminContext);
+
+  useEffect(() => {
+    if (!admin) navigate("/admin/login", { state: "upload-users" });
+  }, []);
 
   return (
     <>

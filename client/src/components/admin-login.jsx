@@ -1,39 +1,44 @@
-import { useState, useContext, useEffect } from "react";
-import { useNavigate, Link, useLocation } from "react-router-dom";
-import { UserContext } from "./App";
-import InputField from "./input-field";
+import { useState, useEffect } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { loginForm } from "../data";
-import { useFormik } from "formik";
 import loginSchema from "../login-schema";
-import BackButton from "./back-btn";
+import InputField from "./input-field";
+import { useFormik } from "formik";
 import Popup from "./popup";
 import LoadingSpinner from "./loading";
+import BackButton from "./back-btn";
 import Footer from "./footer";
 import { URL } from "../main";
 
-function Login({ setUserInfo }) {
+function AdminLogin({ setAdminInfo }) {
   const [pending, setPending] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [popupMsg, setPopupMsg] = useState("");
   const [msgType, setMsgType] = useState("");
-  const [loginResult, setLoginResult] = useState("");
+  const [loggedIn, setLoggedIn] = useState(false);
   const navigate = useNavigate();
-  //const location = useLocation();
-  // const userInfo = useContext(UserContext);
+  const location = useLocation();
+  const state = location?.state;
 
   useEffect(() => {
     let timeoutId;
 
-    if (loginResult) {
-      timeoutId = setTimeout(() => {
-        navigate("/", { state: "login page" });
-      }, 3000);
+    if (loggedIn) {
+      let page;
+
+      if (state === "upload-users") page = "/admin/upload-users";
+      else if (state === "add-user") page = "/admin/add-user";
+      else if (state === "all-users") page = "/admin/all-users";
+      else if (state === "points-history") page = "/admin/points-history";
+      else page = "/admin";
+
+      timeoutId = setTimeout(() => navigate(page), 3000);
     }
 
     return () => {
       if (timeoutId) clearTimeout(timeoutId);
     };
-  }, [loginResult]);
+  }, [loggedIn]);
 
   const formik = useFormik({
     initialValues: {
@@ -47,7 +52,7 @@ function Login({ setUserInfo }) {
   async function handleLogin(values, { resetForm }) {
     setPending(true);
     try {
-      const response = await fetch(`${URL}/api/auth/login`, {
+      const response = await fetch(`${URL}/api/admin/login`, {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -69,36 +74,21 @@ function Login({ setUserInfo }) {
       setShowPopup(true);
       setPending(false);
 
-      if (result === "User not found") {
+      if (result === "Not found") {
         setPopupMsg(
-          "User not found. Please try again with your correct information."
+          "Not found. Please try again with your correct information."
         );
         setMsgType("error-msg");
         return;
       }
 
-      setLoginResult(result);
-
-      if (result[0].points > 0) {
-        setPopupMsg(
-          `Hello ${result[0].firstName} ${result[0].lastName}! You have Already ${result[0].points} points! Keep it up!`
-        );
-      } else {
-        setPopupMsg(
-          `Hello ${result[0].firstName} ${result[0].lastName}! Redirecting you to the Homepage.`
-        );
-      }
-
+      setPopupMsg(`Hello ${result[0]?.email}! You Have Admin status.`);
       setMsgType("success-msg");
-
-      setUserInfo({
-        id: result[0].id,
-        name: `${result[0].firstName} ${result[0].lastName}`,
-        email: result[0].email,
-        points: result[0].points,
-      });
+      setLoggedIn(true);
+      setAdminInfo(result[0]?.email);
     } catch (error) {
       console.error(error);
+      resetForm();
       setPopupMsg("Error logging in. Please try again.");
       setShowPopup(true);
       setMsgType("error-msg");
@@ -109,7 +99,7 @@ function Login({ setUserInfo }) {
   return (
     <>
       <div className="sign-up-container">
-        <h1>Please fill out the fields below to Log into your account.</h1>
+        <h1>Fill out the fields below to Log in as a Admin.</h1>
 
         <form className="sign-up-form" onSubmit={formik.handleSubmit}>
           {loginForm.map((field, index) => (
@@ -139,9 +129,6 @@ function Login({ setUserInfo }) {
             </button>
           </div>
         </form>
-        <p>
-          Don't have account yet? <Link to="/sign-up"> Sign Up</Link>
-        </p>
       </div>
 
       {showPopup && (
@@ -154,10 +141,10 @@ function Login({ setUserInfo }) {
 
       {pending && <LoadingSpinner />}
 
-      <BackButton path="/" text="Back to Homepage" />
+      <BackButton path="/admin" text="Back to Admin page" />
       <Footer />
     </>
   );
 }
 
-export default Login;
+export default AdminLogin;

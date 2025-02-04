@@ -1,13 +1,23 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import PointsTable from "./points-table";
 import LoadingSpinner from "./loading";
+import Popup from "./popup";
 import BackButton from "./back-btn";
 import Footer from "./footer";
 import { URL } from "../main";
+import { AdminContext } from "./App";
 
 function PointsHistory() {
   const [history, setHistory] = useState("");
   const [pending, setPending] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+  const navigate = useNavigate();
+  const admin = useContext(AdminContext);
+
+  useEffect(() => {
+    if (!admin) navigate("/admin/login", { state: "points-history" });
+  }, []);
 
   useEffect(() => {
     async function GetHistory() {
@@ -25,6 +35,7 @@ function PointsHistory() {
       } catch (e) {
         console.error("Error getting points history: ", e.message);
         setPending(false);
+        setShowPopup(true);
       }
     }
     GetHistory();
@@ -41,6 +52,16 @@ function PointsHistory() {
       )}
 
       {pending && <LoadingSpinner />}
+
+      {showPopup && (
+        <>
+          <Popup
+            msg="Error getting the data. Please reload the page."
+            showPopup={() => setShowPopup(!showPopup)}
+            class_="error-msg"
+          />{" "}
+        </>
+      )}
 
       <BackButton path="/admin" text="Back to Admin page" />
       <Footer />
