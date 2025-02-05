@@ -60,7 +60,7 @@ function Homepage() {
               <>
                 {userInfo?.points > 0 ? (
                   <h3>
-                    You have already {userInfo?.points} points! Keep it up!
+                    You already earned {userInfo?.points} points! Keep it up!
                   </h3>
                 ) : (
                   <h3>You don't have any points yet. Start earning today!</h3>

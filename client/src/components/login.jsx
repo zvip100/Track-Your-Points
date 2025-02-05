@@ -81,7 +81,7 @@ function Login({ setUserInfo }) {
 
       if (result[0].points > 0) {
         setPopupMsg(
-          `Hello ${result[0].firstName} ${result[0].lastName}! You have Already ${result[0].points} points! Keep it up!`
+          `Hello ${result[0].firstName} ${result[0].lastName}! You already earned ${result[0].points} points! Keep it up!`
         );
       } else {
         setPopupMsg(

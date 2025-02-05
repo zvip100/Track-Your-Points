@@ -16,12 +16,12 @@ app.use(express.json());
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-app.use("/", express.static(path.join(__dirname, "../client/dist/")));
+app.use("/", express.static(path.join(__dirname, "./front-end")));
 
 app.use("/api", apiRouter);
 
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../client/dist/index.html"));
+  res.sendFile(path.join(__dirname, "./front-end/index.html"));
 });
 
 app.listen(PORT, () => {
