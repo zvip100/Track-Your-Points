@@ -5,10 +5,10 @@ import logo from "../assets/logo.svg";
 import villaImg from "../assets/villa.jpg";
 import VillaPool from "../assets/villa-pool.jpg";
 import Footer from "./footer";
-import { scrollToTop } from "../helpers/utils.js";
+import { scrollToTop, changeTitle } from "../helpers/utils.js";
 import "../styles/App.css";
 
-function Homepage() {
+function Homepage({ title }) {
   const [points, setPoints] = useState();
   const [showPopup, setShowPopup] = useState(false);
   const navigate = useNavigate();
@@ -17,6 +17,7 @@ function Homepage() {
 
   useEffect(() => {
     scrollToTop();
+    changeTitle(title);
 
     if (userInfo && location?.state === "login page") {
       console.log("user info: ", userInfo);
