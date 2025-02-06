@@ -9,7 +9,7 @@ import LoadingSpinner from "./loading";
 import Footer from "./footer";
 import { URL } from "../main";
 import { AdminContext } from "./App";
-import { scrollToTop, changeTitle } from "../helpers/utils";
+import { scrollToTop, changeTitle, capitalize } from "../helpers/utils";
 
 function AddUser({ title }) {
   const [pending, setPending] = useState(false);
@@ -45,9 +45,9 @@ function AddUser({ title }) {
         },
         body: JSON.stringify([
           {
-            firstName: values.firstName,
-            lastName: values.lastName,
-            email: values.email,
+            firstName: capitalize(values.firstName),
+            lastName: capitalize(values.lastName),
+            email: values.email.toLowerCase(),
           },
         ]),
       });

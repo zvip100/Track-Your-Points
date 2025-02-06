@@ -13,3 +13,10 @@ export function changeTitle(title) {
 export function formatNumber(number) {
   return new Intl.NumberFormat("en-US").format(number);
 }
+
+export function capitalize(string) {
+  if (!string) return "";
+  return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+}
+
+

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Popup from "./popup";
 import LoadingSpinner from "./loading";
 import { URL } from "../main";
+import { capitalize } from "../helpers/utils";
 import "../styles/data-display.css";
 
 function DataDisplay({ data, setUploaded }) {
@@ -89,9 +90,9 @@ function DataDisplay({ data, setUploaded }) {
     setIsSaving(true);
     try {
       const usersToSave = formattedData.map((row) => ({
-        firstName: row.firstName,
-        lastName: row.lastName,
-        email: row.email,
+        firstName: capitalize(row.firstName),
+        lastName: capitalize(row.lastName),
+        email: row.email.toLowerCase(),
       }));
 
       const response = await fetch(`${URL}/api/admin/add-user`, {

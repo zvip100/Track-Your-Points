@@ -40,7 +40,7 @@ function Signup({ title }) {
           "Content-type": "application/json",
         },
         body: JSON.stringify({
-          email: values.email,
+          email: values.email.toLowerCase(),
           password: values.password,
         }),
       });
