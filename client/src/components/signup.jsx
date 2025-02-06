@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useFormik } from "formik";
 import signUpSchema from "../sign-up-schema.js";
@@ -9,14 +9,17 @@ import BackButton from "./back-btn.jsx";
 import LoadingSpinner from "./loading.jsx";
 import Footer from "./footer.jsx";
 import { URL } from "../main";
+import { scrollToTop, changeTitle } from "../helpers/utils";
 import "../styles/sign-up.css";
 
-function Signup() {
+function Signup({ title }) {
   const [pending, setPending] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [popupMsg, setPopupMsg] = useState("");
   const [msgType, setMsgType] = useState("");
   const navigate = useNavigate();
+
+  useEffect(() => scrollToTop(), changeTitle(title), []);
 
   const formik = useFormik({
     initialValues: {
@@ -61,9 +64,9 @@ function Signup() {
         return;
       }
 
-      setPopupMsg("Sign Up Successful!");
+      setPopupMsg("Sign Up Successful! Redirecting...");
       setMsgType("success-msg");
-      setTimeout(() => navigate("/"), 3000);
+      setTimeout(() => navigate("/login"), 3000);
     } catch (e) {
       console.error("Error creating acount: ", e);
       setPopupMsg("Error creating account. Please try again.");
@@ -112,7 +115,7 @@ function Signup() {
               className="submit-btn"
               disabled={!formik.isValid || !formik.dirty}
             >
-              Sign Up
+              {pending ? "Creating Your Account..." : "Sign Up"}
             </button>{" "}
             <button
               type="button"

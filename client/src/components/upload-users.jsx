@@ -5,14 +5,18 @@ import FileInput from "./file-input";
 import BackButton from "./back-btn";
 import Footer from "./footer";
 import exempleImage from "../assets/user-sheet-exemple.png";
+import { scrollToTop, changeTitle } from "../helpers/utils";
 import "../styles/upload-users.css";
 
-function UploadUsers() {
+function UploadUsers({ title }) {
   const [uploaded, setUploaded] = useState(false);
   const navigate = useNavigate();
   const admin = useContext(AdminContext);
 
   useEffect(() => {
+    scrollToTop();
+    changeTitle(title);
+
     if (!admin) navigate("/admin/login", { state: "upload-users" });
   }, []);
 

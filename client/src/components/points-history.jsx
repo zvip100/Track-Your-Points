@@ -7,8 +7,9 @@ import BackButton from "./back-btn";
 import Footer from "./footer";
 import { URL } from "../main";
 import { AdminContext } from "./App";
+import { scrollToTop, changeTitle } from "../helpers/utils";
 
-function PointsHistory() {
+function PointsHistory({ title }) {
   const [history, setHistory] = useState("");
   const [pending, setPending] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
@@ -16,6 +17,9 @@ function PointsHistory() {
   const admin = useContext(AdminContext);
 
   useEffect(() => {
+    scrollToTop();
+    changeTitle(title);
+
     if (!admin) navigate("/admin/login", { state: "points-history" });
   }, []);
 

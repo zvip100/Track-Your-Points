@@ -5,14 +5,17 @@ import AccountTable from "./account-table";
 import BackButton from "./back-btn";
 import Footer from "./footer";
 import { URL } from "../main";
+import { scrollToTop, changeTitle } from "../helpers/utils";
 import "../styles/my-account.css";
 
-function MyAccount() {
+function MyAccount({ title }) {
   const userInfo = useContext(UserContext);
   const navigate = useNavigate();
   const [accountData, setAccountData] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [loadingFailed, setLoadingFailed] = useState(false);
+
+  useEffect(() => scrollToTop(), changeTitle(title), []);
 
   useEffect(() => {
     async function getUserHistory() {

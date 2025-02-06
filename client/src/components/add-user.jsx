@@ -9,8 +9,9 @@ import LoadingSpinner from "./loading";
 import Footer from "./footer";
 import { URL } from "../main";
 import { AdminContext } from "./App";
+import { scrollToTop, changeTitle } from "../helpers/utils";
 
-function AddUser() {
+function AddUser({ title }) {
   const [pending, setPending] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [msg, setMsg] = useState("");
@@ -19,6 +20,8 @@ function AddUser() {
   const admin = useContext(AdminContext);
 
   useEffect(() => {
+    scrollToTop();
+    changeTitle(title);
     if (!admin) navigate("/admin/login", { state: "add-user" });
   }, []);
 
@@ -87,6 +90,7 @@ function AddUser() {
             name="firstName"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
+            autoFocus
           />
 
           {formik.touched.firstName && formik.errors.firstName && (
@@ -125,7 +129,7 @@ function AddUser() {
             className="submit-btn"
             disabled={!formik.isValid || !formik.dirty}
           >
-            Add User
+            {pending ? "Adding User..." : "Add User"}
           </button>
           <button
             type="button"

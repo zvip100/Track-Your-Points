@@ -9,8 +9,9 @@ import LoadingSpinner from "./loading";
 import BackButton from "./back-btn";
 import Footer from "./footer";
 import { URL } from "../main";
+import { scrollToTop, changeTitle } from "../helpers/utils";
 
-function AdminLogin({ setAdminInfo }) {
+function AdminLogin({ setAdminInfo, title }) {
   const [pending, setPending] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [popupMsg, setPopupMsg] = useState("");
@@ -21,6 +22,9 @@ function AdminLogin({ setAdminInfo }) {
   const state = location?.state;
 
   useEffect(() => {
+    scrollToTop();
+    changeTitle(title);
+
     let timeoutId;
 
     if (loggedIn) {
@@ -117,7 +121,11 @@ function AdminLogin({ setAdminInfo }) {
           ))}
 
           <div className="submit-button-container">
-            <button type="submit" className="submit-btn">
+            <button
+              type="submit"
+              className="submit-btn"
+              disabled={!formik.isValid || !formik.dirty}
+            >
               {pending ? "Logging In..." : "Log In"}
             </button>{" "}
             <button

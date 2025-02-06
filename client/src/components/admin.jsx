@@ -3,14 +3,18 @@ import { Link, useNavigate } from "react-router-dom";
 import { AdminContext } from "./App";
 import BackButton from "./back-btn";
 import Footer from "./footer";
+import { scrollToTop, changeTitle } from "../helpers/utils";
 import "../styles/admin.css";
 
-function Admin() {
+function Admin({title}) {
   const [loggedIn, setLoggedIn] = useState(false);
   const admin = useContext(AdminContext);
   const navigate = useNavigate();
 
   useEffect(() => {
+    scrollToTop();
+    changeTitle(title);
+
     if (!admin) navigate("/admin/login");
   }, []);
 

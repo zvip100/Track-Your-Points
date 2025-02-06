@@ -8,9 +8,10 @@ import BackButton from "./back-btn";
 import Footer from "./footer";
 import { URL } from "../main";
 import { AdminContext } from "./App";
+import { scrollToTop, changeTitle } from "../helpers/utils";
 import "../styles/all-users.css";
 
-function AllUsers() {
+function AllUsers({ title }) {
   const [users, setUsers] = useState([]);
   const [pending, setPending] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
@@ -20,6 +21,9 @@ function AllUsers() {
   const admin = useContext(AdminContext);
 
   useEffect(() => {
+    scrollToTop();
+    changeTitle(title);
+
     if (!admin) navigate("/admin/login", { state: "all-users" });
   }, []);
 

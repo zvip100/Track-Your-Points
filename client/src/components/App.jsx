@@ -15,6 +15,7 @@ import PointsHistory from "./points-history.jsx";
 
 export const UserContext = createContext(null);
 export const AdminContext = createContext(null);
+const mainTitle = "Track Your Points";
 
 function App() {
   const [userInfo, setUserInfo] = useState(null);
@@ -27,43 +28,47 @@ function App() {
     },
     {
       path: "/login",
-      element: <Login setUserInfo={setUserInfo} />,
+      element: (
+        <Login setUserInfo={setUserInfo} title={`Log In - ${mainTitle}`} />
+      ),
     },
     {
       path: "/sign-up",
-      element: <Signup />,
+      element: <Signup title={`Sign Up - ${mainTitle}`} />,
     },
     {
       path: "/my-account",
-      element: <MyAccount />,
+      element: <MyAccount title={`My Account - ${mainTitle}`} />,
     },
     {
       path: "/admin",
-      element: <Admin />,
+      element: <Admin title={`Admin - ${mainTitle}`} />,
     },
     {
       path: "/admin/login",
-      element: <AdminLogin setAdminInfo={setAdminInfo} />,
+      element: (
+        <AdminLogin setAdminInfo={setAdminInfo} title="Admin - Log In" />
+      ),
     },
     {
       path: "/admin/upload-users",
-      element: <UploadUsers />,
+      element: <UploadUsers title="Admin - Upload User Sheet" />,
     },
     {
       path: "/admin/add-user",
-      element: <AddUser />,
+      element: <AddUser title="Admin - Add User" />,
     },
     {
       path: "/admin/all-users",
-      element: <AllUsers />,
+      element: <AllUsers title="Admin - All Users" />,
     },
     {
       path: "/admin/points-history",
-      element: <PointsHistory />,
+      element: <PointsHistory title="Admin - Points History" />,
     },
     {
       path: "/about",
-      element: <About />,
+      element: <About title={`About Us - ${mainTitle}`} />,
     },
   ]);
 

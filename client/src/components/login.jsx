@@ -10,8 +10,9 @@ import Popup from "./popup";
 import LoadingSpinner from "./loading";
 import Footer from "./footer";
 import { URL } from "../main";
+import { scrollToTop, changeTitle } from "../helpers/utils";
 
-function Login({ setUserInfo }) {
+function Login({ setUserInfo, title }) {
   const [pending, setPending] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [popupMsg, setPopupMsg] = useState("");
@@ -20,6 +21,8 @@ function Login({ setUserInfo }) {
   const navigate = useNavigate();
   //const location = useLocation();
   // const userInfo = useContext(UserContext);
+
+  useEffect(() => scrollToTop(), changeTitle(title), []);
 
   useEffect(() => {
     let timeoutId;
@@ -127,7 +130,11 @@ function Login({ setUserInfo }) {
           ))}
 
           <div className="submit-button-container">
-            <button type="submit" className="submit-btn">
+            <button
+              type="submit"
+              className="submit-btn"
+              disabled={!formik.isValid || !formik.dirty}
+            >
               {pending ? "Logging In..." : "Log In"}
             </button>{" "}
             <button
