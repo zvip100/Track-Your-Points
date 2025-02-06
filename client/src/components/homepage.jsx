@@ -5,7 +5,7 @@ import logo from "../assets/logo.svg";
 import villaImg from "../assets/villa.jpg";
 import VillaPool from "../assets/villa-pool.jpg";
 import Footer from "./footer";
-import { scrollToTop, changeTitle } from "../helpers/utils.js";
+import { scrollToTop, changeTitle, formatNumber } from "../helpers/utils.js";
 import "../styles/App.css";
 
 function Homepage({ title }) {
@@ -63,7 +63,8 @@ function Homepage({ title }) {
               <>
                 {userInfo?.points > 0 ? (
                   <h3>
-                    You already earned {userInfo?.points} points! Keep it up!
+                    You already earned {formatNumber(userInfo?.points)} points!
+                    Keep it up!
                   </h3>
                 ) : (
                   <h3>You don't have any points yet. Start earning today!</h3>

@@ -10,7 +10,7 @@ import Popup from "./popup";
 import LoadingSpinner from "./loading";
 import Footer from "./footer";
 import { URL } from "../main";
-import { scrollToTop, changeTitle } from "../helpers/utils";
+import { scrollToTop, changeTitle, formatNumber } from "../helpers/utils";
 
 function Login({ setUserInfo, title }) {
   const [pending, setPending] = useState(false);
@@ -84,7 +84,11 @@ function Login({ setUserInfo, title }) {
 
       if (result[0].points > 0) {
         setPopupMsg(
-          `Hello ${result[0].firstName} ${result[0].lastName}! You already earned ${result[0].points} points! Keep it up!`
+          `Hello ${result[0].firstName} ${
+            result[0].lastName
+          }! You already earned ${formatNumber(
+            result[0].points
+          )} points! Keep it up!`
         );
       } else {
         setPopupMsg(

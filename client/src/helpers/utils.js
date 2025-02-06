@@ -9,3 +9,7 @@ export function scrollToTop() {
 export function changeTitle(title) {
   document.title = title;
 }
+
+export function formatNumber(number) {
+  return new Intl.NumberFormat("en-US").format(number);
+}

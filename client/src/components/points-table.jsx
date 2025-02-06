@@ -1,3 +1,4 @@
+import { formatNumber } from "../helpers/utils";
 import "../styles/points-table.css";
 
 function PointsTable({ data }) {
@@ -26,7 +27,7 @@ function PointsTable({ data }) {
                 <tr key={record.id}>
                   <td>{index + 1}</td>
                   <td>{record.email}</td>
-                  <td>{record.amount}</td>
+                  <td>{formatNumber(record.amount)}</td>
                   <td>{record.date}</td>
                   <td>{record.time}</td>
                 </tr>

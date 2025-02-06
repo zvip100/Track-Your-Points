@@ -4,6 +4,7 @@ import { useState } from "react";
 import { addPoints } from "../helpers/admin.js";
 import Popup from "./popup.jsx";
 import LoadingSpinner from "./loading.jsx";
+import { formatNumber } from "../helpers/utils.js";
 
 function AdminActions({
   user,
@@ -42,7 +43,11 @@ function AdminActions({
         return;
       }
 
-      setPopupMsg(`Successfully added ${points} points to ${email}'s account.`);
+      setPopupMsg(
+        `Successfully added ${formatNumber(
+          points
+        )} points to ${email}'s account.`
+      );
       setMsgType("success-msg");
       setPopupNote("Table has been updated.");
       setUser("");

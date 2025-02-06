@@ -1,6 +1,7 @@
 import { useState } from "react";
 import AdminActions from "./admin-actions";
 import Popup from "./popup";
+import { formatNumber } from "../helpers/utils";
 
 function UserTable({ users, setReloadPage }) {
   const [user, setUser] = useState("");
@@ -39,7 +40,7 @@ function UserTable({ users, setReloadPage }) {
                   <td>{user.lastName}</td>
                   <td>{user.email}</td>
                   <td>{user.status}</td>
-                  <td>{user.points}</td>
+                  <td>{formatNumber(user.points)}</td>
                 </tr>
               ))}
             </tbody>

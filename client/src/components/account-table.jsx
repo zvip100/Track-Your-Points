@@ -1,3 +1,5 @@
+import { formatNumber } from "../helpers/utils";
+
 function AccountTable({ data }) {
   return (
     <div className="user-table">
@@ -18,7 +20,7 @@ function AccountTable({ data }) {
               <tr key={record.id}>
                 <td>{index + 1}</td>
                 <td>{record.email}</td>
-                <td>{record.amount}</td>
+                <td>{formatNumber(record.amount)}</td>
                 <td>{record.date}</td>
                 <td>{record.time}</td>
               </tr>

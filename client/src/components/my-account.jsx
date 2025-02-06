@@ -5,7 +5,7 @@ import AccountTable from "./account-table";
 import BackButton from "./back-btn";
 import Footer from "./footer";
 import { URL } from "../main";
-import { scrollToTop, changeTitle } from "../helpers/utils";
+import { scrollToTop, changeTitle, formatNumber } from "../helpers/utils";
 import "../styles/my-account.css";
 
 function MyAccount({ title }) {
@@ -52,13 +52,15 @@ function MyAccount({ title }) {
             <div className="points-info">
               <h3 className="points-text">
                 {userInfo?.points > 0
-                  ? `Congratulations on earning so far ${userInfo?.points} points!`
+                  ? `Congratulations on earning so far ${formatNumber(
+                      userInfo?.points
+                    )} points!`
                   : "It's not to late to start earning your points!"}
               </h3>
 
               <h3 className="points-text">
                 <span className="remaining-points">
-                  {90000 - userInfo?.points}
+                  {formatNumber(90000 - userInfo?.points)}
                 </span>{" "}
                 points to go to your dream vacation!
               </h3>
