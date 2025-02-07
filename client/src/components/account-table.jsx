@@ -16,15 +16,23 @@ function AccountTable({ data }) {
           </thead>
 
           <tbody>
-            {data.map((record, index) => (
-              <tr key={record.id}>
-                <td>{index + 1}</td>
-                <td>{record.email}</td>
-                <td>{formatNumber(record.amount)}</td>
-                <td>{record.date}</td>
-                <td>{record.time}</td>
+            {data.length === 0 ? (
+              <tr>
+                <td colSpan="5" className="no-data-message">
+                  No Data Yet...
+                </td>
               </tr>
-            ))}
+            ) : (
+              data.map((record, index) => (
+                <tr key={record.id}>
+                  <td>{index + 1}</td>
+                  <td>{record.email}</td>
+                  <td>{formatNumber(record.amount)}</td>
+                  <td>{record.date}</td>
+                  <td>{record.time}</td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>

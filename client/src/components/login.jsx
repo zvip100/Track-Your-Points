@@ -19,10 +19,13 @@ function Login({ setUserInfo, title }) {
   const [msgType, setMsgType] = useState("");
   const [loginResult, setLoginResult] = useState("");
   const navigate = useNavigate();
-  //const location = useLocation();
+  const location = useLocation();
   // const userInfo = useContext(UserContext);
 
-  useEffect(() => scrollToTop(), changeTitle(title), []);
+  useEffect(() => {
+    scrollToTop();
+    changeTitle(title);
+  }, []);
 
   useEffect(() => {
     let timeoutId;

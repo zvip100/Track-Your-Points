@@ -27,10 +27,18 @@ export async function getUsers() {
         firstName: users.first_name,
         lastName: users.last_name,
         email: users.email,
-        points: users.points,
+        points: sql`COALESCE(SUM(${points.amount}), 0)`,
         registered: users.registered,
       })
       .from(users)
+      .leftJoin(points, eq(users.id, points.user))
+      .groupBy(
+        users.id,
+        users.first_name,
+        users.last_name,
+        users.email,
+        users.registered
+      )
       .orderBy(asc(users.last_name));
 
     console.log("Users: ", allUsers);
@@ -71,29 +79,12 @@ export async function addUsers(usersArray) {
 
 export async function addPoints(user, points_) {
   try {
-    const currentPoints = await db
-      .select({ points: users.points })
-      .from(users)
-      .where(eq(users.id, user));
-
-    console.log("current points: ", currentPoints);
-
-    const newPoints = currentPoints[0].points + points_;
-    console.log("new points: ", newPoints);
-
     const result = await db
-      .update(users)
-      .set({ points: newPoints })
-      .where(eq(users.id, user))
-      .returning({ user: users.email, points: users.points });
-
-    const addRecord = await db
       .insert(points)
       .values({ user: user, amount: points_ })
       .returning();
 
-    console.log("New points record: ", addRecord);
-
+    console.log("Add points result: ", result);
     return result;
   } catch (e) {
     console.error("Error adding points: ", e.message);

@@ -38,7 +38,7 @@ function App() {
     },
     {
       path: "/my-account",
-      element: <MyAccount title={`My Account - ${mainTitle}`} />,
+      element: <MyAccount setUserInfo={setUserInfo} title={`My Account - ${mainTitle}`} />,
     },
     {
       path: "/admin",

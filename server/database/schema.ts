@@ -17,7 +17,6 @@ export const users = mySchema.table("users", {
   email: varchar({ length: 255 }).notNull().unique(),
   password_hash: varchar({ length: 255 }),
   phone: varchar({ length: 20 }),
-  points: integer().default(0),
   registered: boolean().default(false).notNull(),
   created_at: timestamp({ mode: "date" })
     .default(sql`TIMEZONE('America/New_York', NOW())`)

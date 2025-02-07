@@ -8,7 +8,7 @@ import { URL } from "../main";
 import { scrollToTop, changeTitle, formatNumber } from "../helpers/utils";
 import "../styles/my-account.css";
 
-function MyAccount({ title }) {
+function MyAccount({ setUserInfo, title }) {
   const userInfo = useContext(UserContext);
   const navigate = useNavigate();
   const [accountData, setAccountData] = useState("");
@@ -32,6 +32,16 @@ function MyAccount({ title }) {
         console.log("Get user history fetch result: ", result);
 
         setAccountData(result);
+
+        //update points to reflect sum of all points, not one single points amount
+        if (result.length > 0) {
+          setUserInfo({
+            id: userInfo.id,
+            name: userInfo.name,
+            email: userInfo.email,
+            points: result[0].totalPoints,
+          });
+        }
       } catch (e) {
         console.error("Error getting user history: ", e.message);
         setLoadingFailed(true);
@@ -47,7 +57,7 @@ function MyAccount({ title }) {
       <div className="account-container">
         {userInfo ? (
           <>
-            <h1 className="welcome-title">~Hello {userInfo?.name}~</h1>
+            <h1 className="welcome-title">~Hello {userInfo?.name}!~</h1>
 
             <div className="points-info">
               <h3 className="points-text">

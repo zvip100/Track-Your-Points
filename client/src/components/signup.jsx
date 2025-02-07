@@ -17,9 +17,24 @@ function Signup({ title }) {
   const [showPopup, setShowPopup] = useState(false);
   const [popupMsg, setPopupMsg] = useState("");
   const [msgType, setMsgType] = useState("");
+  const [signUpSuccess, setSignUpSuccess] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => scrollToTop(), changeTitle(title), []);
+
+  /* useEffect(() => {
+    let timeoutId;
+
+    if (signUpSuccess) {
+      timeoutId = setTimeout(() => {
+        navigate("/login");
+      }, 3000);
+    }
+
+    return () => {
+      if (timeoutId) clearTimeout(timeoutId);
+    };
+  }, [signUpSuccess]);*/
 
   const formik = useFormik({
     initialValues: {
@@ -64,9 +79,9 @@ function Signup({ title }) {
         return;
       }
 
-      setPopupMsg("Sign Up Successful! Redirecting...");
+      setPopupMsg("Sign Up Successful! Please Log In to access your account.");
       setMsgType("success-msg");
-      setTimeout(() => navigate("/login"), 3000);
+      setSignUpSuccess(true);
     } catch (e) {
       console.error("Error creating acount: ", e);
       setPopupMsg("Error creating account. Please try again.");
@@ -86,49 +101,55 @@ function Signup({ title }) {
   return (
     <>
       <div className="sign-up-container">
-        <h1>Please fill out the fields below to create your account.</h1>
+        {signUpSuccess ? (
+          <Link to="/login">
+            <button type="button">Log In</button>
+          </Link>
+        ) : (
+          <>
+            <h1>Please fill out the fields below to create your account.</h1>
+            <p className="sign-up-info">
+              <strong>Important</strong>: Please use the same Email Address
+              you're using at "Starlife Partners Agency". Otherwise your account
+              will not be created.
+            </p>
+            <form className="sign-up-form" onSubmit={formik.handleSubmit}>
+              {signUpForm.map((field, index) => (
+                <InputField
+                  key={index}
+                  name={field.name}
+                  placeholder={field.placeholder}
+                  value={formik.values[field.name]}
+                  type={field.type}
+                  handleChange={formik.handleChange}
+                  handleBlur={formik.handleBlur}
+                  touched={formik.touched[field.name]}
+                  error={formik.errors[field.name]}
+                />
+              ))}
 
-        <p className="sign-up-info">
-          <strong>Important</strong>: Please use the same Email Address you're
-          using at "Starlife Partners Agency". Otherwise your account will not
-          be created.
-        </p>
-
-        <form className="sign-up-form" onSubmit={formik.handleSubmit}>
-          {signUpForm.map((field, index) => (
-            <InputField
-              key={index}
-              name={field.name}
-              placeholder={field.placeholder}
-              value={formik.values[field.name]}
-              type={field.type}
-              handleChange={formik.handleChange}
-              handleBlur={formik.handleBlur}
-              touched={formik.touched[field.name]}
-              error={formik.errors[field.name]}
-            />
-          ))}
-
-          <div className="submit-button-container">
-            <button
-              type="submit"
-              className="submit-btn"
-              disabled={!formik.isValid || !formik.dirty}
-            >
-              {pending ? "Creating Your Account..." : "Sign Up"}
-            </button>{" "}
-            <button
-              type="button"
-              className="reset-btn"
-              onClick={formik.handleReset}
-            >
-              Reset
-            </button>
-          </div>
-        </form>
-        <p>
-          Already have an account? <Link to="/login">Log In</Link>
-        </p>
+              <div className="submit-button-container">
+                <button
+                  type="submit"
+                  className="submit-btn"
+                  disabled={!formik.isValid || !formik.dirty}
+                >
+                  {pending ? "Creating Your Account..." : "Sign Up"}
+                </button>{" "}
+                <button
+                  type="button"
+                  className="reset-btn"
+                  onClick={formik.handleReset}
+                >
+                  Reset
+                </button>
+              </div>
+            </form>
+            <p>
+              Already have an account? <Link to="/login">Log In</Link>
+            </p>{" "}
+          </>
+        )}
       </div>
 
       {showPopup && (
