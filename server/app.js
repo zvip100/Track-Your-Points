@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 import path from "path";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
@@ -10,8 +11,14 @@ const app = express();
 const URL = process.env.URL;
 const PORT = process.env.PORT;
 
-app.use(cors());
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(cookieParser());
 app.use(express.json());
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Credentials", "true");
+  next();
+});
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);

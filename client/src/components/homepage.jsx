@@ -57,7 +57,6 @@ function Homepage({ title }) {
               </button>{" "}
             </>
           )}
-          
           <button type="button" onClick={() => navigate("/admin")}>
             Admin
           </button>

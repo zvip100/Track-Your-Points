@@ -26,6 +26,7 @@ function MyAccount({ setUserInfo, title }) {
       try {
         const response = await fetch(`${URL}/api/account/${user}/points`, {
           method: "GET",
+          credentials: "include",
         });
 
         const result = await response.json();
@@ -33,7 +34,7 @@ function MyAccount({ setUserInfo, title }) {
 
         setAccountData(result);
 
-        //update points to reflect sum of all points, not one single points amount
+       
         if (result.length > 0) {
           setUserInfo({
             id: userInfo.id,

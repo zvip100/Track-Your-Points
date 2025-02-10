@@ -6,10 +6,15 @@ const accountRouter = Router();
 accountRouter.get("/:user/points", async (req, res) => {
   const user = req.params.user;
   console.log("user: ", user);
+  
 
   try {
     const result = await getPoints(user);
     console.log("Get user points result: ", result);
+    if(req?.cookies?.token){
+      console.log("req token: ", req?.cookies?.token)}else {
+        console.log("BRO!!!!!!!!")
+      }
     res.json(result);
   } catch (e) {
     console.error(e.message);

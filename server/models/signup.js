@@ -1,12 +1,15 @@
 import { db, users, eq } from "../database/db";
+import { hashPass } from "../middlewares";
 
 export async function createUser(reqBody) {
+  const { email, password } = reqBody;
   try {
-    const { email, password } = reqBody;
+    const passwordHash = await hashPass(password);
+    if (!passwordHash) throw new Error("Failed to hash password");
 
     const user = await db
       .update(users)
-      .set({ password_hash: password, registered: true })
+      .set({ password_hash: passwordHash, registered: true })
       .where(eq(users.email, email))
       .returning({ email: users.email, registered: users.registered });
 

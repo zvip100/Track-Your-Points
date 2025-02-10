@@ -2,6 +2,7 @@ import { asc, desc } from "drizzle-orm";
 import { db, users, admin, points, eq, sql, and } from "../database/db";
 
 export async function login(email, password) {
+  //add compare password hashing
   try {
     const result = await db
       .select()
