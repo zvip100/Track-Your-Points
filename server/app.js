@@ -25,6 +25,7 @@ app.use(express.json());
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Credentials", "true");
+  res.setHeader("Access-Control-Allow-Origin", "https://track-your-points-production.up.railway.app/")
   next();
 });
 
