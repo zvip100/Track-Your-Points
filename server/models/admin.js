@@ -114,3 +114,18 @@ export async function getPoints() {
     throw e;
   }
 }
+
+export async function removePoints(user, points_) {
+  try {
+    const result = await db
+      .insert(points)
+      .values({ user: user, amount: points_ })
+      .returning();
+
+    console.log("Remove points DB result: ", result);
+    return result;
+  } catch (e) {
+    console.error("Error removing points from DB: ", e.message);
+    throw e;
+  }
+}

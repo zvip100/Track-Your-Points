@@ -1,8 +1,8 @@
 import { URL } from "../main";
 
-export async function addPoints(user, points) {
+export async function handlePoints(path,user, points) {
   try {
-    const response = await fetch(`${URL}/api/admin/add-points`, {
+    const response = await fetch(`${URL}/api/admin/${path}`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",

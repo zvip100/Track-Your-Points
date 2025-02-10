@@ -1,8 +1,7 @@
 import "../styles/admin-actions.css";
 import { IoClose } from "react-icons/io5";
 import { useState } from "react";
-import { addPoints } from "../helpers/admin.js";
-import Popup from "./popup.jsx";
+import { handlePoints } from "../helpers/admin.js";
 import LoadingSpinner from "./loading.jsx";
 import { formatNumber } from "../helpers/utils.js";
 
@@ -18,19 +17,20 @@ function AdminActions({
   setPopupNote,
 }) {
   const [points, setPoints] = useState("");
+  const [action, setAction] = useState("");
+
   const [pending, setPending] = useState(false);
 
-  async function handlePointsClick() {
-    if (!points) {
-      setPoints("points");
+  async function handleClick() {
+    if (!points || points === "0") {
       return;
     } else {
-      if (points === "points") return;
-
       setPending(true);
-      const toNumber = Number.parseInt(points);
+      const toNumber = Number.parseInt(
+        action === "add-points" ? points : -points
+      );
 
-      const result = await addPoints(user, toNumber);
+      const result = await handlePoints(action, user, toNumber);
       console.log(result);
 
       setPending(false);
@@ -44,9 +44,11 @@ function AdminActions({
       }
 
       setPopupMsg(
-        `Successfully added ${formatNumber(
-          points
-        )} points to ${email}'s account.`
+        `Successfully ${
+          action === "add-points" ? "added" : "removed"
+        } ${formatNumber(points)} points ${
+          action === "add-points" ? "to" : "from"
+        } ${email}'s account.`
       );
       setMsgType("success-msg");
       setPopupNote("Table has been updated.");
@@ -71,7 +73,26 @@ function AdminActions({
           </button>
           <h3 className="admin-title">Account: {email}</h3>
 
-          {points && (
+          {!action ? (
+            <>
+              <button
+                type="button"
+                className="admin-btn"
+                value="add-points"
+                onClick={(e) => setAction(e.target.value)}
+              >
+                Add Points
+              </button>{" "}
+              <button
+                type="button"
+                className="admin-btn"
+                value="remove-points"
+                onClick={(e) => setAction(e.target.value)}
+              >
+                Remove Points
+              </button>{" "}
+            </>
+          ) : (
             <>
               <input
                 type="number"
@@ -81,17 +102,21 @@ function AdminActions({
                 onChange={(e) => setPoints(e.target.value)}
                 autoFocus
               ></input>
+              <button type="button" className="admin-btn" onClick={handleClick}>
+                {action === "add-points" ? "Add Points" : "Remove Points"}
+              </button>{" "}
+              <button
+                type="button"
+                className="admin-btn"
+                onClick={() => {
+                  setAction("");
+                  setPoints("");
+                }}
+              >
+                Cancel
+              </button>
             </>
           )}
-          <div>
-            <button
-              type="button"
-              className="admin-btn"
-              onClick={handlePointsClick}
-            >
-              Add Points
-            </button>
-          </div>
 
           <p className="admin-footer-text">
             Click on the close Icon at the top right corner to exit.

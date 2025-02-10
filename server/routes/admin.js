@@ -5,6 +5,7 @@ import {
   addUsers,
   addPoints,
   getPoints,
+  removePoints,
 } from "../models/admin";
 
 const adminRouter = Router();
@@ -77,6 +78,19 @@ adminRouter.get("/points", async (req, res) => {
     res.json(result);
   } catch (e) {
     console.error("Error getting points history: ", e.message);
+    res.sendStatus(500);
+  }
+});
+
+adminRouter.post("/remove-points", async (req, res) => {
+  const userId = req.body.userId;
+  const points = req.body.points;
+
+  try {
+    const result = await removePoints(userId, points);
+    res.json(result);
+  } catch (e) {
+    console.error("Error removing points: ", e.message);
     res.sendStatus(500);
   }
 });
