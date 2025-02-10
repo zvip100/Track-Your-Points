@@ -14,6 +14,7 @@ const PORT = process.env.PORT;
 app.use(
   cors({
     origin: [
+      "*",
       "http://localhost:5173",
       "https://track-your-points-production.up.railway.app/",
     ],
@@ -25,8 +26,6 @@ app.use(express.json());
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Credentials", "true");
-  res.setHeader("Access-Control-Allow-Origin", "https://track-your-points-production.up.railway.app/")
-  next();
 });
 
 const __filename = fileURLToPath(import.meta.url);
