@@ -1,7 +1,8 @@
 import { formatNumber } from "../helpers/utils";
+import { IoCheckmarkCircle } from "react-icons/io5";
 import "../styles/points-table.css";
 
-function PointsTable({ data }) {
+function PointsTable({ data, searchResult }) {
   return (
     <>
       <p className="table-row-amount">
@@ -23,6 +24,26 @@ function PointsTable({ data }) {
             </thead>
 
             <tbody>
+              {searchResult &&
+                data
+                  .filter((record) => record.email === searchResult)
+                  .map((record) => (
+                    <tr key={record.id} className="searched-row">
+                      <td>
+                        {" "}
+                        <IoCheckmarkCircle
+                          size={24}
+                          color="#22c55e"
+                          className="check-icon"
+                        />
+                      </td>
+                      <td>{record.email}</td>
+                      <td>{formatNumber(record.amount)}</td>
+                      <td>{record.date}</td>
+                      <td>{record.time}</td>
+                    </tr>
+                  ))}
+
               {data.map((record, index) => (
                 <tr key={record.id}>
                   <td>{index + 1}</td>

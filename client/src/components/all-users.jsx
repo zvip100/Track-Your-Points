@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import UserTable from "./user-table";
+import SearchUser from "./search-user";
 import SortTable from "./sort-table";
 import Popup from "./popup";
 import LoadingSpinner from "./loading";
@@ -13,6 +14,7 @@ import "../styles/all-users.css";
 
 function AllUsers({ title }) {
   const [users, setUsers] = useState([]);
+  const [searchResult, setSearchResult] = useState("");
   const [pending, setPending] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [reloadPage, setReloadPage] = useState(false);
@@ -56,16 +58,24 @@ function AllUsers({ title }) {
       {users.length > 0 && (
         <>
           <h3 className="options-msg">
-            Click on a specific user to add points to his account.
+            Click on a specific user to add or remove points to his account.
           </h3>
 
-          <SortTable
-            users={users}
-            setReloadTable={() => setReloadTable(!reloadTable)}
-          />
+          <div className="options-container">
+            <SearchUser
+              searchResult={searchResult}
+              setSearchResult={setSearchResult}
+            />
+
+            <SortTable
+              users={users}
+              setReloadTable={() => setReloadTable(!reloadTable)}
+            />
+          </div>
 
           <UserTable
             users={users}
+            searchResult={searchResult}
             setReloadPage={() => setReloadPage(!reloadPage)}
           />
         </>

@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import PointsTable from "./points-table";
+import SearchUser from "./search-user";
 import LoadingSpinner from "./loading";
 import Popup from "./popup";
 import BackButton from "./back-btn";
@@ -13,6 +14,7 @@ function PointsHistory({ title }) {
   const [history, setHistory] = useState("");
   const [pending, setPending] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
+  const [searchResult, setSearchResult] = useState("");
   const navigate = useNavigate();
   const admin = useContext(AdminContext);
 
@@ -51,7 +53,14 @@ function PointsHistory({ title }) {
 
       {history && (
         <>
-          <PointsTable data={history} />
+          <div className="options-container">
+            <SearchUser
+              searchResult={searchResult}
+              setSearchResult={setSearchResult}
+            />
+          </div>
+
+          <PointsTable data={history} searchResult={searchResult} />
         </>
       )}
 

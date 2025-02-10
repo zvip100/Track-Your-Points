@@ -2,8 +2,10 @@ import { useState } from "react";
 import AdminActions from "./admin-actions";
 import Popup from "./popup";
 import { formatNumber } from "../helpers/utils";
+import { IoCheckmarkCircle } from "react-icons/io5";
+import { capitalize } from "../helpers/utils";
 
-function UserTable({ users, setReloadPage }) {
+function UserTable({ users, searchResult, setReloadPage }) {
   const [user, setUser] = useState("");
   const [email, setEmail] = useState("");
   const [showPopup, setShowPopup] = useState(false);
@@ -13,6 +15,11 @@ function UserTable({ users, setReloadPage }) {
 
   return (
     <>
+      <p className="table-row-amount">
+        Total Users:
+        <span>{users.length}</span>
+      </p>
+
       <div className="user-table">
         <div className="table-container">
           <table>
@@ -28,6 +35,38 @@ function UserTable({ users, setReloadPage }) {
             </thead>
 
             <tbody>
+              {searchResult &&
+                users
+                  .filter(
+                    (row) =>
+                      row.email === searchResult ||
+                      row.firstName === capitalize(searchResult) ||
+                      row.lastName === capitalize(searchResult)
+                  )
+                  .map((row) => (
+                    <tr
+                      key={row.id}
+                      className="searched-row"
+                      onClick={() => {
+                        setUser(row.id), setEmail(row.email);
+                      }}
+                    >
+                      <td>
+                        {" "}
+                        <IoCheckmarkCircle
+                          size={24}
+                          color="#22c55e"
+                          className="check-icon"
+                        />
+                      </td>
+                      <td>{row.firstName}</td>
+                      <td>{row.lastName}</td>
+                      <td>{row.email}</td>
+                      <td>{row.status}</td>
+                      <td>{formatNumber(row.points)}</td>
+                    </tr>
+                  ))}
+
               {users.map((user, index) => (
                 <tr
                   key={user.id}
