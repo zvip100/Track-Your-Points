@@ -228,3 +228,9 @@
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(2, 132, 199, 0.2);
 }
+
+.account-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}

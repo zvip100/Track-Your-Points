@@ -7,7 +7,7 @@
 .admin-container {
   max-width: 1200px;
   margin: 2rem auto;
-  margin-top: 80px;
+  margin-bottom: 80px;
   padding: 2rem;
   background: #ffffff;
   border-radius: 15px;
@@ -23,59 +23,46 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-button {
-  background: #3498db;
-  color: white;
-  border: none;
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-weight: 500;
-  transition: transform 0.2s, box-shadow 0.2s;
-  margin: 0.5rem;
-  cursor: pointer;
-}
-
-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
-  background: #2980b9;
-}
-
 .button-group {
   display: flex;
-  gap: 1rem;
   flex-wrap: wrap;
+  gap: 1.5rem;
+  margin: 2rem 0;
   justify-content: center;
-  margin-bottom: 2rem;
-}
-/**
-.user-table {
+  align-items: center;
   width: 100%;
-  border-collapse: collapse;
-  margin-top: 2rem;
-  background: #f8f9fa;
-  border-radius: 10px;
-  overflow: hidden;
 }
 
-.user-table th {
-  background: #2c3e50;
+.admin-page-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.8rem 1.2rem;
+  background: #60a5fa;
   color: white;
-  padding: 1rem;
-  text-align: left;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
-.user-table td {
-  padding: 1rem;
-  border-bottom: 1px solid #dee2e6;
+.admin-page-btn:hover {
+  background: #3b82f6;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.user-table tr:hover {
-  background: #e9ecef;
+.admin-page-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
 }
 
-*/
-/* Responsive Design */
+.admin-page-btn span {
+  font-weight: 500;
+}
+
 @media (max-width: 768px) {
   .admin-container {
     margin: 1rem;
@@ -86,7 +73,7 @@ button:hover {
     font-size: 2rem;
   }
 
-  button {
+  .admin-page-btn {
     width: 100%;
     margin: 0.5rem 0;
   }

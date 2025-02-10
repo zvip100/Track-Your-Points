@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import { IoPersonCircle } from "react-icons/io5";
 import { UserContext } from "./App";
 import logo from "../assets/logo.svg";
 import villaImg from "../assets/villa.jpg";
@@ -37,17 +38,26 @@ function Homepage({ title }) {
           <a href="https://www.starlifevacation.com/" target="_blank">
             <button type="button">Gallery</button>
           </a>{" "}
-          <button type="button" onClick={() => navigate("/login")}>
-            Log In
-          </button>{" "}
-          <button type="button" onClick={() => navigate("/sign-up")}>
-            Sign Up
-          </button>{" "}
-          {userInfo && (
-            <button type="button" onClick={() => navigate("/my-account")}>
-              My Account
+          {userInfo ? (
+            <button
+              type="button"
+              onClick={() => navigate("/my-account")}
+              className="account-btn"
+            >
+              <IoPersonCircle size={20} />
+              <span>My Account</span>
             </button>
-          )}{" "}
+          ) : (
+            <>
+              <button type="button" onClick={() => navigate("/login")}>
+                Log In
+              </button>{" "}
+              <button type="button" onClick={() => navigate("/sign-up")}>
+                Sign Up
+              </button>{" "}
+            </>
+          )}
+          
           <button type="button" onClick={() => navigate("/admin")}>
             Admin
           </button>
