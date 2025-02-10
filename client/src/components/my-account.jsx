@@ -26,7 +26,7 @@ function MyAccount({ setUserInfo, title }) {
       try {
         const response = await fetch(`${URL}/api/account/${user}/points`, {
           method: "GET",
-          credentials: "include",
+         // credentials: "include",
         });
 
         const result = await response.json();

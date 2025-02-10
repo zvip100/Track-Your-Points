@@ -1,0 +1,49 @@
+.about-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  
+  .about-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  .about-section {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .about-section h2 {
+    color: #1e293b;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+  }
+  
+  .about-section p {
+    color: #64748b;
+    line-height: 1.6;
+  }
+  
+  .about-section ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .about-section li {
+    color: #64748b;
+    padding: 0.5rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .about-section li:before {
+    content: "•";
+    color: #3b82f6;
+    font-weight: bold;
+    margin-right: 0.5rem;
+  }
