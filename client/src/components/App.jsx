@@ -1,4 +1,4 @@
-import { useState, createContext } from "react";
+import { useState, createContext, useEffect } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "../styles/index.css";
 import Homepage from "./homepage.jsx";
@@ -12,14 +12,23 @@ import AddUser from "./add-user.jsx";
 import AllUsers from "./all-users.jsx";
 import MyAccount from "./my-account.jsx";
 import PointsHistory from "./points-history.jsx";
+import { getUser } from "../helpers/user.js";
 
 export const UserContext = createContext(null);
 export const AdminContext = createContext(null);
+
 const mainTitle = "Track Your Points";
 
 function App() {
   const [userInfo, setUserInfo] = useState(null);
   const [adminInfo, setAdminInfo] = useState(null);
+
+  useEffect(() => {
+    const token = sessionStorage.getItem("token");
+    if (token) {
+      getUser(token, userInfo, setUserInfo);
+    }
+  }, [userInfo]);
 
   const router = createBrowserRouter([
     {
@@ -38,7 +47,12 @@ function App() {
     },
     {
       path: "/my-account",
-      element: <MyAccount setUserInfo={setUserInfo} title={`My Account - ${mainTitle}`} />,
+      element: (
+        <MyAccount
+          setUserInfo={setUserInfo}
+          title={`My Account - ${mainTitle}`}
+        />
+      ),
     },
     {
       path: "/admin",

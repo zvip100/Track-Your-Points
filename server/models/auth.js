@@ -1,4 +1,4 @@
-import { db, users, points, eq, and, sql } from "../database/db";
+import { db, users, points, eq, sql } from "../database/db";
 import { checkPass, createToken } from "../middlewares";
 
 export async function login(email, password) {
@@ -34,7 +34,7 @@ export async function login(email, password) {
 
     return user;
   } catch (e) {
-    console.error(e);
+    console.error("Error logging in from DB: ", e);
     throw new Error("Error logging in: ", e);
   }
 }

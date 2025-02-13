@@ -1,6 +1,5 @@
 import { Router } from "express";
 import { login } from "../models/auth.js";
-import { setCookie } from "../middlewares.js";
 
 const authRouter = Router();
 
@@ -13,11 +12,11 @@ authRouter.post("/login", async (req, res) => {
       return;
     }
     console.log("token: ", user[0].token);
-    setCookie(res, user[0].token);
 
     const userInfo = [
       {
         id: user[0].id,
+        token: user[0].token,
         firstName: user[0].firstName,
         lastName: user[0].lastName,
         email: user[0].email,
@@ -26,7 +25,7 @@ authRouter.post("/login", async (req, res) => {
     ];
     res.json(userInfo);
   } catch (e) {
-    console.error(e);
+    console.error("error logging in: ", e);
     res.sendStatus(500);
   }
 });

@@ -20,7 +20,7 @@ function Login({ setUserInfo, title }) {
   const [loginResult, setLoginResult] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
-  // const userInfo = useContext(UserContext);
+  //const userInfo = useContext(UserContext);
 
   useEffect(() => {
     scrollToTop();
@@ -100,6 +100,8 @@ function Login({ setUserInfo, title }) {
       }
 
       setMsgType("success-msg");
+
+      sessionStorage.setItem("token", result[0].token);
 
       setUserInfo({
         id: result[0].id,

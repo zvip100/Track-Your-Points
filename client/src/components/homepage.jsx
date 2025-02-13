@@ -10,7 +10,7 @@ import { scrollToTop, changeTitle, formatNumber } from "../helpers/utils.js";
 import "../styles/App.css";
 
 function Homepage({ title }) {
-  const [points, setPoints] = useState();
+  const [loggedIn, setLoggedIn] = useState(true);
   const [showPopup, setShowPopup] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
@@ -19,11 +19,15 @@ function Homepage({ title }) {
   useEffect(() => {
     scrollToTop();
     changeTitle(title);
-
-    if (userInfo && location?.state === "login page") {
-      console.log("user info: ", userInfo);
-    }
   }, []);
+
+  useEffect(() => {
+    const token = sessionStorage.getItem("token");
+
+    if (!userInfo && !token) {
+      setLoggedIn(false);
+    }
+  }, [userInfo]);
 
   return (
     <>
@@ -38,7 +42,7 @@ function Homepage({ title }) {
           <a href="https://www.starlifevacation.com/" target="_blank">
             <button type="button">Gallery</button>
           </a>{" "}
-          {userInfo ? (
+          {loggedIn ? (
             <button
               type="button"
               onClick={() => navigate("/my-account")}

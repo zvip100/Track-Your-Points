@@ -11,6 +11,7 @@ import "../styles/my-account.css";
 function MyAccount({ setUserInfo, title }) {
   const userInfo = useContext(UserContext);
   const navigate = useNavigate();
+  const [loggedIn, setLoggedIn] = useState(true);
   const [accountData, setAccountData] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [loadingFailed, setLoadingFailed] = useState(false);
@@ -18,15 +19,27 @@ function MyAccount({ setUserInfo, title }) {
   useEffect(() => scrollToTop(), changeTitle(title), []);
 
   useEffect(() => {
-    async function getUserHistory() {
-      if (!userInfo) return;
+    const token = sessionStorage.getItem("token");
 
-      const user = userInfo?.id;
+    if (!userInfo && !token) {
+      setLoggedIn(false);
+    }
+  }, [userInfo]);
+
+  useEffect(() => {
+    console.log("user info now: ", userInfo);
+
+    async function getUserHistory() {
+      const token = sessionStorage.getItem("token");
+      if (!token) return;
+
       setIsLoading(true);
       try {
-        const response = await fetch(`${URL}/api/account/${user}/points`, {
+        const response = await fetch(`${URL}/api/account/points`, {
           method: "GET",
-         // credentials: "include",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         });
 
         const result = await response.json();
@@ -34,8 +47,9 @@ function MyAccount({ setUserInfo, title }) {
 
         setAccountData(result);
 
-       
-        if (result.length > 0) {
+        console.log("user info is now...: ", userInfo);
+
+        if (result.length > 0 && userInfo) {
           setUserInfo({
             id: userInfo.id,
             name: userInfo.name,
@@ -56,7 +70,7 @@ function MyAccount({ setUserInfo, title }) {
   return (
     <>
       <div className="account-container">
-        {userInfo ? (
+        {loggedIn ? (
           <>
             <h1 className="welcome-title">~Hello {userInfo?.name}!~</h1>
 
@@ -71,7 +85,7 @@ function MyAccount({ setUserInfo, title }) {
 
               <h3 className="points-text">
                 <span className="remaining-points">
-                  {formatNumber(90000 - userInfo?.points)}
+                  {userInfo ? formatNumber(90000 - userInfo?.points) : "90,000"}
                 </span>{" "}
                 points to go to your dream vacation!
               </h3>
