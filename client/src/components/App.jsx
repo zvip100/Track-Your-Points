@@ -13,6 +13,7 @@ import AllUsers from "./all-users.jsx";
 import MyAccount from "./my-account.jsx";
 import PointsHistory from "./points-history.jsx";
 import { getUser } from "../helpers/user.js";
+import { getAdminAccount } from "../helpers/admin.js";
 
 export const UserContext = createContext(null);
 export const AdminContext = createContext(null);
@@ -29,6 +30,13 @@ function App() {
       getUser(token, userInfo, setUserInfo);
     }
   }, [userInfo]);
+
+  useEffect(() => {
+    const adminToken = sessionStorage.getItem("admin-token");
+    if (adminToken) {
+      getAdminAccount(adminToken, adminInfo, setAdminInfo);
+    }
+  }, [adminInfo]);
 
   const router = createBrowserRouter([
     {

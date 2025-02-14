@@ -10,6 +10,7 @@ import Footer from "./footer";
 import { URL } from "../main";
 import { AdminContext } from "./App";
 import { scrollToTop, changeTitle } from "../helpers/utils";
+import { addAuthHeader } from "../helpers/admin";
 import "../styles/all-users.css";
 
 function AllUsers({ title }) {
@@ -25,9 +26,12 @@ function AllUsers({ title }) {
   useEffect(() => {
     scrollToTop();
     changeTitle(title);
-
-    if (!admin) navigate("/admin/login", { state: "all-users" });
   }, []);
+
+  useEffect(() => {
+    const adminToken = sessionStorage.getItem("admin-token");
+    if (!admin && !adminToken) navigate("/admin/login", { state: "all-users" });
+  }, [admin]);
 
   useEffect(() => {
     async function getUsers() {
@@ -36,6 +40,7 @@ function AllUsers({ title }) {
       try {
         const response = await fetch(`${URL}/api/admin/get-users`, {
           method: "GET",
+          headers: addAuthHeader(),
         });
 
         const result = await response.json();

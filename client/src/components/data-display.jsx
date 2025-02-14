@@ -3,6 +3,7 @@ import Popup from "./popup";
 import LoadingSpinner from "./loading";
 import { URL } from "../main";
 import { capitalize } from "../helpers/utils";
+import { addAuthHeader } from "../helpers/admin";
 import "../styles/data-display.css";
 
 function DataDisplay({ data, setUploaded }) {
@@ -97,9 +98,7 @@ function DataDisplay({ data, setUploaded }) {
 
       const response = await fetch(`${URL}/api/admin/add-user`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: addAuthHeader(),
         body: JSON.stringify(usersToSave),
       });
 

@@ -9,6 +9,7 @@ import LoadingSpinner from "./loading";
 import Footer from "./footer";
 import { URL } from "../main";
 import { AdminContext } from "./App";
+import { addAuthHeader } from "../helpers/admin";
 import { scrollToTop, changeTitle, capitalize } from "../helpers/utils";
 
 function AddUser({ title }) {
@@ -22,8 +23,12 @@ function AddUser({ title }) {
   useEffect(() => {
     scrollToTop();
     changeTitle(title);
-    if (!admin) navigate("/admin/login", { state: "add-user" });
   }, []);
+
+  useEffect(() => {
+    const adminToken = sessionStorage.getItem("admin-token");
+    if (!admin && !adminToken) navigate("/admin/login", { state: "add-user" });
+  }, [admin]);
 
   const formik = useFormik({
     initialValues: {
@@ -40,9 +45,8 @@ function AddUser({ title }) {
     try {
       const response = await fetch(`${URL}/api/admin/add-user`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: addAuthHeader(),
+
         body: JSON.stringify([
           {
             firstName: capitalize(values.firstName),

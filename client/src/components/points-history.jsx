@@ -8,6 +8,7 @@ import BackButton from "./back-btn";
 import Footer from "./footer";
 import { URL } from "../main";
 import { AdminContext } from "./App";
+import { addAuthHeader } from "../helpers/admin";
 import { scrollToTop, changeTitle } from "../helpers/utils";
 
 function PointsHistory({ title }) {
@@ -21,9 +22,13 @@ function PointsHistory({ title }) {
   useEffect(() => {
     scrollToTop();
     changeTitle(title);
-
-    if (!admin) navigate("/admin/login", { state: "points-history" });
   }, []);
+
+  useEffect(() => {
+    const adminToken = sessionStorage.getItem("admin-token");
+    if (!admin && !adminToken)
+      navigate("/admin/login", { state: "points-history" });
+  }, [admin]);
 
   useEffect(() => {
     async function GetHistory() {
@@ -31,6 +36,7 @@ function PointsHistory({ title }) {
       try {
         const response = await fetch(`${URL}/api/admin/points`, {
           method: "GET",
+          headers: addAuthHeader(),
         });
 
         const result = await response.json();

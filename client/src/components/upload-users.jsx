@@ -16,9 +16,13 @@ function UploadUsers({ title }) {
   useEffect(() => {
     scrollToTop();
     changeTitle(title);
-
-    if (!admin) navigate("/admin/login", { state: "upload-users" });
   }, []);
+
+  useEffect(() => {
+    const adminToken = sessionStorage.getItem("admin-token");
+    if (!admin && !adminToken)
+      navigate("/admin/login", { state: "upload-users" });
+  }, [admin]);
 
   return (
     <>

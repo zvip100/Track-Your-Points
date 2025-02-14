@@ -56,7 +56,7 @@ function AdminLogin({ setAdminInfo, title }) {
   async function handleLogin(values, { resetForm }) {
     setPending(true);
     try {
-      const response = await fetch(`${URL}/api/admin/login`, {
+      const response = await fetch(`${URL}/api/admin-auth/login`, {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -89,6 +89,8 @@ function AdminLogin({ setAdminInfo, title }) {
       setPopupMsg(`Hello ${result[0]?.email}! You Have Admin status.`);
       setMsgType("success-msg");
       setLoggedIn(true);
+
+      sessionStorage.setItem("admin-token", result[0]?.token);
       setAdminInfo(result[0]?.email);
     } catch (error) {
       console.error(error);

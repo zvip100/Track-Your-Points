@@ -1,21 +1,27 @@
 import { asc, desc } from "drizzle-orm";
-import { db, users, admin, points, eq, sql, and } from "../database/db";
+import { db, users, admin, points, eq, sql } from "../database/db";
 
-export async function login(email, password) {
-  //add compare password hashing
+export async function getAccount(id) {
   try {
     const result = await db
-      .select()
+      .select({
+        id: admin.id,
+        email: admin.email,
+        dateCreated: sql`to_char(${admin.created_at}, 'MM/DD/YYYY')`,
+        timeCreated: sql`to_char(${admin.created_at}, 'HH12:MI:SS AM')`,
+      })
       .from(admin)
-      .where(and(eq(admin.email, email), eq(admin.password_hash, password)));
+      .where(eq(admin.id, id));
 
-    console.log("admin login result: ", result);
+    console.log("Getting admin account from DB result: ", result);
 
-    if (result.length === 0) return "Not found";
+    if (result.length === 0) {
+      return "Not found";
+    }
 
     return result;
   } catch (e) {
-    console.error("Error logging as admin: ", e.message);
+    console.error("Error getting admin account: ", e.message);
     throw e;
   }
 }

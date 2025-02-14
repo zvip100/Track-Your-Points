@@ -1,5 +1,6 @@
 import { Router } from "express";
 import signupRouter from "./signup.js";
+import adminAuthRouter from "./admin-auth.js";
 import adminRouter from "./admin.js";
 import authRouter from "./auth.js";
 import accountRouter from "./account.js";
@@ -9,7 +10,8 @@ const apiRouter = Router();
 
 apiRouter.use("/sign-up", signupRouter);
 apiRouter.use("/auth", authRouter);
-apiRouter.use("/admin", adminRouter);
+apiRouter.use("/admin-auth", adminAuthRouter);
+apiRouter.use("/admin", authenticateToken, adminRouter);
 apiRouter.use("/account", authenticateToken, accountRouter);
 
 export default apiRouter;

@@ -16,9 +16,12 @@ function Admin({ title }) {
   useEffect(() => {
     scrollToTop();
     changeTitle(title);
-
-    if (!admin) navigate("/admin/login");
   }, []);
+
+  useEffect(() => {
+    const adminToken = sessionStorage.getItem("admin-token");
+    if (!admin && !adminToken) navigate("/admin/login");
+  }, [admin]);
 
   return (
     <>

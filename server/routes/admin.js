@@ -1,6 +1,6 @@
 import { Router } from "express";
 import {
-  login,
+  getAccount,
   getUsers,
   addUsers,
   addPoints,
@@ -10,17 +10,18 @@ import {
 
 const adminRouter = Router();
 
-adminRouter.post("/login", async (req, res) => {
-  const { email, password } = req.body;
+adminRouter.get("/account", async (req, res) => {
+  const account = req.user?.id;
+  console.log("Account: ", account);
+
   try {
-    const result = await login(email, password);
-    if (result === "Not found") {
-      res.json("Not found");
-      return;
-    }
+    const result = await getAccount(account);
+
+    if (result === "Not found") return res.json("Not found");
+
     res.json(result);
   } catch (e) {
-    console.error("error logging in as admin: ", e.message);
+    console.error("Error getting admin account: ", e.message);
     res.sendStatus(500);
   }
 });
