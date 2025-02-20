@@ -114,7 +114,7 @@ function BookVilla({ title }) {
       <div className="account-container">
         {loggedIn ? (
           <>
-            {points && (
+            {points >= 0 && (
               <>
                 {allowBooking ? (
                   <>
