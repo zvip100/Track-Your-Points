@@ -105,6 +105,8 @@ export async function getPoints() {
       .select({
         id: points.id,
         userId: points.user,
+        firstName: users.first_name,
+        lastName: users.last_name,
         email: users.email,
         amount: points.amount,
         date: sql`to_char(${points.added_at}, 'MM/DD/YYYY')`,

@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AdminContext } from "./App";
+import AdminSidebar from "./admin-sidebar";
 import FileInput from "./file-input";
 import BackButton from "./back-btn";
 import Footer from "./footer";
@@ -8,7 +9,7 @@ import exempleImage from "../assets/user-sheet-exemple.png";
 import { scrollToTop, changeTitle } from "../helpers/utils";
 import "../styles/upload-users.css";
 
-function UploadUsers({ title }) {
+function UploadUsers({ setAdminInfo, title }) {
   const [uploaded, setUploaded] = useState(false);
   const navigate = useNavigate();
   const admin = useContext(AdminContext);
@@ -26,6 +27,8 @@ function UploadUsers({ title }) {
 
   return (
     <>
+      <AdminSidebar setAdminInfo={setAdminInfo} />
+
       <div className="upload-container">
         {uploaded ? (
           <h1>~Users Uploaded~</h1>

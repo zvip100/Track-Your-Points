@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import AdminSidebar from "./admin-sidebar";
 import PointsTable from "./points-table";
 import SearchUser from "./search-user";
 import LoadingSpinner from "./loading";
@@ -11,7 +12,7 @@ import { AdminContext } from "./App";
 import { addAuthHeader } from "../helpers/admin";
 import { scrollToTop, changeTitle } from "../helpers/utils";
 
-function PointsHistory({ title }) {
+function PointsHistory({ setAdminInfo, title }) {
   const [history, setHistory] = useState("");
   const [pending, setPending] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
@@ -55,6 +56,8 @@ function PointsHistory({ title }) {
 
   return (
     <>
+      <AdminSidebar setAdminInfo={setAdminInfo} />
+
       <h1 className="title">~Points History~</h1>
 
       {history && (

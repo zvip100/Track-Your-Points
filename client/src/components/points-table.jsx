@@ -1,4 +1,4 @@
-import { formatNumber } from "../helpers/utils";
+import { formatNumber, capitalize, formatEmail } from "../helpers/utils";
 import { IoCheckmarkCircle } from "react-icons/io5";
 import "../styles/points-table.css";
 
@@ -26,7 +26,16 @@ function PointsTable({ data, searchResult }) {
             <tbody>
               {searchResult &&
                 data
-                  .filter((record) => record.email === searchResult)
+                  .filter(
+                    (record) =>
+                      record.email === formatEmail(searchResult) ||
+                      record.firstName === capitalize(searchResult) ||
+                      record.lastName === capitalize(searchResult) ||
+                      `${record.firstName} ${record.lastName}` ===
+                        capitalize(searchResult) ||
+                      `${record.lastName} ${record.firstName}` ===
+                        capitalize(searchResult)
+                  )
                   .map((record) => (
                     <tr key={record.id} className="searched-row">
                       <td>

@@ -3,7 +3,7 @@ import AdminActions from "./admin-actions";
 import Popup from "./popup";
 import { formatNumber } from "../helpers/utils";
 import { IoCheckmarkCircle } from "react-icons/io5";
-import { capitalize } from "../helpers/utils";
+import { capitalize, formatEmail } from "../helpers/utils";
 
 function UserTable({ users, searchResult, setReloadPage }) {
   const [user, setUser] = useState("");
@@ -39,9 +39,13 @@ function UserTable({ users, searchResult, setReloadPage }) {
                 users
                   .filter(
                     (row) =>
-                      row.email === searchResult ||
+                      row.email === formatEmail(searchResult) ||
                       row.firstName === capitalize(searchResult) ||
-                      row.lastName === capitalize(searchResult)
+                      row.lastName === capitalize(searchResult) ||
+                      `${row.firstName} ${row.lastName}` ===
+                        capitalize(searchResult) ||
+                      `${row.lastName} ${row.firstName}` ===
+                        capitalize(searchResult)
                   )
                   .map((row) => (
                     <tr

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import addUserSchema from "../add-user-schema";
 import "../styles/add-user.css";
+import AdminSidebar from "./admin-sidebar";
 import Popup from "./popup";
 import BackButton from "./back-btn";
 import LoadingSpinner from "./loading";
@@ -10,9 +11,14 @@ import Footer from "./footer";
 import { URL } from "../main";
 import { AdminContext } from "./App";
 import { addAuthHeader } from "../helpers/admin";
-import { scrollToTop, changeTitle, capitalize } from "../helpers/utils";
+import {
+  scrollToTop,
+  changeTitle,
+  capitalize,
+  removeAllSpaces,
+} from "../helpers/utils";
 
-function AddUser({ title }) {
+function AddUser({ setAdminInfo, title }) {
   const [pending, setPending] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [msg, setMsg] = useState("");
@@ -82,6 +88,8 @@ function AddUser({ title }) {
 
   return (
     <>
+      <AdminSidebar setAdminInfo={setAdminInfo} />
+
       <div className="add-user-container">
         <h1>~Add User~</h1>
 
@@ -89,7 +97,7 @@ function AddUser({ title }) {
           <input
             type="text"
             placeholder="First Name"
-            value={formik.values.firstName}
+            value={removeAllSpaces(formik.values.firstName)}
             id="firstName"
             name="firstName"
             onChange={formik.handleChange}
@@ -106,7 +114,7 @@ function AddUser({ title }) {
             placeholder="Last Name"
             id="lastName"
             name="lastName"
-            value={formik.values.lastName}
+            value={removeAllSpaces(formik.values.lastName)}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
           />
@@ -119,7 +127,7 @@ function AddUser({ title }) {
             placeholder="Email Address"
             id="email"
             name="email"
-            value={formik.values.email}
+            value={removeAllSpaces(formik.values.email)}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
           />

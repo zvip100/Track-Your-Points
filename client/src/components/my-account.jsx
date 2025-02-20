@@ -1,10 +1,12 @@
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "./App";
+import UserSidebar from "./user-sidebar";
 import AccountTable from "./account-table";
 import BackButton from "./back-btn";
 import Footer from "./footer";
 import { URL } from "../main";
+import { IoHome } from "react-icons/io5";
 import { scrollToTop, changeTitle, formatNumber } from "../helpers/utils";
 import "../styles/my-account.css";
 
@@ -69,6 +71,8 @@ function MyAccount({ setUserInfo, title }) {
 
   return (
     <>
+      {loggedIn && <UserSidebar setUserInfo={setUserInfo} />}
+
       <div className="account-container">
         {loggedIn ? (
           <>
@@ -111,12 +115,21 @@ function MyAccount({ setUserInfo, title }) {
               </p>
             )}
 
-            <button type="button" className="book-btn">
-              Book Now
+            <button
+              type="button"
+              className="book-btn"
+              onClick={() => navigate("/book-villa")}
+            >
+              <IoHome size={24} />
+              Book Villa
             </button>
           </>
         ) : (
-          <button type="button" onClick={() => navigate("/login")}>
+          <button
+            type="button"
+            className="login-btn"
+            onClick={() => navigate("/login", { state: "/my-account" })}
+          >
             Log In
           </button>
         )}

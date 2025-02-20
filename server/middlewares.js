@@ -36,3 +36,17 @@ export function authenticateToken(req, res, next) {
     return res.status(403).json({ message: "Invalid token" });
   }
 }
+
+export function generateOtp() {
+  let otp = "";
+
+  for (let i = 0; i < 3; i++) {
+    const random = Math.floor(Math.random() * 100)
+      .toString()
+      .padStart(2, "0");
+    otp += random;
+  }
+
+  console.log("OTP: ", otp);
+  return otp;
+}

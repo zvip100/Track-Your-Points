@@ -20,7 +20,6 @@ function Login({ setUserInfo, title }) {
   const [loginResult, setLoginResult] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
-  //const userInfo = useContext(UserContext);
 
   useEffect(() => {
     scrollToTop();
@@ -32,7 +31,8 @@ function Login({ setUserInfo, title }) {
 
     if (loginResult) {
       timeoutId = setTimeout(() => {
-        navigate("/", { state: "login page" });
+        if (location?.state) navigate(location?.state);
+        else navigate("/");
       }, 3000);
     }
 

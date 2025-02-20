@@ -1,17 +1,9 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import {
-  IoGrid,
-  IoPersonAdd,
-  IoPeople,
-  IoStatsChart,
-  IoLogOut,
-  IoMenu,
-  IoClose,
-} from "react-icons/io5";
+import { IoLogOut, IoMenu, IoHome, IoClose } from "react-icons/io5";
 import "../styles/admin-sidebar.css";
 
-function AdminSidebar({ setAdminInfo }) {
+function UserSidebar({ setUserInfo }) {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -37,8 +29,8 @@ function AdminSidebar({ setAdminInfo }) {
   }, [isOpen]);
 
   function handleLogout() {
-    sessionStorage.removeItem("admin-token");
-    setAdminInfo(null);
+    sessionStorage.removeItem("token");
+    setUserInfo(null);
   }
 
   return (
@@ -52,24 +44,11 @@ function AdminSidebar({ setAdminInfo }) {
 
       <aside className={`admin-sidebar ${isOpen ? "open" : ""}`}>
         <div className="sidebar-content">
-          <nav className="sidebar-nav">
-            <Link to="/admin/upload-users" className="nav-item">
-              <IoGrid size={24} />
-              <span>Upload Users</span>
-            </Link>
-            <Link to="/admin/add-user" className="nav-item">
-              <IoPersonAdd size={24} />
-              <span>Add User</span>
-            </Link>
-            <Link to="/admin/all-users" className="nav-item">
-              <IoPeople size={24} />
-              <span>All Users</span>
-            </Link>
-            <Link to="/admin/points-history" className="nav-item">
-              <IoStatsChart size={24} />
-              <span>Points History</span>
-            </Link>
-          </nav>
+          <nav className="sidebar-nav"></nav>
+          <Link to="/book-villa" className="nav-item">
+            <IoHome size={24} />
+            <span>Book Villa</span>
+          </Link>
           <button onClick={handleLogout} className="nav-item logout">
             <IoLogOut size={24} />
             <span>Logout</span>
@@ -80,4 +59,4 @@ function AdminSidebar({ setAdminInfo }) {
   );
 }
 
-export default AdminSidebar;
+export default UserSidebar;

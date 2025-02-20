@@ -8,7 +8,7 @@ import Footer from "./footer";
 import { scrollToTop, changeTitle } from "../helpers/utils";
 import "../styles/admin.css";
 
-function Admin({ title }) {
+function Admin({ setAdminInfo, title }) {
   const [loggedIn, setLoggedIn] = useState(false);
   const admin = useContext(AdminContext);
   const navigate = useNavigate();
@@ -25,7 +25,8 @@ function Admin({ title }) {
 
   return (
     <>
-      <AdminSidebar />
+      <AdminSidebar setAdminInfo={setAdminInfo} />
+
       <h1 className="title">Admin Page!</h1>
 
       <div className="admin-container">

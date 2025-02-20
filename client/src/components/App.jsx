@@ -11,6 +11,7 @@ import UploadUsers from "./upload-users.jsx";
 import AddUser from "./add-user.jsx";
 import AllUsers from "./all-users.jsx";
 import MyAccount from "./my-account.jsx";
+import BookVilla from "./book-villa.jsx";
 import PointsHistory from "./points-history.jsx";
 import { getUser } from "../helpers/user.js";
 import { getAdminAccount } from "../helpers/admin.js";
@@ -63,8 +64,14 @@ function App() {
       ),
     },
     {
+      path: "/book-villa",
+      element: <BookVilla title={`Book Villa - ${mainTitle}`} />,
+    },
+    {
       path: "/admin",
-      element: <Admin title={`Admin - ${mainTitle}`} />,
+      element: (
+        <Admin setAdminInfo={setAdminInfo} title={`Admin - ${mainTitle}`} />
+      ),
     },
     {
       path: "/admin/login",
@@ -74,19 +81,31 @@ function App() {
     },
     {
       path: "/admin/upload-users",
-      element: <UploadUsers title="Admin - Upload User Sheet" />,
+      element: (
+        <UploadUsers
+          setAdminInfo={setAdminInfo}
+          title="Admin - Upload User Sheet"
+        />
+      ),
     },
     {
       path: "/admin/add-user",
-      element: <AddUser title="Admin - Add User" />,
+      element: <AddUser setAdminInfo={setAdminInfo} title="Admin - Add User" />,
     },
     {
       path: "/admin/all-users",
-      element: <AllUsers title="Admin - All Users" />,
+      element: (
+        <AllUsers setAdminInfo={setAdminInfo} title="Admin - All Users" />
+      ),
     },
     {
       path: "/admin/points-history",
-      element: <PointsHistory title="Admin - Points History" />,
+      element: (
+        <PointsHistory
+          setAdminInfo={setAdminInfo}
+          title="Admin - Points History"
+        />
+      ),
     },
     {
       path: "/about",

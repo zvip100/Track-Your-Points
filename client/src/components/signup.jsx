@@ -9,32 +9,26 @@ import BackButton from "./back-btn.jsx";
 import LoadingSpinner from "./loading.jsx";
 import Footer from "./footer.jsx";
 import { URL } from "../main";
+import SignUpOtp from "./signup-otp.jsx";
 import { scrollToTop, changeTitle } from "../helpers/utils";
+import { verifyEmail, getOtp } from "../helpers/sign-up.js";
 import "../styles/sign-up.css";
 
 function Signup({ title }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [pending, setPending] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [popupMsg, setPopupMsg] = useState("");
   const [msgType, setMsgType] = useState("");
   const [signUpSuccess, setSignUpSuccess] = useState(false);
+  const [askOtp, setAskOtp] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => scrollToTop(), changeTitle(title), []);
-
-  /* useEffect(() => {
-    let timeoutId;
-
-    if (signUpSuccess) {
-      timeoutId = setTimeout(() => {
-        navigate("/login");
-      }, 3000);
-    }
-
-    return () => {
-      if (timeoutId) clearTimeout(timeoutId);
-    };
-  }, [signUpSuccess]);*/
+  useEffect(() => {
+    scrollToTop();
+    changeTitle(title);
+  }, []);
 
   const formik = useFormik({
     initialValues: {
@@ -48,48 +42,45 @@ function Signup({ title }) {
 
   async function handleSignUp(values, { resetForm }) {
     setPending(true);
-    try {
-      const response = await fetch(`${URL}/api/sign-up`, {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({
-          email: values.email.toLowerCase(),
-          password: values.password,
-        }),
-      });
+    setEmail(values.email.toLowerCase());
+    setPassword(values.password);
 
-      if (!response.ok) {
-        throw new Error("Network response was not ok " + response.statusText);
-      }
+    const verifyEmailResult = await verifyEmail(values.email.toLowerCase());
 
-      const result = await response.json();
-      console.log(result);
+    resetForm();
 
-      resetForm();
-      setShowPopup(true);
+    if (verifyEmailResult?.error) {
       setPending(false);
+      setShowPopup(true);
+      setMsgType("error-msg");
 
-      if (result.length === 0) {
+      if (verifyEmailResult?.error === "user not found") {
         setPopupMsg(
           "Invalid Email Address. Please use your Starlife Partners Agency Email Address."
         );
-        setMsgType("error-msg");
-        return;
+      } else {
+        setPopupMsg("Failed to verify your email address. Please try again.");
       }
-
-      setPopupMsg("Sign Up Successful! Please Log In to access your account.");
-      setMsgType("success-msg");
-      setSignUpSuccess(true);
-    } catch (e) {
-      console.error("Error creating acount: ", e);
-      setPopupMsg("Error creating account. Please try again.");
-      setMsgType("error-msg");
-      setShowPopup(true);
-      setPending(false);
-      resetForm();
+      return;
     }
+
+    const getOtpResult = await getOtp(values.email.toLowerCase());
+    console.log("Get otp result: ", getOtpResult);
+
+    setPending(false);
+    setShowPopup(true);
+
+    if (getOtpResult?.error) {
+      setPopupMsg("Something went wrong. Please try again");
+      setMsgType("error-msg");
+      return;
+    }
+
+    setPopupMsg(
+      `We sent a temporary code to ${values.email.toLowerCase()}. Please use this code to verify your email address.`
+    );
+    setMsgType("success-msg");
+    setAskOtp(true);
   }
 
   if (showPopup) {
@@ -107,47 +98,64 @@ function Signup({ title }) {
           </Link>
         ) : (
           <>
-            <h1>Please fill out the fields below to create your account.</h1>
-            <p className="sign-up-info">
-              <strong>Important</strong>: Please use the same Email Address
-              you're using at "Starlife Partners Agency". Otherwise your account
-              will not be created.
-            </p>
-            <form className="sign-up-form" onSubmit={formik.handleSubmit}>
-              {signUpForm.map((field, index) => (
-                <InputField
-                  key={index}
-                  name={field.name}
-                  placeholder={field.placeholder}
-                  value={formik.values[field.name]}
-                  type={field.type}
-                  handleChange={formik.handleChange}
-                  handleBlur={formik.handleBlur}
-                  touched={formik.touched[field.name]}
-                  error={formik.errors[field.name]}
-                />
-              ))}
+            {askOtp ? (
+              <SignUpOtp
+                setSignUpSuccess={setSignUpSuccess}
+                email={email}
+                password={password}
+                setShowPopup={setShowPopup}
+                setPopupMsg={setPopupMsg}
+                setMsgType={setMsgType}
+                pending={pending}
+                setPending={setPending}
+              />
+            ) : (
+              <>
+                <h1>
+                  Please fill out the fields below to create your account.
+                </h1>
+                <p className="sign-up-info">
+                  <strong>Important</strong>: Please use the same Email Address
+                  you're using at "Starlife Partners Agency". Otherwise your
+                  account will not be created.
+                </p>
+                <form className="sign-up-form" onSubmit={formik.handleSubmit}>
+                  {signUpForm.map((field, index) => (
+                    <InputField
+                      key={index}
+                      name={field.name}
+                      placeholder={field.placeholder}
+                      value={formik.values[field.name]}
+                      type={field.type}
+                      handleChange={formik.handleChange}
+                      handleBlur={formik.handleBlur}
+                      touched={formik.touched[field.name]}
+                      error={formik.errors[field.name]}
+                    />
+                  ))}
 
-              <div className="submit-button-container">
-                <button
-                  type="submit"
-                  className="submit-btn"
-                  disabled={!formik.isValid || !formik.dirty}
-                >
-                  {pending ? "Creating Your Account..." : "Sign Up"}
-                </button>{" "}
-                <button
-                  type="button"
-                  className="reset-btn"
-                  onClick={formik.handleReset}
-                >
-                  Reset
-                </button>
-              </div>
-            </form>
-            <p>
-              Already have an account? <Link to="/login">Log In</Link>
-            </p>{" "}
+                  <div className="submit-button-container">
+                    <button
+                      type="submit"
+                      className="submit-btn"
+                      disabled={!formik.isValid || !formik.dirty}
+                    >
+                      {pending ? "Creating Your Account..." : "Sign Up"}
+                    </button>{" "}
+                    <button
+                      type="button"
+                      className="reset-btn"
+                      onClick={formik.handleReset}
+                    >
+                      Reset
+                    </button>
+                  </div>
+                </form>
+                <p>
+                  Already have an account? <Link to="/login">Log In</Link>
+                </p>{" "}
+              </>
+            )}
           </>
         )}
       </div>

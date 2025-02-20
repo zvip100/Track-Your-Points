@@ -1,6 +1,11 @@
 import { IoClose } from "react-icons/io5";
+import { cleanWhitespace } from "../helpers/utils";
 
 function SearchUser({ searchResult, setSearchResult }) {
+  function handleChange(value) {
+    const formatInput = cleanWhitespace(value);
+    setSearchResult(formatInput);
+  }
   return (
     <div className="search-container">
       <input
@@ -8,7 +13,7 @@ function SearchUser({ searchResult, setSearchResult }) {
         className="search-user"
         placeholder="Search User"
         value={searchResult}
-        onChange={(e) => setSearchResult(e.target.value)}
+        onChange={(e) => handleChange(e.target.value)}
       />
       <button
         type="button"

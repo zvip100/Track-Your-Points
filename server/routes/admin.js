@@ -7,8 +7,26 @@ import {
   getPoints,
   removePoints,
 } from "../models/admin";
+import { sendEmail } from "../email";
 
 const adminRouter = Router();
+
+adminRouter.post("/send-email", async (req, res) => {
+  const { recipient, subject, content } = req.body;
+
+  try {
+    const emailSent = await sendEmail(recipient, subject, content);
+
+    if (emailSent) {
+      res.status(200).json({ message: "Email sent successfully" });
+    } else {
+      res.status(500).json({ message: "Failed to send email" });
+    }
+  } catch (error) {
+    console.error("Error in send-email route:", error);
+    res.status(500).json({ message: "Server error sending email" });
+  }
+});
 
 adminRouter.get("/account", async (req, res) => {
   const account = req.user?.id;

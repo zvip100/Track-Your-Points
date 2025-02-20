@@ -44,3 +44,14 @@ export const admin = mySchema.table("admin", {
     .default(sql`TIMEZONE('America/New_York', NOW())`)
     .notNull(),
 });
+
+export const OTP = mySchema.table("OTP", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  user: integer()
+    .notNull()
+    .references(() => users.id),
+  OTP: varchar({ length: 6 }).notNull(),
+  created_at: timestamp({ mode: "date" })
+    .default(sql`TIMEZONE('America/New_York', NOW())`)
+    .notNull(),
+});

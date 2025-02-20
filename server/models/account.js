@@ -45,11 +45,51 @@ export async function getPoints(user) {
       .where(eq(points.user, user))
       .orderBy(desc(points.added_at));
 
-    console.log("Get user points from DB: ", result);
+    console.log("Get user points history from DB: ", result);
 
     return result;
   } catch (e) {
-    console.error(e.message);
+    console.error("Error getting user points history from DB: ", e.message);
+    throw e;
+  }
+}
+
+export async function getTotalPoints(user) {
+  try {
+    const result = await db
+      .select({
+        totalPoints: sql`COALESCE(SUM(${points.amount}), 0)`,
+      })
+      .from(points)
+      .where(eq(points.user, user));
+
+    console.log("Get user points-total from DB: ", result);
+
+    return result[0];
+  } catch (e) {
+    console.error("Error getting user points-total from DB", e.message);
+    throw e;
+  }
+}
+
+export async function requestBooking(user) {
+  try {
+    const result = await db
+      .select({
+        id: users.id,
+        name: `${users.first_name} ${users.last_name}`,
+        email: users.email,
+        totalPoints: sql`COALESCE(SUM(${points.amount}), 0)`,
+      })
+      .from(users)
+      .leftJoin(points, eq(users.id, points.user))
+      .where(eq(users.id, user));
+
+    console.log("Request-booking result from DB: ", result);
+
+    return result[0];
+  } catch (e) {
+    console.error("Error requesting-booking result from DB: ", e.message);
     throw e;
   }
 }

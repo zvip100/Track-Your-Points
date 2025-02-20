@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Popup from "./popup";
 import LoadingSpinner from "./loading";
 import { URL } from "../main";
-import { capitalize } from "../helpers/utils";
+import { capitalize, removeAllSpaces } from "../helpers/utils";
 import { addAuthHeader } from "../helpers/admin";
 import "../styles/data-display.css";
 
@@ -90,7 +90,13 @@ function DataDisplay({ data, setUploaded }) {
   const handleSaveUsers = async () => {
     setIsSaving(true);
     try {
-      const usersToSave = formattedData.map((row) => ({
+      const users = formattedData.map((row) => ({
+        firstName: removeAllSpaces(row.firstName),
+        lastName: removeAllSpaces(row.lastName),
+        email: removeAllSpaces(row.email),
+      }));
+
+      const usersToSave = users.map((row) => ({
         firstName: capitalize(row.firstName),
         lastName: capitalize(row.lastName),
         email: row.email.toLowerCase(),

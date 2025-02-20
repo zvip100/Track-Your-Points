@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import AdminSidebar from "./admin-sidebar";
 import UserTable from "./user-table";
 import SearchUser from "./search-user";
 import SortTable from "./sort-table";
@@ -13,7 +14,7 @@ import { scrollToTop, changeTitle } from "../helpers/utils";
 import { addAuthHeader } from "../helpers/admin";
 import "../styles/all-users.css";
 
-function AllUsers({ title }) {
+function AllUsers({ setAdminInfo, title }) {
   const [users, setUsers] = useState([]);
   const [searchResult, setSearchResult] = useState("");
   const [pending, setPending] = useState(false);
@@ -58,6 +59,8 @@ function AllUsers({ title }) {
 
   return (
     <>
+      <AdminSidebar setAdminInfo={setAdminInfo} />
+
       <h1 className="title">~All Users~</h1>
 
       {users.length > 0 && (

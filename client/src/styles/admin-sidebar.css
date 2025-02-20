@@ -44,6 +44,32 @@
   transform: scale(1.05);
 }
 
+.sidebar-toggle::after {
+  content: "Menu";
+  position: absolute;
+  right: calc(100% + 10px);
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 5px 10px;
+  background: #1e293b;
+  color: white;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.sidebar-toggle.is-open::after {
+  content: "Close";
+}
+
+.sidebar-toggle:hover::after {
+  opacity: 1;
+  visibility: visible;
+}
+
 .sidebar-content {
   display: flex;
   flex-direction: column;
