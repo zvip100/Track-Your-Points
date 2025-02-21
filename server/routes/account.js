@@ -1,5 +1,11 @@
 import { Router } from "express";
-import { getUser, getPoints, getTotalPoints, requestBooking } from "../models/account";
+import {
+  getUser,
+  getPoints,
+  getTotalPoints,
+  requestBooking,
+  getBooking,
+} from "../models/account";
 
 const accountRouter = Router();
 
@@ -51,18 +57,36 @@ accountRouter.get("/total-points", async (req, res) => {
   }
 });
 
-accountRouter.get("/book-villa",async (req, res) => {
+accountRouter.post("/book-villa", async (req, res) => {
   const user = req.user?.id;
   console.log("user: ", user);
 
+  const { checkIn, checkOut } = req.body;
+
   try {
-    const result = await requestBooking(user);
+    const result = await requestBooking(user, checkIn, checkOut);
     console.log("Request-booking result: ", result);
 
     res.json(result);
   } catch (e) {
     console.error("Error requesting-booking: ", e.message);
     res.sendStatus(500);
-  }} )
+  }
+});
+
+accountRouter.get("/my-booking", async (req, res) => {
+  const user = req.user?.id;
+  console.log("user: ", user);
+
+  try {
+    const result = await getBooking(user);
+    console.log("My-booking result: ", result);
+
+    res.json(result);
+  } catch (e) {
+    console.error("Error getting my-booking: ", e.message);
+    res.sendStatus(500);
+  }
+});
 
 export default accountRouter;

@@ -1,5 +1,7 @@
 import { desc } from "drizzle-orm";
-import { db, users, points, eq, sql } from "../database/db";
+import { db, users, points, bookings, eq, sql } from "../database/db";
+import { sendEmail } from "../email";
+import { bookingReqEmail } from "../email-content";
 
 export async function getUser(id) {
   try {
@@ -72,24 +74,85 @@ export async function getTotalPoints(user) {
   }
 }
 
-export async function requestBooking(user) {
+export async function requestBooking(user, checkIn, checkOut) {
   try {
     const result = await db
       .select({
         id: users.id,
-        name: `${users.first_name} ${users.last_name}`,
+        name: sql`CONCAT(${users.first_name}, ' ', ${users.last_name})`,
         email: users.email,
-        totalPoints: sql`COALESCE(SUM(${points.amount}), 0)`,
+        totalPoints: sql`(SELECT COALESCE(SUM(${points.amount}), 0) FROM ${points} WHERE ${points.user} = ${user})`,
       })
       .from(users)
-      .leftJoin(points, eq(users.id, points.user))
       .where(eq(users.id, user));
 
     console.log("Request-booking result from DB: ", result);
 
-    return result[0];
+    if (result.length === 0) return "User not found";
+
+    if (result[0]?.totalPoints < 90000) return "Not enough points";
+
+    const { subject, content } = bookingReqEmail(
+      result[0]?.name,
+      result[0]?.email,
+      checkIn,
+      checkOut
+    );
+
+    const sendMail = await sendEmail("hershypod@outlook.com", subject, content);
+
+    if (sendMail) {
+      console.log("Succesfully sent email to Wave-Tampa.");
+      // return "Succesfully sent email";
+    } else {
+      console.error("Error sending email to Wave-Tmapa.");
+      throw new Error("Failed to send email");
+    }
+
+    const addBooking = await db
+      .insert(bookings)
+      .values({
+        user,
+        checkIn,
+        checkOut,
+      })
+      .returning({
+        id: bookings.id,
+        checkIn: bookings.checkIn,
+        checkOut: bookings.checkOut,
+        confirmed: bookings.confirmed,
+        created_at: bookings.created_at,
+      });
+
+    if (addBooking.length === 0) throw new Error("Failed to add booking");
+
+    return addBooking[0];
   } catch (e) {
     console.error("Error requesting-booking result from DB: ", e.message);
+    throw e;
+  }
+}
+
+export async function getBooking(user) {
+  try {
+    const result = await db
+      .select({
+        id: bookings.id,
+        checkIn: bookings.checkIn,
+        checkOut: bookings.checkOut,
+        confirmed: bookings.confirmed,
+        created_at: bookings.created_at,
+      })
+      .from(bookings)
+      .where(eq(bookings.user, user));
+
+    console.log("Get booking from DB: ", result);
+
+    if (result.length === 0) return "No booking";
+
+    return result[0];
+  } catch (e) {
+    console.error("Error getting booking from DB: ", e.message);
     throw e;
   }
 }

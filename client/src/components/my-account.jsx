@@ -5,6 +5,7 @@ import UserSidebar from "./user-sidebar";
 import AccountTable from "./account-table";
 import BackButton from "./back-btn";
 import Footer from "./footer";
+import { getBookingInfo } from "../helpers/my-account";
 import { URL } from "../main";
 import { IoHome } from "react-icons/io5";
 import { scrollToTop, changeTitle, formatNumber } from "../helpers/utils";
@@ -13,7 +14,7 @@ import "../styles/my-account.css";
 function MyAccount({ setUserInfo, title }) {
   const userInfo = useContext(UserContext);
   const navigate = useNavigate();
-  const [loggedIn, setLoggedIn] = useState(true);
+  const [bookingInfo, setBookingInfo] = useState("");
   const [accountData, setAccountData] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [loadingFailed, setLoadingFailed] = useState(false);
@@ -24,7 +25,17 @@ function MyAccount({ setUserInfo, title }) {
     const token = sessionStorage.getItem("token");
 
     if (!userInfo && !token) {
-      setLoggedIn(false);
+      navigate("/login", { state: "/my-account" });
+    }
+
+    if (token) {
+      const request = async () => {
+        const result = await getBookingInfo(token);
+        if (result?.error) return;
+
+        if (result !== "No booking") setBookingInfo(result);
+      };
+      request();
     }
   }, [userInfo]);
 
@@ -71,66 +82,68 @@ function MyAccount({ setUserInfo, title }) {
 
   return (
     <>
-      {loggedIn && <UserSidebar setUserInfo={setUserInfo} />}
+      <UserSidebar setUserInfo={setUserInfo} bookingInfo={bookingInfo} />
 
       <div className="account-container">
-        {loggedIn ? (
-          <>
-            <h1 className="welcome-title">~Hello {userInfo?.name}!~</h1>
+        <h1 className="welcome-title">~Hello {userInfo?.name}!~</h1>
 
-            <div className="points-info">
-              <h3 className="points-text">
-                {userInfo?.points > 0
-                  ? `Congratulations on earning so far ${formatNumber(
-                      userInfo?.points
-                    )} points!`
-                  : "It's not to late to start earning your points!"}
-              </h3>
-
-              <h3 className="points-text">
-                <span className="remaining-points">
-                  {userInfo ? formatNumber(90000 - userInfo?.points) : "90,000"}
-                </span>{" "}
-                points to go to your dream vacation!
-              </h3>
-            </div>
-
-            {isLoading && (
-              <div className="loading-spinner">
-                <div className="spinner"></div>
-                <p>Loading your points history...</p>
-              </div>
-            )}
-
-            {accountData && (
-              <>
-                <h2 className="about-table">Points History:</h2>
-                <AccountTable data={accountData} />
-              </>
-            )}
-
-            {loadingFailed && (
-              <p className="loading-failed-msg">
-                Error loading your points history.
-              </p>
-            )}
-
+        <div className="points-info">
+          <h3 className="points-text">
+            {userInfo?.points > 0
+              ? `Congratulations for ${
+                  userInfo?.points >= 90000 || bookingInfo
+                    ? "reaching"
+                    : "earning so far"
+                } ${formatNumber(userInfo?.points)} points!`
+              : "It's not to late to start earning your points!"}
+          </h3>
+          {bookingInfo || userInfo?.points >= 90000 ? (
             <button
               type="button"
               className="book-btn"
               onClick={() => navigate("/book-villa")}
             >
               <IoHome size={24} />
-              Book Villa
+              {bookingInfo ? "My Booking" : "Book Villa"}
             </button>
+          ) : (
+            <h3 className="points-text">
+              <span className="remaining-points">
+                {userInfo ? formatNumber(90000 - userInfo?.points) : "90,000"}
+              </span>{" "}
+              points to go to your dream vacation!
+            </h3>
+          )}
+        </div>
+
+        {isLoading && (
+          <div className="loading-spinner">
+            <div className="spinner"></div>
+            <p>Loading your points history...</p>
+          </div>
+        )}
+
+        {accountData && (
+          <>
+            <h2 className="about-table">Points History:</h2>
+            <AccountTable data={accountData} />
           </>
-        ) : (
+        )}
+
+        {loadingFailed && (
+          <p className="loading-failed-msg">
+            Error loading your points history.
+          </p>
+        )}
+
+        {!bookingInfo && userInfo?.points < 90000 && (
           <button
             type="button"
-            className="login-btn"
-            onClick={() => navigate("/login", { state: "/my-account" })}
+            className="book-btn"
+            onClick={() => navigate("/book-villa")}
           >
-            Log In
+            <IoHome size={24} />
+            Book Villa
           </button>
         )}
       </div>

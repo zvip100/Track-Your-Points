@@ -55,3 +55,17 @@ export const OTP = mySchema.table("OTP", {
     .default(sql`TIMEZONE('America/New_York', NOW())`)
     .notNull(),
 });
+
+export const bookings = mySchema.table("bookings", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  user: integer()
+    .notNull()
+    .references(() => users.id),
+  checkIn: varchar({ length: 20 }).notNull(),
+  checkOut: varchar({ length: 20 }).notNull(),
+  confirmed: boolean().default(false).notNull(),
+  created_at: timestamp({ mode: "date" })
+    .default(sql`TIMEZONE('America/New_York', NOW())`)
+    .notNull(),
+  updated_at: timestamp({ mode: "date" }),
+});

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { IoLogOut, IoMenu, IoHome, IoClose } from "react-icons/io5";
 import "../styles/admin-sidebar.css";
 
-function UserSidebar({ setUserInfo }) {
+function UserSidebar({ setUserInfo, bookingInfo }) {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -47,7 +47,7 @@ function UserSidebar({ setUserInfo }) {
           <nav className="sidebar-nav"></nav>
           <Link to="/book-villa" className="nav-item">
             <IoHome size={24} />
-            <span>Book Villa</span>
+            <span>{bookingInfo ? "My booking" : "Book Villa"}</span>
           </Link>
           <button onClick={handleLogout} className="nav-item logout">
             <IoLogOut size={24} />
