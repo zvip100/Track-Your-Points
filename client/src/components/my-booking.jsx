@@ -2,10 +2,9 @@ import { useState, useEffect } from "react";
 import "../styles/my-booking.css";
 
 function MyBooking({ bookingInfo }) {
-  const formatDate = (dateString) => {
+  const formatBookingDate = (dateString) => {
     const date = new Date(dateString);
     date.setDate(date.getDate() + 1);
-
     return date.toLocaleDateString("en-US", {
       year: "numeric",
       month: "long",
@@ -29,11 +28,11 @@ function MyBooking({ bookingInfo }) {
       <div className="booking-dates">
         <div className="date-group">
           <label>Check In</label>
-          <p>{formatDate(bookingInfo.checkIn)}</p>
+          <p>{formatBookingDate(bookingInfo.checkIn)}</p>
         </div>
         <div className="date-group">
           <label>Check Out</label>
-          <p>{formatDate(bookingInfo.checkOut)}</p>
+          <p>{formatBookingDate(bookingInfo.checkOut)}</p>
         </div>
       </div>
 
@@ -45,7 +44,7 @@ function MyBooking({ bookingInfo }) {
 
       <div className="booking-footer">
         <p className="booking-created">
-          Requested on: {formatDate(bookingInfo.created_at)}
+          Requested on: {bookingInfo.date} at {bookingInfo.time}
         </p>
       </div>
     </div>

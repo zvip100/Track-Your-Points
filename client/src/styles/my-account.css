@@ -1,6 +1,6 @@
 .account-container {
   max-width: 800px;
-  margin: 2rem auto;
+  margin: 2rem auto 4rem;
   padding: 2rem;
   background: white;
   border-radius: 12px;
@@ -37,8 +37,30 @@
   transition: transform 0.3s ease;
 }
 
-.points-text:hover {
+.points-text:hover,
+.confirmed-msg:hover {
   transform: translateX(10px);
+}
+
+.pending-msg {
+  color: #64748b;
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.confirmed-msg {
+  background: linear-gradient(135deg, #ecfdf5 0%, #a7f3d0 50%, #6ee7b7 100%);
+  color: #166534;
+  font-size: 1.4rem;
+  font-weight: 500;
+  margin: 1.5rem 0;
+  padding: 1rem;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.confirmed-msg:hover {
+  background: linear-gradient(135deg, #a7f3d0 0%, #6ee7b7 50%, #34d399 100%);
 }
 
 .remaining-points {
@@ -114,7 +136,8 @@
 }
 
 .loading-spinner p,
-.loading-failed-msg {
+.loading-failed-msg,
+.loading-msg {
   color: #64748b;
   font-size: 1.1rem;
 }

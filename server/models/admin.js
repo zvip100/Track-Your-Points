@@ -1,5 +1,5 @@
 import { asc, desc } from "drizzle-orm";
-import { db, users, admin, points, eq, sql } from "../database/db";
+import { db, users, admin, points, bookings, eq, sql } from "../database/db";
 
 export async function getAccount(id) {
   try {
@@ -135,6 +135,65 @@ export async function removePoints(user, points_) {
     return result;
   } catch (e) {
     console.error("Error removing points from DB: ", e.message);
+    throw e;
+  }
+}
+
+export async function confirmBooking(user) {
+  try {
+    await db.transaction(async (tx) => {
+      const bookingResult = await tx
+        .update(bookings)
+        .set({
+          confirmed: true,
+          updated_at: sql`TIMEZONE('America/New_York', NOW())`,
+        })
+        .where(eq(bookings.user, user))
+        .returning({
+          confirmed: bookings.confirmed,
+          date: sql`to_char(${bookings.updated_at}, 'MM/DD/YYYY')`,
+          time: sql`to_char(${bookings.updated_at}, 'HH12:MI:SS AM')`,
+        });
+
+      const pointsResult = await tx
+        .insert(points)
+        .values({ user: user, amount: -90000 })
+        .returning();
+
+      if (bookingResult.length === 0 || pointsResult.length === 0) {
+        tx.rollback();
+      }
+    });
+
+    return { success: true };
+  } catch (e) {
+    console.error("Error confirming booking from DB: ", e.message);
+    throw e;
+  }
+}
+
+export async function getBookings() {
+  try {
+    const result = await db
+      .select({
+        id: bookings.id,
+        user: bookings.user,
+        checkIn: bookings.checkIn,
+        checkOut: bookings.checkOut,
+        confirmed: bookings.confirmed,
+        requestedOn: sql`to_char(${bookings.created_at}, 'MM/DD/YYYY HH12:MI:SS AM')`,
+        confirmedOn: sql`to_char(${bookings.updated_at}, 'MM/DD/YYYY HH12:MI:SS AM')`,
+        name: sql`CONCAT(${users.first_name}, ' ', ${users.last_name})`,
+        email: users.email,
+      })
+      .from(bookings)
+      .leftJoin(users, eq(bookings.user, users.id))
+      .orderBy(desc(bookings.created_at));
+
+    console.log("Get bookings DB result: ", result);
+    return result;
+  } catch (e) {
+    console.error("Error getting bookings from DB: ", e.message);
     throw e;
   }
 }

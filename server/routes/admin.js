@@ -6,6 +6,8 @@ import {
   addPoints,
   getPoints,
   removePoints,
+  confirmBooking,
+  getBookings,
 } from "../models/admin";
 import { sendEmail } from "../email";
 
@@ -110,6 +112,28 @@ adminRouter.post("/remove-points", async (req, res) => {
     res.json(result);
   } catch (e) {
     console.error("Error removing points: ", e.message);
+    res.sendStatus(500);
+  }
+});
+
+adminRouter.post("/confirm-booking", async (req, res) => {
+  const userId = req.body.userId;
+
+  try {
+    const result = await confirmBooking(userId);
+    res.json(result);
+  } catch (e) {
+    console.error("Error confirming booking: ", e.message);
+    res.sendStatus(500);
+  }
+});
+
+adminRouter.get("/bookings", async (req, res) => {
+  try {
+    const result = await getBookings();
+    res.json(result);
+  } catch (e) {
+    console.error("Error getting bookings: ", e.message);
     res.sendStatus(500);
   }
 });

@@ -173,7 +173,7 @@ function BookVilla({ title }) {
                           Click here
                         </a>{" "}
                         to check available dates, scroll down a little bit to
-                        see our villa, Then finish your booking request here
+                        see our villa (Fountainview Villa), Then finish your booking request here
                         using your points.
                       </p>
                       <p className="instruction">

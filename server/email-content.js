@@ -10,7 +10,7 @@ export function otpEmail(otp) {
 export function bookingReqEmail(name, email, checkIn, checkOut) {
   return {
     subject: "New Booking Request from StarLife Vacation",
-    content: `<h1>Hi,</h1>
+    content: `<h3>Hi,</h3>
     <h3>We got a new booking request for "Fountainview Villa" as following:</h3>
     <ul>
       <li>Name: ${name},</li>

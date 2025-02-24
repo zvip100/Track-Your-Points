@@ -50,3 +50,14 @@ export function generateOtp() {
   console.log("OTP: ", otp);
   return otp;
 }
+
+export function formatDate(dateString) {
+  const date = new Date(dateString);
+  date.setDate(date.getDate() + 1);
+
+  return date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}

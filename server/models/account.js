@@ -2,6 +2,7 @@ import { desc } from "drizzle-orm";
 import { db, users, points, bookings, eq, sql } from "../database/db";
 import { sendEmail } from "../email";
 import { bookingReqEmail } from "../email-content";
+import { formatDate } from "../middlewares";
 
 export async function getUser(id) {
   try {
@@ -95,8 +96,8 @@ export async function requestBooking(user, checkIn, checkOut) {
     const { subject, content } = bookingReqEmail(
       result[0]?.name,
       result[0]?.email,
-      checkIn,
-      checkOut
+      formatDate(checkIn),
+      formatDate(checkOut)
     );
 
     const sendMail = await sendEmail("hershypod@outlook.com", subject, content);
@@ -121,7 +122,8 @@ export async function requestBooking(user, checkIn, checkOut) {
         checkIn: bookings.checkIn,
         checkOut: bookings.checkOut,
         confirmed: bookings.confirmed,
-        created_at: bookings.created_at,
+        date: sql`to_char(${bookings.created_at}, 'MM/DD/YYYY')`,
+        time: sql`to_char(${bookings.created_at}, 'HH12:MI:SS AM')`,
       });
 
     if (addBooking.length === 0) throw new Error("Failed to add booking");
@@ -141,7 +143,8 @@ export async function getBooking(user) {
         checkIn: bookings.checkIn,
         checkOut: bookings.checkOut,
         confirmed: bookings.confirmed,
-        created_at: bookings.created_at,
+        date: sql`to_char(${bookings.created_at}, 'MM/DD/YYYY')`,
+        time: sql`to_char(${bookings.created_at}, 'HH12:MI:SS AM')`,
       })
       .from(bookings)
       .where(eq(bookings.user, user));
