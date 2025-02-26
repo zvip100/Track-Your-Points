@@ -5,6 +5,7 @@ function MyBooking({ bookingInfo }) {
   const formatBookingDate = (dateString) => {
     const date = new Date(dateString);
     date.setDate(date.getDate() + 1);
+
     return date.toLocaleDateString("en-US", {
       year: "numeric",
       month: "long",

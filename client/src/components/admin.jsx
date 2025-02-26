@@ -1,6 +1,12 @@
 import { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { IoGrid, IoPersonAdd, IoPeople, IoStatsChart } from "react-icons/io5";
+import {
+  IoGrid,
+  IoPersonAdd,
+  IoPeople,
+  IoStatsChart,
+  IoCalendar,
+} from "react-icons/io5";
 import AdminSidebar from "./admin-sidebar";
 import { AdminContext } from "./App";
 import BackButton from "./back-btn";
@@ -46,6 +52,10 @@ function Admin({ setAdminInfo, title }) {
           <Link to="/admin/points-history" className="admin-page-btn">
             <IoStatsChart size={24} />
             <span>Points History</span>
+          </Link>{" "}
+          <Link to="/admin/all-bookings" className="admin-page-btn">
+            <IoCalendar size={24} />
+            <span>All Bookings</span>
           </Link>
         </div>
       </div>

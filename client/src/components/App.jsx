@@ -13,6 +13,7 @@ import AllUsers from "./all-users.jsx";
 import MyAccount from "./my-account.jsx";
 import BookVilla from "./book-villa.jsx";
 import PointsHistory from "./points-history.jsx";
+import AllBookings from "./all-bookings.jsx";
 import { getUser } from "../helpers/user.js";
 import { getAdminAccount } from "../helpers/admin.js";
 
@@ -84,7 +85,7 @@ function App() {
       element: (
         <UploadUsers
           setAdminInfo={setAdminInfo}
-          title="Admin - Upload User Sheet"
+          title="Admin - Upload User Sheet" 
         />
       ),
     },
@@ -105,6 +106,12 @@ function App() {
           setAdminInfo={setAdminInfo}
           title="Admin - Points History"
         />
+      ),
+    },
+    {
+      path: "/admin/all-bookings",
+      element: (
+        <AllBookings setAdminInfo={setAdminInfo} title="Admin - All Bookings" />
       ),
     },
     {

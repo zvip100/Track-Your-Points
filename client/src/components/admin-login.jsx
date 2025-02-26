@@ -34,6 +34,7 @@ function AdminLogin({ setAdminInfo, title }) {
       else if (state === "add-user") page = "/admin/add-user";
       else if (state === "all-users") page = "/admin/all-users";
       else if (state === "points-history") page = "/admin/points-history";
+      else if (state === "all-bookings") page = "/admin/all-bookings";
       else page = "/admin";
 
       timeoutId = setTimeout(() => navigate(page), 3000);
