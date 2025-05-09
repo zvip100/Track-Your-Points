@@ -4,6 +4,8 @@ import {
   pgSchema,
   timestamp,
   boolean,
+  pgEnum,
+  PgColumn,
 } from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
 
@@ -11,7 +13,6 @@ export const mySchema = pgSchema("points-project");
 
 export const users = mySchema.table("users", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
-
   first_name: varchar({ length: 255 }).notNull(),
   last_name: varchar({ length: 255 }).notNull(),
   email: varchar({ length: 255 }).notNull().unique(),
@@ -56,6 +57,8 @@ export const OTP = mySchema.table("OTP", {
     .notNull(),
 });
 
+export const bookingStatus = pgEnum("booking_status", ["P", "C", "R"]);
+
 export const bookings = mySchema.table("bookings", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   user: integer()
@@ -63,7 +66,7 @@ export const bookings = mySchema.table("bookings", {
     .references(() => users.id),
   checkIn: varchar({ length: 20 }).notNull(),
   checkOut: varchar({ length: 20 }).notNull(),
-  confirmed: boolean().default(false).notNull(),
+  status: bookingStatus("booking_status").notNull().default("P"),
   created_at: timestamp({ mode: "date" })
     .default(sql`TIMEZONE('America/New_York', NOW())`)
     .notNull(),

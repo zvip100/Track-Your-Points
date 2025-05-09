@@ -126,12 +126,8 @@ body.active-popup {
   border-radius: 8px;
 }
 
-@media (max-width: 640px) {
-  .popup {
-    padding: 1.5rem;
-  }
-
+@media (max-width: 600px) {
   .popup-content {
-    width: 85vw;
+    width: 70vw;
   }
 }

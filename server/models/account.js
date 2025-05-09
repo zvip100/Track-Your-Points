@@ -121,7 +121,7 @@ export async function requestBooking(user, checkIn, checkOut) {
         id: bookings.id,
         checkIn: bookings.checkIn,
         checkOut: bookings.checkOut,
-        confirmed: bookings.confirmed,
+        status: bookings.status,
         date: sql`to_char(${bookings.created_at}, 'MM/DD/YYYY')`,
         time: sql`to_char(${bookings.created_at}, 'HH12:MI:SS AM')`,
       });
@@ -142,7 +142,7 @@ export async function getBooking(user) {
         id: bookings.id,
         checkIn: bookings.checkIn,
         checkOut: bookings.checkOut,
-        confirmed: bookings.confirmed,
+        status: bookings.status,
         date: sql`to_char(${bookings.created_at}, 'MM/DD/YYYY')`,
         time: sql`to_char(${bookings.created_at}, 'HH12:MI:SS AM')`,
       })

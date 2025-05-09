@@ -13,6 +13,7 @@ import { IoHome } from "react-icons/io5";
 import { scrollToTop, changeTitle } from "../helpers/utils";
 import "../styles/my-account.css";
 
+
 function MyAccount({ setUserInfo, title }) {
   const userInfo = useContext(UserContext);
   const navigate = useNavigate();

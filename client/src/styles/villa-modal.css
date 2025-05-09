@@ -1,0 +1,204 @@
+.modal-open {
+  overflow: hidden;
+  padding-right: 15px;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 2rem;
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+  position: relative;
+  width: 90%;
+  max-width: 1200px;
+
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  font-family: "Inter", sans-serif;
+  background: linear-gradient(
+      rgba(255, 255, 255, 0.92),
+      rgba(255, 255, 255, 0.92)
+    ),
+    url("../assets/villa.jpg") center/cover no-repeat;
+}
+
+.modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  color: #64748b;
+  cursor: pointer;
+  padding: 8px;
+  transition: transform 0.2s ease;
+  z-index: 1001;
+}
+
+.modal-close:hover {
+  transform: scale(1.1);
+  color: #0ea5e9;
+}
+
+.modal-title {
+  font-size: 2rem;
+  color: #0284c7;
+  margin-bottom: 2rem;
+  text-align: center;
+  background: linear-gradient(135deg, #0284c7, #0ea5e9);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.modal-content p:first-of-type {
+  font-size: 1.5rem;
+  color: #0ea5e9;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.modal-content p:nth-of-type(2) {
+  background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+  padding: 1.5rem;
+  border-radius: 12px;
+  line-height: 1.8;
+  font-size: 1.1rem;
+  color: #334155;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+  margin-bottom: 2rem;
+}
+
+.amenities {
+  font-size: 1.4rem;
+  color: #0284c7;
+  margin-bottom: 1.5rem;
+  position: relative;
+  padding-left: 1rem;
+}
+
+.modal-content ul {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  padding: 0;
+  list-style: none;
+}
+
+.modal-content li {
+  padding: 1rem;
+  background: #f8fafc;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  transition: all 0.3s ease;
+  border: 1px solid #e2e8f0;
+}
+
+.modal-content li::before {
+  content: "✓";
+  margin-right: 0.5rem;
+  color: #0ea5e9;
+  font-weight: bold;
+}
+
+.modal-content li:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border-color: #0ea5e9;
+}
+
+.more-details {
+  max-width: 1000px;
+  margin: 4rem auto 2rem;
+  padding: 0 1rem;
+  font-size: 1.2rem;
+  color: #64748b;
+  text-align: center;
+}
+
+.wave-link {
+  color: #0284c7;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.wave-link:hover {
+  color: #0ea5e9;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .modal-content ul {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .modal-overlay {
+    padding: 0;
+  }
+
+  .modal-content {
+    width: 100%;
+    height: 100%;
+    padding: 1.5rem;
+    overflow-y: auto;
+  }
+
+  .modal-close {
+    position: fixed;
+    top: 0.8rem;
+    right: 1rem;
+  }
+
+  .modal-title {
+    font-size: 1.5rem;
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .modal-content p:first-of-type {
+    font-size: 1.2rem;
+  }
+
+  .modal-content p:nth-of-type(2) {
+    font-size: 1rem;
+    padding: 1rem;
+  }
+
+  .modal-content ul {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-content li {
+    padding: 0.75rem;
+  }
+
+  .more-details {
+    font-size: 1rem;
+    padding: 0 0.5rem;
+    margin: 2rem auto 3rem;
+  }
+}

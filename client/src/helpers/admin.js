@@ -81,6 +81,29 @@ export async function handlePoints(path, user, points) {
   }
 }
 
+export async function confirmBooking(user) {
+  try {
+    const response = await fetch(`${URL}/api/admin/confirm-booking`, {
+      method: "POST",
+      headers: addAuthHeader(),
+      body: JSON.stringify({
+        userId: user,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error("Network response was not ok " + response.statusText);
+    }
+
+    const result = await response.json();
+    console.log(result);
+    return result;
+  } catch (e) {
+    console.error(e.message);
+    return { error: e.message };
+  }
+}
+
 export function addAuthHeader() {
   const adminToken = sessionStorage.getItem("admin-token");
   if (adminToken)

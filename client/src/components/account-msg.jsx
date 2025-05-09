@@ -9,7 +9,7 @@ function AccountMsg({ userInfo, bookingInfo, navigate }) {
   useEffect(() => {
     if (bookingInfo) {
       setHasBooking(true);
-      if (bookingInfo?.confirmed) setConfirmed(true);
+      if (bookingInfo?.status === "C") setConfirmed(true);
     }
   }, [bookingInfo]);
 

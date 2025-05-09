@@ -14,6 +14,7 @@ import { scrollToTop, changeTitle } from "../helpers/utils";
 
 function PointsHistory({ setAdminInfo, title }) {
   const [history, setHistory] = useState("");
+  const [noHistory, setNoHistory] = useState(false);
   const [pending, setPending] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [searchResult, setSearchResult] = useState("");
@@ -42,8 +43,13 @@ function PointsHistory({ setAdminInfo, title }) {
 
         const result = await response.json();
         console.log(result);
-
         setPending(false);
+
+        if (result.length === 0) {
+          setNoHistory(true);
+          return;
+        }
+
         setHistory(result);
       } catch (e) {
         console.error("Error getting points history: ", e.message);
@@ -59,6 +65,10 @@ function PointsHistory({ setAdminInfo, title }) {
       <AdminSidebar setAdminInfo={setAdminInfo} />
 
       <h1 className="title">~Points History~</h1>
+
+      {noHistory && (
+        <h3 className="no-bookings-msg">No History Found!</h3>
+      )}
 
       {history && (
         <>

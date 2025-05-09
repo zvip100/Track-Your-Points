@@ -36,3 +36,24 @@ export function cleanWhitespace(str) {
   if (!str) return "";
   return str.trimStart().replace(/\s+/g, " ");
 }
+
+export function formatBookingDate(dateString) {
+  const date = new Date(dateString);
+  date.setDate(date.getDate() + 1);
+
+  return date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+
+export function formatBookingStatus(status) {
+  if (status === "P") {
+    return "Pending";
+  } else if (status === "C") {
+    return "Confirmed";
+  } else if (status === "R") {
+    return "Rejected";
+  }
+}

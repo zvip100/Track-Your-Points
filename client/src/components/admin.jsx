@@ -33,7 +33,7 @@ function Admin({ setAdminInfo, title }) {
     <>
       <AdminSidebar setAdminInfo={setAdminInfo} />
 
-      <h1 className="title">Admin Page!</h1>
+      <h1 className="title">~Admin Page~</h1>
 
       <div className="admin-container">
         <div className="button-group">

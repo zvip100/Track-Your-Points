@@ -8,6 +8,7 @@ import {
   IoLogOut,
   IoMenu,
   IoClose,
+  IoCalendar,
 } from "react-icons/io5";
 import "../styles/admin-sidebar.css";
 
@@ -68,6 +69,10 @@ function AdminSidebar({ setAdminInfo }) {
             <Link to="/admin/points-history" className="nav-item">
               <IoStatsChart size={24} />
               <span>Points History</span>
+            </Link>
+            <Link to="/admin/all-bookings" className="nav-item">
+              <IoCalendar size={24} />
+              <span>All Bookings</span>
             </Link>
           </nav>
           <button onClick={handleLogout} className="nav-item logout">

@@ -6,8 +6,9 @@ import {
   addPoints,
   getPoints,
   removePoints,
-  confirmBooking,
   getBookings,
+  confirmBooking,
+  rejectBooking,
 } from "../models/admin";
 import { sendEmail } from "../email";
 
@@ -116,6 +117,16 @@ adminRouter.post("/remove-points", async (req, res) => {
   }
 });
 
+adminRouter.get("/bookings", async (req, res) => {
+  try {
+    const result = await getBookings();
+    res.json(result);
+  } catch (e) {
+    console.error("Error getting bookings: ", e.message);
+    res.sendStatus(500);
+  }
+});
+
 adminRouter.post("/confirm-booking", async (req, res) => {
   const userId = req.body.userId;
 
@@ -128,12 +139,14 @@ adminRouter.post("/confirm-booking", async (req, res) => {
   }
 });
 
-adminRouter.get("/bookings", async (req, res) => {
+adminRouter.post("/reject-booking", async (req, res) => {
+  const userId = req.body.userId;
+
   try {
-    const result = await getBookings();
+    const result = await rejectBooking(userId);
     res.json(result);
   } catch (e) {
-    console.error("Error getting bookings: ", e.message);
+    console.error("Error rejecting booking: ", e.message);
     res.sendStatus(500);
   }
 });

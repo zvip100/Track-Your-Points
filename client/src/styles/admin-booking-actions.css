@@ -1,0 +1,21 @@
+.admin-note {
+  display: inline-block;
+  background: #fff7ed;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  margin-right: 0;
+  margin-left: 0;
+  border-left: 4px solid #fb923c;
+  box-shadow: 0 2px 4px rgba(251, 146, 60, 0.1);
+  line-height: 1.5;
+}
+
+.admin-note p {
+  color: #c2410c;
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin: 0;
+  text-align: center;
+}

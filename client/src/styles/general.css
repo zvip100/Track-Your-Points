@@ -1,0 +1,148 @@
+/* General page container */
+.page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  min-height: 100vh;
+  background: #ffffff;
+}
+
+/* Page title styling */
+.page-title {
+  font-size: 2.5rem;
+  background: linear-gradient(135deg, #0284c7, #0ea5e9);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+  margin-bottom: 2rem;
+  padding: 1rem 0;
+  line-height: 1.2;
+}
+
+/* Content section */
+.content-section {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+/* Info message styling */
+.info-message {
+  background: linear-gradient(135deg, #e0f2fe, #bfdbfe);
+  color: #0369a1;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  margin: 2rem auto;
+  max-width: 600px;
+  text-align: center;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid #0284c7;
+}
+
+/* Loading state */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+}
+
+/* Error message */
+.error-message {
+  background: #fee2e2;
+  color: #dc2626;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  margin: 1rem auto;
+  max-width: 600px;
+  text-align: center;
+  font-size: 1rem;
+  border-left: 4px solid #dc2626;
+}
+
+/* Success message */
+.success-message {
+  background: #dcfce7;
+  color: #166534;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  margin: 1rem auto;
+  max-width: 600px;
+  text-align: center;
+  font-size: 1rem;
+  border-left: 4px solid #22c55e;
+}
+
+/* Button styling */
+.page-btn {
+  background: #3b82f6;
+  color: white;
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.page-btn:hover {
+  background: #2563eb;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Mobile styles */
+@media screen and (max-width: 600px) {
+  .page-container {
+    padding: 1rem;
+  }
+
+  .page-title {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .content-section {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border-radius: 8px;
+  }
+
+  .info-message,
+  .error-message,
+  .success-message {
+    margin: 1rem;
+    padding: 0.8rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .page-btn {
+    width: 100%;
+    margin: 0.5rem 0;
+    padding: 0.7rem 1rem;
+  }
+
+  .loading-container {
+    min-height: 150px;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-out;
+}

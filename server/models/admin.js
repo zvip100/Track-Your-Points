@@ -139,18 +139,49 @@ export async function removePoints(user, points_) {
   }
 }
 
+export async function getBookings() {
+  try {
+    const areThereBookings = await db.select().from(bookings).limit(1);
+    if (areThereBookings.length === 0) {
+      return "No bookings found";
+    }
+
+    const result = await db
+      .select({
+        id: bookings.id,
+        user: bookings.user,
+        name: sql`CONCAT(${users.first_name}, ' ', ${users.last_name})`,
+        email: users.email,
+        checkIn: bookings.checkIn,
+        checkOut: bookings.checkOut,
+        status: bookings.status,
+        requestedOn: sql`to_char(${bookings.created_at}, 'MM/DD/YYYY HH12:MI:SS AM')`,
+        confirmedOn: sql`to_char(${bookings.updated_at}, 'MM/DD/YYYY HH12:MI:SS AM')`,
+      })
+      .from(bookings)
+      .leftJoin(users, eq(bookings.user, users.id))
+      .orderBy(desc(bookings.created_at));
+
+    console.log("Get bookings DB result: ", result);
+    return result;
+  } catch (e) {
+    console.error("Error getting bookings from DB: ", e.message);
+    throw e;
+  }
+}
+
 export async function confirmBooking(user) {
   try {
     await db.transaction(async (tx) => {
       const bookingResult = await tx
         .update(bookings)
         .set({
-          confirmed: true,
+          status: "C",
           updated_at: sql`TIMEZONE('America/New_York', NOW())`,
         })
         .where(eq(bookings.user, user))
         .returning({
-          confirmed: bookings.confirmed,
+          status: bookings.status,
           date: sql`to_char(${bookings.updated_at}, 'MM/DD/YYYY')`,
           time: sql`to_char(${bookings.updated_at}, 'HH12:MI:SS AM')`,
         });
@@ -172,28 +203,28 @@ export async function confirmBooking(user) {
   }
 }
 
-export async function getBookings() {
+export async function rejectBooking(user) {
   try {
     const result = await db
-      .select({
-        id: bookings.id,
-        user: bookings.user,
-        checkIn: bookings.checkIn,
-        checkOut: bookings.checkOut,
-        confirmed: bookings.confirmed,
-        requestedOn: sql`to_char(${bookings.created_at}, 'MM/DD/YYYY HH12:MI:SS AM')`,
-        confirmedOn: sql`to_char(${bookings.updated_at}, 'MM/DD/YYYY HH12:MI:SS AM')`,
-        name: sql`CONCAT(${users.first_name}, ' ', ${users.last_name})`,
-        email: users.email,
+      .update(bookings)
+      .set({
+        status: "R",
+        updated_at: sql`TIMEZONE('America/New_York', NOW())`,
       })
-      .from(bookings)
-      .leftJoin(users, eq(bookings.user, users.id))
-      .orderBy(desc(bookings.created_at));
+      .where(eq(bookings.user, user))
+      .returning({
+        status: bookings.status,
+        date: sql`to_char(${bookings.updated_at}, 'MM/DD/YYYY')`,
+        time: sql`to_char(${bookings.updated_at}, 'HH12:MI:SS AM')`,
+      });
 
-    console.log("Get bookings DB result: ", result);
-    return result;
+    if (result.length === 0) {
+      throw new Error("Booking not found");
+    }
+
+    return { success: true };
   } catch (e) {
-    console.error("Error getting bookings from DB: ", e.message);
+    console.error("Error rejecting booking from DB: ", e.message);
     throw e;
   }
 }

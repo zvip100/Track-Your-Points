@@ -5,50 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1738485439861,
-      "tag": "0000_wet_scorpion",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1738485686072,
-      "tag": "0001_loud_iron_fist",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1738565822512,
-      "tag": "0002_lonely_sandman",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "7",
-      "when": 1738907350135,
-      "tag": "0003_windy_zemo",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "7",
-      "when": 1739773439328,
-      "tag": "0004_daily_luke_cage",
-      "breakpoints": true
-    },
-    {
-      "idx": 5,
-      "version": "7",
-      "when": 1740067420676,
-      "tag": "0005_aspiring_punisher",
-      "breakpoints": true
-    },
-    {
-      "idx": 6,
-      "version": "7",
-      "when": 1740067491802,
-      "tag": "0006_wooden_violations",
+      "when": 1741588974485,
+      "tag": "0000_tough_dragon_lord",
       "breakpoints": true
     }
   ]

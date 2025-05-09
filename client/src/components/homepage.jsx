@@ -1,19 +1,25 @@
 import { useState, useEffect, useContext } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
-import { IoPersonCircle } from "react-icons/io5";
+import { Link, useNavigate } from "react-router-dom";
+import { IoPersonCircle, IoMenu, IoClose } from "react-icons/io5";
 import { UserContext } from "./App";
+import DesktopNav from "./desktop-nav.jsx";
+import MobileNav from "./mobile-nav.jsx";
 import logo from "../assets/logo.svg";
 import villaImg from "../assets/villa.jpg";
 import VillaPool from "../assets/villa-pool.jpg";
+import livingRoom from "../assets/living-room.jpg";
+import kitchen from "../assets/kitchen.jpg";
+import Video from "./video";
 import Footer from "./footer";
 import { scrollToTop, changeTitle, formatNumber } from "../helpers/utils.js";
+import { useIsMobile } from "../hooks/is-mobile.js";
 import "../styles/App.css";
 
 function Homepage({ title }) {
   const [loggedIn, setLoggedIn] = useState(true);
-  const [showPopup, setShowPopup] = useState(false);
+  const [showSidebar, setShowSidebar] = useState(false);
+  const isMobile = useIsMobile();
   const navigate = useNavigate();
-  const location = useLocation();
   const userInfo = useContext(UserContext);
 
   useEffect(() => {
@@ -29,43 +35,19 @@ function Homepage({ title }) {
     }
   }, [userInfo]);
 
+  const toggleSidebar = () => {
+    if (isMobile) {
+      setShowSidebar(!showSidebar);
+    }
+  };
+
   return (
     <>
-      <div className="nav">
-        <div className="nav-logo">
-          <a href="https://www.starlifevacation.com/" target="_blank">
-            <img src={logo} alt="Website logo" />
-          </a>
-        </div>
-
-        <div className="nav-btn-group">
-          <a href="https://www.starlifevacation.com/" target="_blank">
-            <button type="button">Gallery</button>
-          </a>{" "}
-          {loggedIn ? (
-            <button
-              type="button"
-              onClick={() => navigate("/my-account")}
-              className="account-btn"
-            >
-              <IoPersonCircle size={20} />
-              <span>My Account</span>
-            </button>
-          ) : (
-            <>
-              <button type="button" onClick={() => navigate("/login")}>
-                Log In
-              </button>{" "}
-              <button type="button" onClick={() => navigate("/sign-up")}>
-                Sign Up
-              </button>{" "}
-            </>
-          )}
-          <button type="button" onClick={() => navigate("/admin")}>
-            Admin
-          </button>
-        </div>
-      </div>
+      {isMobile ? (
+        <MobileNav isLoggedIn={loggedIn} />
+      ) : (
+        <DesktopNav isLoggedIn={loggedIn} />
+      )}
 
       <main className="main-content">
         <div className="centered-content">
@@ -85,16 +67,13 @@ function Homepage({ title }) {
                 <Link to="/my-account">Click here for more info</Link>{" "}
               </>
             )}
-
             <h1>
               Earn 90,000 points to get your 3 nights dream vacation at our
               beautiful villa in Tampa Florida for free!
             </h1>
-
             <div>
               <Link to="/about">How it Works</Link>{" "}
             </div>
-
             <div className="img-container">
               <img
                 src={villaImg}
@@ -107,6 +86,20 @@ function Homepage({ title }) {
                 title="Back of our villa"
               ></img>
             </div>
+            <div className="img-container">
+              <img
+                src={livingRoom}
+                alt="Image of the living room at our villa"
+                title="Our living room"
+              ></img>
+              <img
+                src={kitchen}
+                alt="Image of the kitchen at our villa"
+                title="Our kitchen"
+              ></img>
+            </div>
+            <Video />
+            <Link to="/our-villa">Meet Our Villa</Link>{" "}
           </div>
         </div>
       </main>

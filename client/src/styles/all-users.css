@@ -216,3 +216,60 @@ table-container::-webkit-scrollbar {
   background-color: white;
   color: #1e293b;
 }
+
+/* Add after existing table styles */
+@media screen and (max-width: 600px) {
+  .user-table {
+    margin: 1rem;
+    max-height: none;
+    border-width: 1px;
+  }
+
+  .table-container {
+    max-height: none;
+    margin: 0;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .table-container table {
+    font-size: 0.9rem;
+  }
+
+  .table-container thead {
+    position: sticky;
+    top: 0;
+  }
+
+  .table-container th {
+    padding: 0.75rem 0.5rem;
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
+
+  .table-container td {
+    padding: 0.75rem 0.5rem;
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
+
+  .table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .options-container {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 0 1rem;
+  }
+
+  .search-container {
+    width: 100%;
+  }
+
+  .sort-table-dropdown {
+    width: 100%;
+    margin: 0;
+  }
+}

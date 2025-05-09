@@ -4,6 +4,7 @@ import "../styles/index.css";
 import Homepage from "./homepage.jsx";
 import Login from "./login.jsx";
 import Signup from "./signup.jsx";
+import OurVilla from "./our-villa.jsx";
 import Admin from "./admin.jsx";
 import AdminLogin from "./admin-login.jsx";
 import About from "./about.jsx";
@@ -56,13 +57,12 @@ function App() {
       element: <Signup title={`Sign Up - ${mainTitle}`} />,
     },
     {
+      path: "/our-villa",
+      element: <OurVilla title={`Our Villa - ${mainTitle}`} />,
+    },
+    {
       path: "/my-account",
-      element: (
-        <MyAccount
-          setUserInfo={setUserInfo}
-          title={`My Account - ${mainTitle}`}
-        />
-      ),
+      element: <MyAccount title={`My Account - ${mainTitle}`} />,
     },
     {
       path: "/book-villa",
@@ -85,7 +85,7 @@ function App() {
       element: (
         <UploadUsers
           setAdminInfo={setAdminInfo}
-          title="Admin - Upload User Sheet" 
+          title="Admin - Upload User Sheet"
         />
       ),
     },
