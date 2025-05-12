@@ -19,10 +19,6 @@ app.use(
 app.use(cookieParser());
 app.use(express.json());
 
-/*app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Credentials", "true");
-});*/
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 

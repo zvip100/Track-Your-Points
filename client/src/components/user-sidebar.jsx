@@ -49,6 +49,7 @@ function UserSidebar({ setUserInfo, bookingInfo }) {
             <IoHome size={24} />
             <span>{bookingInfo ? "My booking" : "Book Villa"}</span>
           </Link>
+
           <button onClick={handleLogout} className="nav-item logout">
             <IoLogOut size={24} />
             <span>Logout</span>

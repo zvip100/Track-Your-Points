@@ -107,7 +107,7 @@ function AdminActions({
               </button>{" "}
               <button
                 type="button"
-                className="admin-btn"
+                className="admin-btn cancel-btn"
                 onClick={() => {
                   setAction("");
                   setPoints("");

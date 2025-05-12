@@ -1,7 +1,7 @@
 import { desc } from "drizzle-orm";
 import { db, users, points, bookings, eq, sql } from "../database/db";
-import { sendEmail } from "../email";
-import { bookingReqEmail } from "../email-content";
+import { sendEmail } from "../email/email";
+import bookingReqEmail from "../email/templates/booking-req-email";
 import { formatDate } from "../middlewares";
 
 export async function getUser(id) {
@@ -13,11 +13,19 @@ export async function getUser(id) {
         lastName: users.last_name,
         email: users.email,
         points: sql`COALESCE(SUM(${points.amount}), 0)`,
+        bookingStatus: bookings.status,
       })
       .from(users)
       .leftJoin(points, eq(users.id, points.user))
+      .leftJoin(bookings, eq(users.id, bookings.user))
       .where(eq(users.id, id))
-      .groupBy(users.id, users.first_name, users.last_name, users.email);
+      .groupBy(
+        users.id,
+        users.first_name,
+        users.last_name,
+        users.email,
+        bookings.status
+      );
 
     console.log("Getting user info by token result: ", result);
 

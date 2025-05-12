@@ -46,7 +46,7 @@ function MobileNav({ isLoggedIn }) {
             <div className="auth-popup">
               <button onClick={() => navigate("/login")} className="auth-btn">
                 <IoLogInOutline size={20} />
-                Login
+                Log In
               </button>
               <button onClick={() => navigate("/sign-up")} className="auth-btn">
                 <IoPersonAddOutline size={20} />

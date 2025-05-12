@@ -43,7 +43,7 @@
 }
 
 .nav-btn-group button {
-  background: #3b82f6;
+  background: linear-gradient(135deg, #0284c7, #0ea5e9);
   color: white;
   border: none;
   padding: 0.8rem 1.5rem;
@@ -59,12 +59,12 @@
   justify-content: center;
   gap: 0.5rem;
   margin: 0;
+  box-shadow: 0 4px 15px rgba(2, 132, 199, 0.2);
 }
 
 .nav-btn-group button:hover {
-  background: #2563eb;
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
+  box-shadow: 0 6px 20px rgba(2, 132, 199, 0.3);
 }
 
 .nav-btn-group button.active {

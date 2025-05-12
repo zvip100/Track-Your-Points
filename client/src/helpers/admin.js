@@ -86,9 +86,7 @@ export async function confirmBooking(user) {
     const response = await fetch(`${URL}/api/admin/confirm-booking`, {
       method: "POST",
       headers: addAuthHeader(),
-      body: JSON.stringify({
-        userId: user,
-      }),
+      body: JSON.stringify(user),
     });
 
     if (!response.ok) {

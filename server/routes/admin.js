@@ -1,7 +1,9 @@
 import { Router } from "express";
+import { configDotenv } from "dotenv";
 import {
   getAccount,
   getUsers,
+  getUsersName,
   addUsers,
   addPoints,
   getPoints,
@@ -10,7 +12,10 @@ import {
   confirmBooking,
   rejectBooking,
 } from "../models/admin";
-import { sendEmail } from "../email";
+import { sendEmail } from "../email/email";
+import bookingConfirmedEmail from "../email/templates/booking-confirmed-email";
+
+configDotenv();
 
 const adminRouter = Router();
 
@@ -128,10 +133,27 @@ adminRouter.get("/bookings", async (req, res) => {
 });
 
 adminRouter.post("/confirm-booking", async (req, res) => {
-  const userId = req.body.userId;
+  const { id, account, checkIn, checkOut } = req.body;
 
   try {
-    const result = await confirmBooking(userId);
+    const result = await confirmBooking(id);
+
+    const username = await getUsersName(id);
+
+    if (username === "Not found") throw new Error("User not found");
+
+    const infoUrl = `${process.env.URL}:${process.env.PORT}/book-villa`;
+
+    const { subject, content } = bookingConfirmedEmail(
+      username,
+      checkIn,
+      checkOut,
+      infoUrl
+    );
+
+    const emailUser = await sendEmail(account, subject, content);
+    if (!emailUser) throw new Error("Failed to send email");
+
     res.json(result);
   } catch (e) {
     console.error("Error confirming booking: ", e.message);

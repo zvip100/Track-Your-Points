@@ -5,8 +5,8 @@ import {
   verifyOtp,
   createUser,
 } from "../models/signup.js";
-import { sendEmail } from "../email";
-import { otpEmail } from "../email-content.js";
+import { sendEmail } from "../email/email";
+import otpEmail from "../email/templates/otp-email";
 
 const signupRouter = Router();
 

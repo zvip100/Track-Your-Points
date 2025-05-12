@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/logo.svg";
+import starlifeLogo from "../assets/starlife-logo.jpg";
 import {
   IoHomeOutline,
   IoPersonCircleOutline,
@@ -13,7 +14,7 @@ function DesktopNav({ isLoggedIn }) {
   const navigate = useNavigate();
 
   return (
-    <div className="desktop-nav">
+    <nav className="desktop-nav">
       <div className="desktop-site-logo">
         <a href="https://www.starlifevacation.com/" target="_blank">
           <img src={logo} alt="Website logo" />
@@ -47,7 +48,7 @@ function DesktopNav({ isLoggedIn }) {
           <span>Admin</span>
         </button>
       </div>
-    </div>
+    </nav>
   );
 }
 

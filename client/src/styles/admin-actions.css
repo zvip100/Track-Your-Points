@@ -106,10 +106,17 @@
   color: white;
   border: none;
   padding: 0.8rem 1.5rem;
+  margin-top: 1rem;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
   border-radius: 8px;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
+}
+
+.cancel-btn {
+  margin-right: 0;
 }
 
 .admin-btn:hover {

@@ -1,7 +1,7 @@
-import { useState, useContext, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
-  IoGrid,
+  IoCloudUpload,
   IoPersonAdd,
   IoPeople,
   IoStatsChart,
@@ -15,7 +15,6 @@ import { scrollToTop, changeTitle } from "../helpers/utils";
 import "../styles/admin.css";
 
 function Admin({ setAdminInfo, title }) {
-  const [loggedIn, setLoggedIn] = useState(false);
   const admin = useContext(AdminContext);
   const navigate = useNavigate();
 
@@ -33,12 +32,12 @@ function Admin({ setAdminInfo, title }) {
     <>
       <AdminSidebar setAdminInfo={setAdminInfo} />
 
-      <h1 className="title">~Admin Page~</h1>
+      <h1 className="title">~Admin Dashboard~</h1>
 
       <div className="admin-container">
         <div className="button-group">
           <Link to="/admin/upload-users" className="admin-page-btn">
-            <IoGrid size={24} />
+            <IoCloudUpload size={24} />
             <span>Upload Users</span>
           </Link>{" "}
           <Link to="/admin/add-user" className="admin-page-btn">

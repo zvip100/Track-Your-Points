@@ -13,7 +13,6 @@ import { IoHome } from "react-icons/io5";
 import { scrollToTop, changeTitle } from "../helpers/utils";
 import "../styles/my-account.css";
 
-
 function MyAccount({ setUserInfo, title }) {
   const userInfo = useContext(UserContext);
   const navigate = useNavigate();
@@ -74,6 +73,7 @@ function MyAccount({ setUserInfo, title }) {
             name: userInfo.name,
             email: userInfo.email,
             points: result[0].totalPoints,
+            bookingStatus: userInfo.bookingStatus,
           });
         }
       } catch (e) {

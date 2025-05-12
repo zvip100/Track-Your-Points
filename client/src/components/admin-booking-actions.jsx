@@ -20,7 +20,7 @@ function AdminBookingActions({
 
     setPending(true);
 
-    const result = await confirmBooking(user?.id);
+    const result = await confirmBooking(user);
     console.log(result);
 
     setPending(false);
@@ -59,7 +59,11 @@ function AdminBookingActions({
               necessary points from the user's account.
             </p>
           </div>
-          <button type="button" className="admin-btn" onClick={handleClick}>
+          <button
+            type="button"
+            className="admin-btn confirm-booking"
+            onClick={handleClick}
+          >
             Confirm Booking
           </button>{" "}
           <p className="admin-footer-text">

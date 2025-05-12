@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
-  IoGrid,
+  IoCloudUpload,
   IoPersonAdd,
   IoPeople,
   IoStatsChart,
@@ -55,7 +55,7 @@ function AdminSidebar({ setAdminInfo }) {
         <div className="sidebar-content">
           <nav className="sidebar-nav">
             <Link to="/admin/upload-users" className="nav-item">
-              <IoGrid size={24} />
+              <IoCloudUpload size={24} />
               <span>Upload Users</span>
             </Link>
             <Link to="/admin/add-user" className="nav-item">

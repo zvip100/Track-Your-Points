@@ -29,7 +29,8 @@
   position: fixed;
   right: 20px;
   top: 20px;
-  background: #3b82f6;
+  color: white;
+  background: #836cddaa;
   border: none;
   color: white;
   padding: 0.8rem;
@@ -40,7 +41,7 @@
 }
 
 .sidebar-toggle:hover {
-  background: #2563eb;
+  background: #836cdd;
   transform: scale(1.05);
 }
 
@@ -59,6 +60,14 @@
   opacity: 0;
   visibility: hidden;
   transition: all 0.3s ease;
+}
+
+.sidebar-toggle.is-open {
+  background: #3b82f6;
+}
+
+.sidebar-toggle.is-open:hover {
+  background: #2563eb;
 }
 
 .sidebar-toggle.is-open::after {

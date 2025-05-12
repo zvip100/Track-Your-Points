@@ -1,25 +1,26 @@
 import { useState, useEffect, useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { IoPersonCircle, IoMenu, IoClose } from "react-icons/io5";
+import { Link } from "react-router-dom";
 import { UserContext } from "./App";
 import DesktopNav from "./desktop-nav.jsx";
 import MobileNav from "./mobile-nav.jsx";
-import logo from "../assets/logo.svg";
 import villaImg from "../assets/villa.jpg";
 import VillaPool from "../assets/villa-pool.jpg";
 import livingRoom from "../assets/living-room.jpg";
 import kitchen from "../assets/kitchen.jpg";
 import Video from "./video";
 import Footer from "./footer";
-import { scrollToTop, changeTitle, formatNumber } from "../helpers/utils.js";
+import {
+  scrollToTop,
+  changeTitle,
+  formatNumber,
+  formatBookingStatus,
+} from "../helpers/utils.js";
 import { useIsMobile } from "../hooks/is-mobile.js";
 import "../styles/App.css";
 
 function Homepage({ title }) {
   const [loggedIn, setLoggedIn] = useState(true);
-  const [showSidebar, setShowSidebar] = useState(false);
   const isMobile = useIsMobile();
-  const navigate = useNavigate();
   const userInfo = useContext(UserContext);
 
   useEffect(() => {
@@ -35,28 +36,29 @@ function Homepage({ title }) {
     }
   }, [userInfo]);
 
-  const toggleSidebar = () => {
-    if (isMobile) {
-      setShowSidebar(!showSidebar);
-    }
-  };
-
   return (
     <>
-      {isMobile ? (
-        <MobileNav isLoggedIn={loggedIn} />
-      ) : (
-        <DesktopNav isLoggedIn={loggedIn} />
-      )}
+      <header>
+        {isMobile ? (
+          <MobileNav isLoggedIn={loggedIn} />
+        ) : (
+          <DesktopNav isLoggedIn={loggedIn} />
+        )}
+      </header>
 
       <main className="main-content">
         <div className="centered-content">
-          <div className="background-img"></div>
+          <div className="background-img" />
 
           <div>
             {userInfo && (
               <>
-                {userInfo?.points > 0 ? (
+                {userInfo?.bookingStatus ? (
+                  <h3>
+                    Your booking is{" "}
+                    {formatBookingStatus(userInfo.bookingStatus)}!{" "}
+                  </h3>
+                ) : userInfo?.points > 0 ? (
                   <h3>
                     You already earned {formatNumber(userInfo?.points)} points!
                     Keep it up!
@@ -68,8 +70,8 @@ function Homepage({ title }) {
               </>
             )}
             <h1>
-              Earn 90,000 points to get your 3 nights dream vacation at our
-              beautiful villa in Tampa Florida for free!
+              Earn 90,000 Points To Get Your 3 Nights Dream Vacation At Our
+              Beautiful Villa In Tampa Florida For Free!
             </h1>
             <div>
               <Link to="/about">How it Works</Link>{" "}
@@ -85,8 +87,6 @@ function Homepage({ title }) {
                 alt="Image of the pool at our villa"
                 title="Back of our villa"
               ></img>
-            </div>
-            <div className="img-container">
               <img
                 src={livingRoom}
                 alt="Image of the living room at our villa"

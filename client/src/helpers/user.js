@@ -41,6 +41,7 @@ export async function getUser(token, userInfo, setUserInfo) {
       name: `${result[0].firstName} ${result[0].lastName}`,
       email: result[0].email,
       points: result[0].points,
+      bookingStatus: result[0].bookingStatus,
     });
 
     removeToken(setUserInfo, timeUntilExpiration);

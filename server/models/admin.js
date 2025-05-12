@@ -62,6 +62,30 @@ export async function getUsers() {
   }
 }
 
+export async function getUsersName(id) {
+  try {
+    const result = await db
+      .select({
+        name: sql`CONCAT(${users.first_name}, ' ', ${users.last_name})`,
+      })
+      .from(users)
+      .where(eq(users.id, id))
+      .limit(1);
+
+    console.log("Get user by id result: ", result);
+
+    if (result.length === 0) {
+      return "Not found";
+    }
+
+    const username = result[0].name;
+    return username;
+  } catch (e) {
+    console.error("Error getting user by id: ", e.message);
+    throw e;
+  }
+}
+
 export async function addUsers(usersArray) {
   try {
     const newUsers = await db

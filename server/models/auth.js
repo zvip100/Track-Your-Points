@@ -1,4 +1,4 @@
-import { db, users, points, eq, sql } from "../database/db";
+import { db, users, points, bookings, eq, sql } from "../database/db";
 import { checkPass, createToken } from "../middlewares";
 
 export async function login(email, password) {
@@ -11,11 +11,19 @@ export async function login(email, password) {
         email: users.email,
         passwordHash: users.password_hash,
         points: sql`COALESCE(SUM(${points.amount}), 0)`,
+        bookingStatus: bookings.status,
       })
       .from(users)
       .leftJoin(points, eq(users.id, points.user))
+      .leftJoin(bookings, eq(users.id, bookings.user))
       .where(eq(users.email, email))
-      .groupBy(users.id, users.first_name, users.last_name, users.email);
+      .groupBy(
+        users.id,
+        users.first_name,
+        users.last_name,
+        users.email,
+        bookings.status
+      );
 
     if (user.length === 0) {
       return "User not found";

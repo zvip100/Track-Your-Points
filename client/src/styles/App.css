@@ -17,7 +17,7 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-image: url("https://static.wixstatic.com/media/8e29fc9caeac45eca7ba7756230db91b.jpg/v1/fill/w_1891,h_670,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/8e29fc9caeac45eca7ba7756230db91b.jpg");
+  background-image: url("../assets/beach.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -28,7 +28,7 @@
 .centered-content {
   position: relative;
   z-index: 1;
-  margin-top: 150px;
+  margin-top: 140px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -87,8 +87,8 @@
 }
 
 .img-container {
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 2rem;
   padding: 2rem;
   background: white;
@@ -99,7 +99,7 @@
 }
 
 .img-container img {
-  width: 45%;
+  width: 100%;
   height: 400px;
   object-fit: cover;
   border-radius: 8px;
@@ -168,7 +168,7 @@
   }
 
   .img-container {
-    flex-direction: column;
+    grid-template-columns: repeat(1, 1fr);
     gap: 1rem;
     padding: 1rem;
     margin: 1rem;

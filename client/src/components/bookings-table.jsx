@@ -38,7 +38,12 @@ function BookingsTable({ data, setReloadPage }) {
                   key={record.id}
                   onClick={() =>
                     record.status === "P" &&
-                    setUser({ id: record.user, account: record.email })
+                    setUser({
+                      id: record.user,
+                      account: record.email,
+                      checkIn: formatBookingDate(record.checkIn),
+                      checkOut: formatBookingDate(record.checkOut),
+                    })
                   }
                 >
                   <td>{index + 1}</td>

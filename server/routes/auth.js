@@ -21,6 +21,7 @@ authRouter.post("/login", async (req, res) => {
         lastName: user[0].lastName,
         email: user[0].email,
         points: user[0].points,
+        bookingStatus: user[0].bookingStatus,
       },
     ];
     res.json(userInfo);
