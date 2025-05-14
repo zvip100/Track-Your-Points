@@ -30,7 +30,7 @@ const htmlPath = path.join(__dirname, "./front-end/index.html");
 
 try {
   let html = fs.readFileSync(htmlPath, "utf8");
-  html = html.replace("##API_URL##", URL).replace("##API_PORT##", PORT);
+  html = html.replace("##DEVELOPMENT##", "##PRODUCTION##");
   fs.writeFileSync(htmlPath, html, "utf8");
 } catch (error) {
   console.error("Error modifying index.html:", error);

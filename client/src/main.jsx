@@ -2,17 +2,14 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./components/App.jsx";
 
-//export const URL = "http://localhost:3000";
-//`${config.apiUrl}:${config.port}`
-
-function configBaseUrl() {
+function configApiUrl() {
   const config = window.__CONFIG__;
-  if (config.apiUrl === "##API_URL##") return "http://localhost:3000";
+  if (config === "##DEVELOPMENT##") return "http://localhost:3000";
 
-  return "" ;
+  return "";
 }
 
-const getBaseUrl = configBaseUrl();
+const getBaseUrl = configApiUrl();
 
 export const URL = getBaseUrl;
 console.log("Base URL:", URL);
