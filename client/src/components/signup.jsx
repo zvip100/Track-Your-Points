@@ -1,14 +1,13 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useFormik } from "formik";
-import signUpSchema from "../sign-up-schema.js";
-import { signUpForm } from "../data.js";
+import signUpSchema from "../helpers/sign-up-schema.js";
+import { signUpForm } from "../helpers/forms.js";
 import InputField from "./input-field.jsx";
 import Popup from "./popup.jsx";
 import BackButton from "./back-btn.jsx";
 import LoadingSpinner from "./loading.jsx";
 import Footer from "./footer.jsx";
-import { URL } from "../main";
 import SignUpOtp from "./signup-otp.jsx";
 import { scrollToTop, changeTitle } from "../helpers/utils";
 import { verifyEmail, getOtp } from "../helpers/sign-up.js";

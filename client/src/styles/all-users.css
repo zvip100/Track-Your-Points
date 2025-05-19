@@ -80,7 +80,7 @@
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   border: 2px solid #e2e8f0;
-  margin-bottom: 100px;
+  margin-bottom: 80px;
 }
 
 .table-container {
@@ -89,6 +89,7 @@
   position: relative;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  margin-bottom: 1.5rem;
 }
 
 .table-container table {
@@ -217,10 +218,9 @@ table-container::-webkit-scrollbar {
   color: #1e293b;
 }
 
-/* Add after existing table styles */
 @media screen and (max-width: 600px) {
   .user-table {
-    margin: 1rem;
+    margin: 1rem 0 3rem;
     max-height: none;
     border-width: 1px;
   }
@@ -261,7 +261,7 @@ table-container::-webkit-scrollbar {
   .options-container {
     flex-direction: column;
     gap: 1rem;
-    padding: 0 1rem;
+    padding: 0;
   }
 
   .search-container {

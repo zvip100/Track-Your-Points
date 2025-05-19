@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import classNames from "classnames";
 import {
   IoCloudUpload,
   IoPersonAdd,
@@ -10,10 +11,13 @@ import {
   IoClose,
   IoCalendar,
 } from "react-icons/io5";
+import { useIsMobile } from "../hooks/is-mobile";
 import "../styles/admin-sidebar.css";
 
 function AdminSidebar({ setAdminInfo }) {
   const [isOpen, setIsOpen] = useState(false);
+  const isMobile = useIsMobile();
+  const iconSize = isMobile ? 20 : 24;
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -45,13 +49,18 @@ function AdminSidebar({ setAdminInfo }) {
   return (
     <>
       <button
-        className={`sidebar-toggle ${isOpen ? "is-open" : ""}`}
+        className={classNames(
+          "sidebar-toggle",
+          isOpen && "is-open",
+          isMobile && "mobile"
+        )}
+        type="button"
         onClick={() => setIsOpen(!isOpen)}
       >
-        {isOpen ? <IoClose size={24} /> : <IoMenu size={24} />}
+        {isOpen ? <IoClose size={iconSize} /> : <IoMenu size={iconSize} />}
       </button>
 
-      <aside className={`admin-sidebar ${isOpen ? "open" : ""}`}>
+      <aside className={classNames("admin-sidebar", isOpen && "open")}>
         <div className="sidebar-content">
           <nav className="sidebar-nav">
             <Link to="/admin/upload-users" className="nav-item">

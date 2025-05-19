@@ -32,16 +32,20 @@
   color: white;
   background: #836cddaa;
   border: none;
-  color: white;
   padding: 0.8rem;
+  margin: 7px 0 0;
   border-radius: 8px;
   cursor: pointer;
   z-index: 1001;
   transition: all 0.3s ease;
+
+  &.mobile {
+    padding: 8px 8px 4px;
+    margin: 1px 0 0;
+  }
 }
 
 .sidebar-toggle:hover {
-  background: #836cdd;
   transform: scale(1.05);
 }
 

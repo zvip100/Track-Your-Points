@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { loginForm } from "../data";
-import loginSchema from "../login-schema";
+import { loginForm } from "../helpers/forms";
+import loginSchema from "../helpers/login-schema";
 import InputField from "./input-field";
 import { useFormik } from "formik";
 import Popup from "./popup";

@@ -1,11 +1,9 @@
 import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
-import addUserSchema from "../add-user-schema";
-import "../styles/add-user.css";
-import AdminSidebar from "./admin-sidebar";
+import addUserSchema from "../helpers/add-user-schema";
+import { AdminHeader } from "./admin";
 import Popup from "./popup";
-import BackButton from "./back-btn";
 import LoadingSpinner from "./loading";
 import Footer from "./footer";
 import { URL } from "../main";
@@ -17,6 +15,7 @@ import {
   capitalize,
   removeAllSpaces,
 } from "../helpers/utils";
+import "../styles/add-user.css";
 
 function AddUser({ setAdminInfo, title }) {
   const [pending, setPending] = useState(false);
@@ -88,7 +87,11 @@ function AddUser({ setAdminInfo, title }) {
 
   return (
     <>
-      <AdminSidebar setAdminInfo={setAdminInfo} />
+      <AdminHeader
+        setAdminInfo={setAdminInfo}
+        path="/admin"
+        text="Main Admin page"
+      />
 
       <div className="add-user-container">
         <h1>~Add User~</h1>
@@ -102,7 +105,6 @@ function AddUser({ setAdminInfo, title }) {
             name="firstName"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            autoFocus
           />
 
           {formik.touched.firstName && formik.errors.firstName && (
@@ -138,7 +140,7 @@ function AddUser({ setAdminInfo, title }) {
 
           <button
             type="submit"
-            className="submit-btn"
+            className="submit-btn a"
             disabled={!formik.isValid || !formik.dirty}
           >
             {pending ? "Adding User..." : "Add User"}
@@ -163,7 +165,6 @@ function AddUser({ setAdminInfo, title }) {
 
       {pending && <LoadingSpinner />}
 
-      <BackButton path="/admin" text="Back to Admin page" />
       <Footer />
     </>
   );

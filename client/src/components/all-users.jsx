@@ -1,12 +1,11 @@
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import AdminSidebar from "./admin-sidebar";
+import { AdminHeader } from "./admin";
 import UserTable from "./user-table";
 import SearchUser from "./search-user";
 import SortTable from "./sort-table";
 import Popup from "./popup";
 import LoadingSpinner from "./loading";
-import BackButton from "./back-btn";
 import Footer from "./footer";
 import { URL } from "../main";
 import { AdminContext } from "./App";
@@ -59,7 +58,11 @@ function AllUsers({ setAdminInfo, title }) {
 
   return (
     <>
-      <AdminSidebar setAdminInfo={setAdminInfo} />
+      <AdminHeader
+        setAdminInfo={setAdminInfo}
+        path="/admin"
+        text="Main Admin page"
+      />
 
       <h1 className="title">~All Users~</h1>
 
@@ -101,7 +104,6 @@ function AllUsers({ setAdminInfo, title }) {
         </>
       )}
 
-      <BackButton path="/admin" text="Back to Admin page" />
       <Footer />
     </>
   );

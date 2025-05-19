@@ -1,7 +1,7 @@
 .add-user-container {
   width: 100%;
   max-width: 500px;
-  margin: 2rem auto;
+  margin: 3rem auto 80px;
   padding: 2.5rem;
   background: white;
   border-radius: 15px;
@@ -18,7 +18,7 @@
 .add-user-form {
   display: flex;
   flex-direction: column;
-  gap: 0.7rem;
+  gap: 1rem;
 }
 
 .add-user-form input {
@@ -54,10 +54,13 @@
 
 .submit-btn {
   margin-top: 15px;
-  margin-bottom: 0;
   background-color: #4caf50;
   color: white;
   border: none;
+
+  &.a {
+    margin-bottom: 0 !important;
+  }
 }
 
 .submit-btn:hover {
@@ -82,9 +85,15 @@
   cursor: not-allowed;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 600px) {
   .add-user-container {
-    margin: 1rem;
+    margin: 80px 1rem 3rem;
     padding: 1.5rem;
+    width: auto;
+  }
+
+  .add-user-container h1 {
+    font-size: 2rem;
+    line-height: 1.4;
   }
 }

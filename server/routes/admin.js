@@ -14,6 +14,7 @@ import {
 } from "../models/admin";
 import { sendEmail } from "../email/email";
 import bookingConfirmedEmail from "../email/templates/booking-confirmed-email";
+import { configUrl } from "../middlewares";
 
 configDotenv();
 
@@ -142,7 +143,8 @@ adminRouter.post("/confirm-booking", async (req, res) => {
 
     if (username === "Not found") throw new Error("User not found");
 
-    const infoUrl = `${process.env.URL}:${process.env.PORT}/book-villa`;
+    const infoUrl = configUrl("/book-villa");
+    console.log("Info URL: ", infoUrl);
 
     const { subject, content } = bookingConfirmedEmail(
       username,

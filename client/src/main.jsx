@@ -12,7 +12,6 @@ function configApiUrl() {
 const getBaseUrl = configApiUrl();
 
 export const URL = getBaseUrl;
-console.log("Base URL:", URL);
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>

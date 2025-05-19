@@ -52,26 +52,24 @@ function SignUpOtp({
   }
 
   return (
-    <>
-      <div className="sign-up-form">
-        <h1>Enter the code sent to your email</h1>
-        <div className="input-container">
-          <input
-            type="number"
-            placeholder="Enter code..."
-            value={otp}
-            onChange={(e) => setOtp(e.target.value)}
-            autoFocus
-          ></input>
-        </div>
-
-        <div className="submit-button-container">
-          <button type="button" className="submit-btn" onClick={handleClick}>
-            {pending ? "Submitting" : "Submit"}
-          </button>
-        </div>
+    <div className="sign-up-form">
+      <h1>Enter the code sent to your email</h1>
+      <div className="input-container">
+        <input
+          type="number"
+          placeholder="Enter code..."
+          value={otp}
+          onChange={(e) => setOtp(e.target.value)}
+          autoFocus
+        ></input>
       </div>
-    </>
+
+      <div className="submit-button-container">
+        <button type="button" className="submit-btn" onClick={handleClick}>
+          {pending ? "Submitting" : "Submit"}
+        </button>
+      </div>
+    </div>
   );
 }
 

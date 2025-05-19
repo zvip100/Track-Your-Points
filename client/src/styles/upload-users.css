@@ -1,6 +1,6 @@
 .upload-container {
   max-width: 800px;
-  margin: 2rem auto;
+  margin: 3rem auto 80px;
   padding: 2rem;
   background: linear-gradient(135deg, #334155, #475569);
   border-radius: 16px;
@@ -28,7 +28,6 @@
   color: rgba(255, 255, 255, 0.9);
 }
 
-/* Animation for uploaded text */
 h1:contains("~Users Uploaded~") {
   animation: gradientText 2s ease infinite;
   background-size: 200% 200%;
@@ -64,10 +63,14 @@ h1:contains("~Users Uploaded~") {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 600px) {
   .upload-container {
-    margin: 1rem;
+    margin: 80px 1rem 3rem;
     padding: 1.5rem;
+  }
+
+  .upload-container h1 {
+    font-size: 2rem;
   }
 
   .upload-header h3 {
@@ -79,7 +82,6 @@ h1:contains("~Users Uploaded~") {
   }
 }
 
-/* Add table specific styles */
 table {
   width: 100%;
   background: rgba(255, 255, 255, 0.9);

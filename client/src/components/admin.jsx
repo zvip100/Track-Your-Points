@@ -1,5 +1,6 @@
 import { useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useIsMobile } from "../hooks/is-mobile";
 import {
   IoCloudUpload,
   IoPersonAdd,
@@ -13,6 +14,17 @@ import BackButton from "./back-btn";
 import Footer from "./footer";
 import { scrollToTop, changeTitle } from "../helpers/utils";
 import "../styles/admin.css";
+
+export function AdminHeader({ setAdminInfo, path, text }) {
+  const isMobile = useIsMobile();
+
+  return (
+    <div className={isMobile ? "admin-header" : ""}>
+      <AdminSidebar setAdminInfo={setAdminInfo} />
+      <BackButton path={path} text={text} />
+    </div>
+  );
+}
 
 function Admin({ setAdminInfo, title }) {
   const admin = useContext(AdminContext);
@@ -30,7 +42,7 @@ function Admin({ setAdminInfo, title }) {
 
   return (
     <>
-      <AdminSidebar setAdminInfo={setAdminInfo} />
+      <AdminHeader setAdminInfo={setAdminInfo} path="/" text="Homepage" />
 
       <h1 className="title">~Admin Dashboard~</h1>
 
@@ -59,7 +71,6 @@ function Admin({ setAdminInfo, title }) {
         </div>
       </div>
 
-      <BackButton path="/" text="Back to Homepage" />
       <Footer />
     </>
   );

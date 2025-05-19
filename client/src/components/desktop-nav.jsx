@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import logo from "../assets/logo.svg";
 import starlifeLogo from "../assets/starlife-logo.jpg";
 import {
@@ -16,9 +16,9 @@ function DesktopNav({ isLoggedIn }) {
   return (
     <nav className="desktop-nav">
       <div className="desktop-site-logo">
-        <a href="https://www.starlifevacation.com/" target="_blank">
+        <Link to="/" reloadDocument>
           <img src={logo} alt="Website logo" />
-        </a>
+        </Link>
       </div>
 
       <div className="nav-btn-group">

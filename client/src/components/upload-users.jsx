@@ -1,9 +1,8 @@
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AdminContext } from "./App";
-import AdminSidebar from "./admin-sidebar";
+import { AdminHeader } from "./admin";
 import FileInput from "./file-input";
-import BackButton from "./back-btn";
 import Footer from "./footer";
 import exempleImage from "../assets/user-sheet-exemple.png";
 import { scrollToTop, changeTitle } from "../helpers/utils";
@@ -27,7 +26,11 @@ function UploadUsers({ setAdminInfo, title }) {
 
   return (
     <>
-      <AdminSidebar setAdminInfo={setAdminInfo} />
+      <AdminHeader
+        setAdminInfo={setAdminInfo}
+        path="/admin"
+        text="Main Admin page"
+      />
 
       <div className="upload-container">
         {uploaded ? (
@@ -53,7 +56,6 @@ function UploadUsers({ setAdminInfo, title }) {
         <FileInput uploaded={uploaded} setUploaded={setUploaded} />
       </div>
 
-      <BackButton path="/admin" text="Back to Admin page" />
       <Footer />
     </>
   );

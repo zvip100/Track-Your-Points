@@ -61,3 +61,13 @@ export function formatDate(dateString) {
     day: "numeric",
   });
 }
+
+export function configUrl(path) {
+  const baseUrl = process.env.URL;
+  const port = process.env.PORT;
+
+  if (baseUrl.includes("localhost")) {
+    return `${baseUrl}:${port}${path}`;
+  }
+  return baseUrl + path;
+}

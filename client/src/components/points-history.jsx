@@ -1,11 +1,10 @@
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import AdminSidebar from "./admin-sidebar";
+import { AdminHeader } from "./admin";
 import PointsTable from "./points-table";
 import SearchUser from "./search-user";
 import LoadingSpinner from "./loading";
 import Popup from "./popup";
-import BackButton from "./back-btn";
 import Footer from "./footer";
 import { URL } from "../main";
 import { AdminContext } from "./App";
@@ -62,13 +61,15 @@ function PointsHistory({ setAdminInfo, title }) {
 
   return (
     <>
-      <AdminSidebar setAdminInfo={setAdminInfo} />
+      <AdminHeader
+        setAdminInfo={setAdminInfo}
+        path="/admin"
+        text="Main Admin page"
+      />
 
       <h1 className="title">~Points History~</h1>
 
-      {noHistory && (
-        <h3 className="no-bookings-msg">No History Found!</h3>
-      )}
+      {noHistory && <h3 className="no-bookings-msg">No History Found!</h3>}
 
       {history && (
         <>
@@ -91,11 +92,10 @@ function PointsHistory({ setAdminInfo, title }) {
             msg="Error getting the data. Please reload the page."
             showPopup={() => setShowPopup(!showPopup)}
             class_="error-msg"
-          />{" "}
+          />
         </>
       )}
 
-      <BackButton path="/admin" text="Back to Admin page" />
       <Footer />
     </>
   );
